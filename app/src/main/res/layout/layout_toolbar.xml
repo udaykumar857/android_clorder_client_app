@@ -1,0 +1,62 @@
+<RelativeLayout android:id="@+id/categoryActionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_alignParentTop="true"
+    android:background="#Fb5b5b"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/mToolBarMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:paddingLeft="5dp"
+        android:src="@mipmap/menu_48" />
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:drawableLeft="@mipmap/rsz_marker"
+        android:text="San Francisco"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:paddingRight="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingRight="5dp"
+            android:src="@mipmap/rsz_1search"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/mToolBarCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="5dp"
+            android:visibility="gone"
+            android:src="@mipmap/rsz_cart_icon" />
+
+        <!--<include-->
+            <!--layout="@layout/layout_badge_cnt"/>-->
+
+    </LinearLayout>
+
+
+</RelativeLayout>

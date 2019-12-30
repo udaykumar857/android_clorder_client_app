@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/schedule_order_txt_bg_col">
+
+        <TextView
+            android:id="@+id/schedule_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/select_order_type"
+            android:textColor="@color/schedule_order_txt_col"
+            android:textSize="@dimen/schedule_order_txt_size"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/pickup_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_button_blue_bg"
+            android:text="@string/pickup_text"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/delivery_type_text_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/delivery_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_button_delivery_bg"
+            android:text="@string/delivery_text"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/delivery_type_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/schedule_later"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/select_order_cancel_bg"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="@string/select_order_cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/select_order_cancel_txt_col"
+        android:textStyle="bold" />
+
+</LinearLayout>

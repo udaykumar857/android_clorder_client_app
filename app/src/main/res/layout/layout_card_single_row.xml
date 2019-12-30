@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <ImageView
+        android:id="@+id/cartTypeImg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3" />
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:id="@+id/card_num_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:layout_weight="1.1"
+        android:text="**********8514"
+        android:textSize="@dimen/add_card_num_txt_size" />
+
+    <ImageView
+        android:id="@+id/editBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:padding="10dp"
+        android:src="@mipmap/edit_32"
+        android:text="@string/add_card_edit_txt"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/deleteBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:padding="10dp"
+        android:src="@mipmap/delete_32"
+        android:text="@string/add_card_delete_txt"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+
+</LinearLayout>

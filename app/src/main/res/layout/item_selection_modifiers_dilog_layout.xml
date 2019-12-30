@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/modifiers_txt_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/modifiers_txt_bg_col"
+        android:padding="10dp">
+
+
+        <com.clorderclientapp.utils.FontTextViewBoldClass
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/modifiers_txt"
+            android:textColor="@color/modifiers_txt_col"
+            android:textSize="@dimen/modifiers_txt_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/modifier_close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/close_button_white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/done_btn"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:id="@+id/modifiers_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+        <Button
+            android:id="@+id/done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:background="@color/done_txt_bg_col"
+            android:ems="5"
+            android:text="@string/done_txt"
+            android:textColor="@color/add_to_cart_txt_col"
+            android:textSize="@dimen/add_to_cart_txt_size"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

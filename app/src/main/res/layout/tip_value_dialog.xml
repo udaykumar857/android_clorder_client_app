@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.clorderclientapp.utils.FontTextViewBoldClass
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tip_txt_bg_col"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/tip_dialog_txt"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/tip_dialog_txt_size"
+        android:textStyle="bold" />
+
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/tip_value_msg"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tip_value_msg_size" />
+
+    <com.clorderclientapp.utils.FontEditTextRegularClass
+        android:id="@+id/tip_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/drawable_all_day_single_row_bg"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:maxLength="5"
+        android:minHeight="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.clorderclientapp.utils.FontButtonRegularClass
+            android:id="@+id/tip_cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2.5dp"
+            android:layout_marginRight="2.5dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_button_blue_bg"
+            android:text="@string/cancel_button_txt"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/cancel_button_txt_size" />
+
+        <com.clorderclientapp.utils.FontButtonRegularClass
+            android:id="@+id/tip_ok_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginStart="2.5dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_button_blue_bg"
+            android:text="@string/ok_button_txt"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/ok_button_txt_size" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

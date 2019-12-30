@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/cart_title"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <include layout="@layout/toolbar" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add_to_order_layout"
+        android:layout_below="@+id/cart_title"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+
+            <com.clorderclientapp.utils.FontTextViewBoldClass
+                android:id="@+id/item_details_txt"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/item_details_txt_selection_bg"
+                android:gravity="center"
+                android:text="@string/item_details_selection_txt"
+                android:textColor="@color/item_details_txt_selection_col"
+                android:textSize="@dimen/item_details_selection_txt_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/item_details_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/item_detail_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/item_details_title_txt_col"
+                        android:textSize="@dimen/item_details_title_txt_size" />
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/item_detail_desc"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E4E4E4" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="15dp">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:text="@string/quantity_selection_txt"
+                        android:textColor="@color/quantity_selection_txt_col"
+                        android:textSize="@dimen/quantity_selection_txt_size" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/drawable_reorder_image"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/minus_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:src="@mipmap/minus_24" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/qty_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:text="1"
+                            android:textColor="@color/quantity_num_txt_selection_col"
+                            android:textSize="@dimen/quantity_num_txt_selection_size" />
+
+                        <ImageView
+                            android:id="@+id/plus_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp"
+                            android:src="@mipmap/plus_24" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E4E4E4" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/item_price_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/item_price_selection_txt"
+                        android:textColor="@color/item_price_txt_selection_col"
+                        android:textSize="@dimen/item_price_txt_selection_size" />
+
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_toEndOf="@+id/item_price_txt"
+                        android:layout_toRightOf="@+id/item_price_txt"
+                        android:gravity="end"
+                        android:textColor="@color/item_price_col"
+                        android:textSize="@dimen/item_price_size" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <com.clorderclientapp.utils.FontTextViewBoldClass
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="5dp"
+                android:background="@color/required_choices_selection_txt_bg"
+                android:gravity="center_vertical"
+                android:paddingEnd="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/required_choices_selection_txt"
+                android:textColor="@color/required_choices_selection_txt_col"
+                android:textSize="@dimen/required_selection_txt_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/option_modifier_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1.8"
+                    android:orientation="vertical">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_txt"
+                        android:textColor="@color/choices_selection_txt_col"
+                        android:textSize="@dimen/choices_txt_selection_size"
+                        android:textStyle="bold" />
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/make_selection_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/make_your_selection_txt" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/modifiers_image"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="0.2"
+                    android:src="@mipmap/choose_selection_btn" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/options_modifier_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E4E4E4" />
+
+            <LinearLayout
+                android:id="@+id/modifiers_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/special_instructions_txt"
+                android:textColor="@color/special_instructions_txt_col"
+                android:textSize="@dimen/special_instructions_txt_size" />
+
+
+            <com.clorderclientapp.utils.FontEditTextRegularClass
+                android:id="@+id/special_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/drawable_black_border_bg"
+                android:gravity="top"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:minHeight="80dp" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Example: Make it less spicy. Do not add mushrooms!" />
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:background="#E4E4E4" />-->
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/add_to_order_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="#FB5b5b"
+        android:orientation="horizontal"
+        android:paddingEnd="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingStart="8dp"
+        android:weightSum="2">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/add_to_order_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:text="@string/add_to_orders_selection_txt"
+            android:textColor="@color/add_to_order_txt_selection_col"
+            android:textSize="@dimen/add_to_order_txt_selection_size"
+            android:textStyle="bold" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/add_order_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+            android:gravity="end"
+            android:text="$0"
+            android:textColor="@color/add_to_order_txt_selection_col"
+            android:textSize="@dimen/add_to_order_txt_selection_size"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+</RelativeLayout>

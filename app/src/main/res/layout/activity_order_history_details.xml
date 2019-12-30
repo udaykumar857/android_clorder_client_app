@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB5B5B"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/left_arrow" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/order_details_txt"
+            android:textColor="@color/order_details_txt_col"
+            android:textSize="@dimen/order_details_txt_size"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <com.clorderclientapp.utils.FontTextViewBoldClass
+        android:id="@+id/order_information_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_layout"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/order_information_txt"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/order_information_txt"
+        android:background="#C4C4C4" />
+
+    <LinearLayout
+        android:id="@+id/order_information_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/order_id_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/order_details_id_txt_col"
+            android:textSize="@dimen/order_details_id_txt_size"
+            android:textStyle="bold" />
+
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/placed_on_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/placed_on_details_txt_col"
+            android:textSize="@dimen/placed_on_details_txt_size"
+            android:textStyle="bold" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/order_date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/order_date_details_txt_col"
+            android:textSize="@dimen/order_date_details_txt_size"
+            android:textStyle="bold" />
+
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/order_type_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/order_type_details_txt_col"
+            android:textSize="@dimen/order_type_details_txt_size"
+            android:textStyle="bold" />
+
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/payment_mode_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/payment_mode_details_txt_col"
+            android:textSize="@dimen/payment_mode_details_txt_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/order_information_layout"
+        android:layout_marginBottom="20dp"
+        android:background="#C4C4C4" />
+
+
+    <LinearLayout
+        android:id="@+id/item_header"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/view2"
+        android:background="#2DBCE6"
+        android:weightSum="5">
+
+        <com.clorderclientapp.utils.FontTextViewBoldClass
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.75"
+            android:gravity="center"
+            android:text="@string/qty_details_txt"
+            android:textColor="@color/qty_details_txt_col"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ffffff" />
+
+
+        <com.clorderclientapp.utils.FontTextViewBoldClass
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="3.25"
+            android:paddingLeft="10dp"
+            android:text="@string/item_name_details_txt"
+            android:textColor="@color/item_name_details_txt_col"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ffffff" />
+
+        <com.clorderclientapp.utils.FontTextViewBoldClass
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/price_details_txt"
+            android:textColor="@color/price_detail_txt_col"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/orderTypeLayout"
+        android:layout_below="@+id/item_header"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/payment_information_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.clorderclientapp.utils.ExpandableHeightListview
+                android:id="@+id/order_details_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E4E4E4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="15dp">
+
+
+                <LinearLayout
+                    android:id="@+id/rate_detail"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/subtotal_details_txt" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/subtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/subtotal_details_txt_col"
+                            android:textDirection="rtl" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/discount_details_txt" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/discount_details_txt_col"
+                            android:textDirection="rtl" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/tax_details_txt" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/tax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/tax_details_txt_col"
+                            android:textDirection="rtl" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/delivery_fee_txt" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/delivery_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/delivery_fee_txt_col"
+                            android:textDirection="rtl" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/tip_details_txt" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/detail_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/tip_details_txt_col"
+                            android:textDirection="rtl" />
+                    </RelativeLayout>
+
+                    <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<TextView-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:text="@string/donation_txt" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/donation"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:textColor="@color/donation_txt_col"-->
+                    <!--android:textDirection="rtl" />-->
+                    <!--</RelativeLayout>-->
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/payment_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#00b3e8"
+                        android:textSize="18dp" />
+
+                    <RelativeLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:text="@string/total_details_txt"
+                            android:textSize="@dimen/total_details_txt_size" />
+
+                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                            android:id="@+id/order_total_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/total_details_txt_col"
+                            android:textDirection="rtl"
+                            android:textSize="@dimen/total_details_txt_size"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/special_notes_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/special_notes_txt"
+                        android:textColor="@color/special_notes_details_txt_col"
+                        android:textSize="@dimen/special_notes_details_txt_size" />
+
+                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                        android:id="@+id/special_notes_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="@dimen/special_notes_details_txt_size" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/orderNowBtn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_margin="20dp"-->
+    <!--android:background="@color/order_now_details_txt_bg_col"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:ems="6"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="@string/order_now_details_txt"-->
+    <!--android:textColor="@color/order_now_details_txt_col"-->
+    <!--android:textSize="@dimen/order_now_details_txt_size"-->
+    <!--android:textStyle="bold"-->
+    <!--android:visibility="gone" />-->
+
+    <LinearLayout
+        android:id="@+id/orderTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E4E4E4" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.clorderclientapp.utils.FontButtonRegularClass
+                android:id="@+id/pickup_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_button_blue_bg"
+                android:text="@string/order_history_pickup_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/order_history_delivery_type_text_size"
+                android:textStyle="bold" />
+
+            <com.clorderclientapp.utils.FontButtonRegularClass
+                android:id="@+id/delivery_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_button_delivery_bg"
+                android:text="@string/order_history_delivery_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/order_history_delivery_type_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

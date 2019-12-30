@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/account_update2_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#FB5B5B"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/account_update_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/left_arrow" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/account_update_txt"
+            android:textColor="@color/account_update_txt_col"
+            android:textSize="@dimen/account_update_title_txt_size"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:id="@+id/payments_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/account_update2_txt"
+        android:layout_gravity="center"
+        android:background="@color/payments_txt_bg"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/payment_add_card_txt"
+        android:textColor="@color/payments_txt_col"
+        android:textSize="@dimen/payments_text_size"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/payments_txt"
+        android:layout_margin="10dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/name_on_card_txt"
+                android:textColor="@color/add_card_sub_txt_col"
+                android:textSize="@dimen/add_card_sub_txt_size"
+                android:textStyle="bold" />
+
+            <com.clorderclientapp.utils.FontEditTextRegularClass
+                android:id="@+id/name_on_card_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_black_border_bg"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:imeOptions="actionNext"
+                android:inputType="text|textVisiblePassword"
+                android:padding="5dp" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/card_num_txt"
+                android:textColor="@color/add_card_sub_txt_col"
+                android:textSize="@dimen/add_card_sub_txt_size"
+                android:textStyle="bold" />
+
+            <com.clorderclientapp.utils.FontEditTextRegularClass
+                android:id="@+id/card_number_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="16"
+                android:padding="5dp" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/accountupdate_cards"
+                android:text="@string/card_num_suggestion_txt" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/expiry_date_txt"
+                android:textColor="@color/add_card_sub_txt_col"
+                android:textSize="@dimen/add_card_sub_txt_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Spinner
+                    android:id="@+id/month_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@mipmap/spinner_bg"
+                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp" />
+
+                <Spinner
+                    android:id="@+id/year_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@mipmap/spinner_bg"
+                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"/>
+
+            </LinearLayout>
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/cvv_txt"
+                android:textColor="@color/add_card_sub_txt_col"
+                android:textSize="@dimen/add_card_sub_txt_size"
+                android:textStyle="bold" />
+
+            <com.clorderclientapp.utils.FontEditTextRegularClass
+                android:id="@+id/cvv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="4"
+                android:minWidth="100dp"
+                android:padding="5dp" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/billing_zip_code_txt"
+                android:textColor="@color/add_card_sub_txt_col"
+                android:textSize="@dimen/add_card_sub_txt_size"
+                android:textStyle="bold" />
+
+            <com.clorderclientapp.utils.FontEditTextRegularClass
+                android:id="@+id/billing_zip_code_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="5"
+                android:minWidth="150dp"
+                android:padding="5dp" />
+
+            <com.clorderclientapp.utils.FontButtonRegularClass
+                android:id="@+id/add_card_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/drawable_button_blue_bg"
+                android:padding="5dp"
+                android:textAllCaps="false"
+                android:text="@string/add_card_txt"
+                android:textColor="@color/add_card_btn_txt"
+                android:textSize="@dimen/add_card_txt_size"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

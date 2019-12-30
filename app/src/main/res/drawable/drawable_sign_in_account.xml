@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/footer_button" />
+    <item>
+        <shape
+            android:padding="10dp"
+            android:shape="rectangle">
+        </shape>
+    </item>
+
+</layer-list>

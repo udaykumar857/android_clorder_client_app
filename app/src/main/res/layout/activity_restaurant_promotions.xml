@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/cart_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB5B5B"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/promotions_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/left_arrow" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/coupons_txt_title"
+            android:textColor="@color/coupons_txt_title_col"
+            android:textSize="@dimen/coupons_txt_title_size"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/coupon_bg_col"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="3">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/coupon_id_txt"-->
+    <!--android:textColor="@color/coupon_id_txt_col"-->
+    <!--android:textSize="@dimen/coupon_id_txt_size"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/coupon_desc_txt"-->
+    <!--android:textColor="@color/coupon_desc_txt_col"-->
+    <!--android:textSize="@dimen/coupon_desc_txt_size"-->
+    <!--android:textStyle="bold" />-->
+
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/coupon_expiry_date_txt"-->
+    <!--android:textColor="@color/coupon_expiry_date_txt_col"-->
+    <!--android:textSize="@dimen/coupon_expiry_date_txt_size"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--</LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/coupon_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.clorderclientapp.utils.FontTextViewBoldClass
+        android:id="@+id/no_coupons_txt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_coupons_available_txt"
+        android:textSize="@dimen/no_coupons_available_txt_size"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+
+</LinearLayout>

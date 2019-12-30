@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#Fb5b5b"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:src="@mipmap/rsz_3profile_2" />-->
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:id="@+id/editProfileTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:drawableTop="@mipmap/rsz_3profile_2"
+        android:gravity="center"
+        android:text="Edit Profile"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:id="@+id/userNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <com.clorderclientapp.utils.FontTextViewRegularClass
+        android:id="@+id/emailTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</LinearLayout>

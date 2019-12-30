@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:weightSum="5">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.75"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1x"
+            android:textColor="@color/item_qty_txt_col" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3.25"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <com.clorderclientapp.utils.FontTextViewBoldClass
+                android:id="@+id/itemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/quantity"
+                android:text="ITEM NAME"
+                android:textColor="@color/item_detail_txt_col"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/maketext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/makeitwith_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make with it:"
+                android:textColor="@color/make_it_with_txt_col"
+                android:visibility="gone" />
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/makeitwith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Make with it:"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/maketext"
+            android:orientation="horizontal">
+
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/note_text"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Note:"
+                android:textColor="@color/note_details_txt_col"
+                android:visibility="gone" />
+
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Note:"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12.45"
+            android:textColor="@color/item_price_detail_txt_col" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
