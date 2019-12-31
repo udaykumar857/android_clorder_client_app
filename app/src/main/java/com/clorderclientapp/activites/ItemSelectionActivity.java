@@ -4,16 +4,12 @@ package com.clorderclientapp.activites;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +30,6 @@ import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
 import com.clorderclientapp.modelClasses.ItemModifiersModel;
 import com.clorderclientapp.utils.Constants;
-import com.clorderclientapp.utils.Converter;
 import com.clorderclientapp.utils.Utils;
 import com.clorderclientapp.R;
 
@@ -48,7 +43,7 @@ import io.realm.RealmList;
 
 public class ItemSelectionActivity extends AppCompatActivity implements View.OnClickListener, ResponseHandler, UserActionInterface {
 
-    private ImageView specialBack, mToolBarBack;
+    private ImageView specialBack;
     private int itemPosition, itemQty = 1, minQty = 1;
     private float totalItemCost = 0.0f;
     private HttpRequest httpRequest;
@@ -67,10 +62,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
     private String itemPrice;
     private boolean itemsDetailsStatus = true;
     private String userSelectedModifierOptions = "";
-    private ImageView cartImg;
-    private Toolbar mToolbar;
-    private View actionBarCustomView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +72,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
         modifierSelection = getIntent().getIntExtra("modifierSelection", 0);
         initViews();
         listeners();
-        initActionBarViews();
-        setupToolBar();
         if (modifierSelection == 0) {
             itemModifiersList = new RealmList<>();
             itemQty = Constants.CategoryItemList.get(itemPosition).getItemMinQuantity();
@@ -90,8 +79,8 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
             qtyNum.setText(String.valueOf(itemQty));
             itemPrice = (Constants.CategoryItemList.get(itemPosition).getItemPrice());
             itemDetailTitleTxt.setText(Constants.CategoryItemList.get(itemPosition).getItemTitle());
-//            itemDetailDescTxt.setText(Constants.CategoryItemList.get(itemPosition).getItemDesc());
-//            itemName.append(Constants.CategoryItemList.get(itemPosition).getItemTitle());
+            itemDetailDescTxt.setText(Constants.CategoryItemList.get(itemPosition).getItemDesc());
+            itemName.append(Constants.CategoryItemList.get(itemPosition).getItemTitle());
             setData(itemPrice);
             if (Utils.isNetworkAvailable(this)) {
                 getModifiersForItemRequest();
@@ -104,13 +93,14 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
             itemModifiersList = cartItemModel.getItemModifiersList();
             itemQty = cartItemModel.getItemOrderQuantity();
             minQty = cartItemModel.getItemMinQuantity();
-//            itemName.append(cartItemModel.getItemTitle());
+            itemName.append(cartItemModel.getItemTitle());
             qtyNum.setText(String.valueOf(itemQty));
             itemPrice = cartItemModel.getItemPrice();
             if (cartItemModel.getSpecialNotes() != null) {
                 specialInstructions.setText(cartItemModel.getSpecialNotes());
             }
             itemDetailTitleTxt.setText(cartItemModel.getItemTitle());
+            itemDetailDescTxt.setText(cartItemModel.getItemDesc());
 
             if (itemModifiersList.size() > 0) {
                 optionModifierLayout.setVisibility(View.VISIBLE);
@@ -122,15 +112,13 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
             if (userSelectedModifierOptions.length() > 0) {
                 makeSelectionTxt.setText(userSelectedModifierOptions);
             }
-
             realm.close();
         }
     }
 
     private void initViews() {
-        cartImg = (ImageView) findViewById(R.id.cartImg);
         itemName = (TextView) findViewById(R.id.item_name);
-//        specialBack = (ImageView) findViewById(R.id.special_back);
+        specialBack = (ImageView) findViewById(R.id.special_back);
         modifiersImage = (ImageView) findViewById(R.id.modifiers_image);
         qtyNum = (TextView) findViewById(R.id.qty_num);
         minusImage = (ImageView) findViewById(R.id.minus_image);
@@ -142,81 +130,20 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
         itemPriceTxt = (TextView) findViewById(R.id.item_price);
         itemDetailsLayout = (LinearLayout) findViewById(R.id.item_details_layout);
         itemDetailTitleTxt = (TextView) findViewById(R.id.item_detail_title);
-//        itemDetailDescTxt = (TextView) findViewById(R.id.item_detail_desc);
+        itemDetailDescTxt = (TextView) findViewById(R.id.item_detail_desc);
         itemDetailsTxt = (TextView) findViewById(R.id.item_details_txt);
         optionModifierLayout = (LinearLayout) findViewById(R.id.option_modifier_layout);
         makeSelectionTxt = (TextView) findViewById(R.id.make_selection_txt);
-        mToolbar = (Toolbar) findViewById(R.id.toolBar);
-        actionBarCustomView = LayoutInflater.from(this).inflate(R.layout.layout_item_selection_toolbar, null, false);
-    }
-
-    private void initActionBarViews() {
-        mToolBarBack = (ImageView) actionBarCustomView.findViewById(R.id.special_back);
-        mToolBarBack.setOnClickListener(this);
     }
 
     private void listeners() {
-//        cartImg.setOnClickListener(this);
-//        specialBack.setOnClickListener(this);
+        specialBack.setOnClickListener(this);
         minusImage.setOnClickListener(this);
         modifiersImage.setOnClickListener(this);
         plusImage.setOnClickListener(this);
         addToOrderLayout.setOnClickListener(this);
         itemDetailsTxt.setOnClickListener(this);
 
-    }
-
-
-    private void setupToolBar() {
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            ActionBar.LayoutParams params =
-                    new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-            actionBar.setCustomView(actionBarCustomView, params);
-            actionBar.setDisplayShowCustomEnabled(true);
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.cart_action);
-        Realm realm = Realm.getDefaultInstance();
-        CartModel cartModel = realm.where(CartModel.class).findFirst();
-        int cartItemCnt = 0;
-        if (cartModel != null) {
-            if (cartModel.getCartItemList().size() > 0) {
-                cartItemCnt = cartModel.getCartItemList().size();
-            }
-        }
-        menuItem.setIcon(Converter.convertLayoutToImage(this, cartItemCnt, R.mipmap.ic_shopping_cart_white_24dp));
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.cart_action:
-                startActivity(new Intent(this, CartActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        invalidateOptionsMenu();
     }
 
     @Override
@@ -228,22 +155,18 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            case R.id.cartImg:
-                startActivity(new Intent(this, CartActivity.class));
-                break;
             case R.id.special_back:
                 onBackPressed();
                 break;
 
             case R.id.item_details_txt:
-//                if (itemsDetailsStatus) {
-//                    itemDetailsLayout.setVisibility(View.VISIBLE);
-//                    itemsDetailsStatus = false;
-//                } else {
-//                    itemDetailsLayout.setVisibility(View.GONE);
-//                    itemsDetailsStatus = true;
-//                }
+                if (itemsDetailsStatus) {
+                    itemDetailsLayout.setVisibility(View.VISIBLE);
+                    itemsDetailsStatus = false;
+                } else {
+                    itemDetailsLayout.setVisibility(View.GONE);
+                    itemsDetailsStatus = true;
+                }
 
                 break;
 
@@ -297,10 +220,9 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                 if (cartModel == null) {
                     cartModel = new CartModel();
                     cartModel.setCartId(1);
+                } else {
+                    cartModel.setCartId(cartModel.getCartId());
                 }
-//                else {
-//                    cartModel.setCartId(cartModel.getCartId());
-//                }
                 CartItemModel cartItemModel = null;
 
                 if (modifierSelection == 0) {
@@ -368,9 +290,8 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                 realm.copyToRealmOrUpdate(cartModel);
                 realm.commitTransaction();
                 getSubTotalValue();
-                onBackPressed();
-//                startActivity(new Intent(this, AllDayMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//                finish();
+                startActivity(new Intent(this, AllDayMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
                 break;
         }
     }
@@ -380,7 +301,7 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
             Utils.startLoadingScreen(this);
             JSONObject requestObject = new JSONObject();
             try {
-                requestObject.put("clientId", Utils.getClientId(this));
+                requestObject.put("clientId", Constants.clientId);
                 requestObject.put("ItemId", Constants.CategoryItemList.get(itemPosition).getItemId());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -408,18 +329,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private void calculateModifiers() {
-        modifierTotalAmount = 0.0f;
-        getUserModifierData();
-        getTotalModifiersAmount();
-//        modifierDialog.dismiss();
-        setUserOptionsModifiers();
-        if (userSelectedModifierOptions.length() > 0) {
-            makeSelectionTxt.setText(userSelectedModifierOptions);
-        }
-        setData(itemPrice);
-    }
-
     @Override
     public void responseHandler(Object response, int requestType) {
 
@@ -430,7 +339,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                 itemModifiersList.addAll((RealmList<ItemModifiersModel>) response);
                 if (itemModifiersList.size() > 0) {
                     optionModifierLayout.setVisibility(View.VISIBLE);
-//                    generateLayout();
                 }
                 break;
         }
@@ -443,8 +351,7 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
 //            DropDown = 3,
 //            CheckboxList = 4
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(getAssets(), "Lora-Bold.ttf");
+
         modifierDialog = new AlertDialog.Builder(this).create();
         View view = LayoutInflater.from(this).inflate(R.layout.item_selection_modifiers_dilog_layout, null, false);
         modifierCloseBtn = (ImageView) view.findViewById(R.id.modifier_close_btn);
@@ -462,13 +369,11 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                 lp.gravity = Gravity.CENTER;
                 optionsLayout.setLayoutParams(lp);
                 TextView title = new TextView(this);
-
                 title.setText(itemModifiersList.get(i).getModifierName());
                 title.setGravity(Gravity.CENTER);
                 title.setTextColor(ContextCompat.getColor(this, R.color.salad_options_txt_col));
-                title.setTypeface(fontBold);
+                title.setTypeface(null, Typeface.BOLD);
                 title.setTextSize(pixelsToSp(getResources().getDimension(R.dimen.price_custom_txt_size)));
-
                 LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
                 titleLp.gravity = Gravity.CENTER;
                 titleLp.weight = 0.6f;
@@ -487,7 +392,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                     case 1:
                         //            Checkbox = 1,
                         CheckBox checkBox = new CheckBox(this);
-                        checkBox.setTypeface(font);
                         for (int k = 0; k < optionsModifiersModelArrayList.size(); k++) {
                             if (itemModifiersList.get(i).isPriceField()) {
                                 if (!(optionsModifiersModelArrayList.get(k).getPrice().equals("null"))) {//if true both prices need to be added...
@@ -517,7 +421,6 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                         radioGroup.setOrientation(LinearLayout.VERTICAL);
                         for (int k = 0; k < optionsModifiersModelArrayList.size(); k++) {
                             RadioButton radioButton = new RadioButton(this);
-                            radioButton.setTypeface(font);
                             if (itemModifiersList.get(i).isPriceField()) {
                                 if (!(optionsModifiersModelArrayList.get(k).getPrice().equals("null"))) {//if true both prices need to be added...
                                     String costPrice = Utils.roundFloatString(Float.parseFloat(optionsModifiersModelArrayList.get(k).getPrice()) + Float.parseFloat((itemModifiersList.get(i).getPrice())), 2);
@@ -599,7 +502,7 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
 
                         for (int k = 0; k < optionsModifiersModelArrayList.size(); k++) {
                             CheckBox checkBox1 = new CheckBox(this);
-                            checkBox1.setTypeface(font);
+
                             if (itemModifiersList.get(i).isPriceField()) {//if true both(Modifier and options)prices need to be added...
                                 if (!(optionsModifiersModelArrayList.get(k).getPrice().equals("null"))) {
                                     String costPrice = Utils.roundFloatString(Float.parseFloat(optionsModifiersModelArrayList.get(k).getPrice()) + Float.parseFloat((itemModifiersList.get(i).getPrice())), 2);

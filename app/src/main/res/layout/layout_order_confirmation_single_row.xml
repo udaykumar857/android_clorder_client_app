@@ -6,7 +6,7 @@
     android:padding="10dp"
     android:weightSum="1">
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:id="@+id/item_qty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_weight="0.6"
         android:orientation="vertical">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,14 +29,14 @@
             android:textColor="@color/item_txt_col"
             android:textSize="@dimen/item_text_size" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/modifier_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:id="@+id/item_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -1,17 +1,20 @@
 package com.clorderclientapp.adapters;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.clorderclientapp.interfaces.HandleInterface;
 import com.clorderclientapp.modelClasses.RestaurantPromotionsModel;
 import com.clorderclientapp.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RestaurantPromotionsAdapter extends RecyclerView.Adapter<RestaurantPromotionsAdapter.RestaurantPromotionsViewHolder> {
 
@@ -34,11 +37,11 @@ public class RestaurantPromotionsAdapter extends RecyclerView.Adapter<Restaurant
 
     @Override
     public void onBindViewHolder(final RestaurantPromotionsViewHolder holder, int position) {
-        holder.couponIdTxt.setText(restaurantPromotionsList.get(position).getCouponTitle());
+        holder.couponIdBtn.setText(restaurantPromotionsList.get(position).getCouponTitle());
         holder.couponDescTxt.setText(restaurantPromotionsList.get(position).getCouponDesc());
-//        holder.couponExpiryDateTxt.setText(conversionDateFormat(restaurantPromotionsList.get(position).getDateExpire()));
+        holder.couponExpiryDateTxt.setText(conversionDateFormat(restaurantPromotionsList.get(position).getDateExpire()));
 
-        holder.applyTxt.setOnClickListener(new View.OnClickListener() {
+        holder.couponIdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleInterface.handleClick(null, holder.getAdapterPosition());
@@ -53,14 +56,14 @@ public class RestaurantPromotionsAdapter extends RecyclerView.Adapter<Restaurant
 
     class RestaurantPromotionsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView couponDescTxt, couponExpiryDateTxt,couponIdTxt, applyTxt;
+        TextView couponDescTxt, couponExpiryDateTxt;
+        Button couponIdBtn;
 
         public RestaurantPromotionsViewHolder(View itemView) {
             super(itemView);
-            couponIdTxt = (TextView) itemView.findViewById(R.id.coupon_id_btn);
+            couponIdBtn = (Button) itemView.findViewById(R.id.coupon_id_btn);
             couponDescTxt = (TextView) itemView.findViewById(R.id.coupon_desc_txt);
-//            couponExpiryDateTxt = (TextView) itemView.findViewById(R.id.coupon_expiry_date_txt);
-            applyTxt = (TextView) itemView.findViewById(R.id.apply_txt);
+            couponExpiryDateTxt = (TextView) itemView.findViewById(R.id.coupon_expiry_date_txt);
         }
     }
 

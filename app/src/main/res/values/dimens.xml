@@ -2,35 +2,22 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="drawer_layout_margin_top">0dp</dimen>
 
     //Home screen dimensions
     <dimen name="create_account_text_size">20sp</dimen>
 
-    //Location Screen dimensions
-    <dimen name="all_locations_txt_size">25sp</dimen>
-    <dimen name="restaurantName_txt_size">20sp</dimen>
-    <dimen name="no_locations_msg_txt_size">25sp</dimen>
-
     //Johnnies Pizza Screen dimensions
     <dimen name="delivery_type_text_size">20sp</dimen>
-    <dimen name="re_order_last_order_text_size">18sp</dimen>
-    <dimen name="login_txt_size">20sp</dimen>
-    <dimen name="register_txt_size">20sp</dimen>
-    <dimen name="powered_by_txt_size">18sp</dimen>
 
 
     <!--SignInOrderActivity-->
-    <dimen name="new_order_sign_in_txt_size">25sp</dimen>
+    <dimen name="new_order_sign_in_txt_size">20sp</dimen>
     <dimen name="email_sign_in_txt_size">20sp</dimen>
     <dimen name="password_sign_in_txt_size">20sp</dimen>
     <dimen name="sign_in_txt_size">20sp</dimen>
     <dimen name="guest_user_txt_size">20sp</dimen>
     <dimen name="or_txt_size">20sp</dimen>
-    <dimen name="create_user_sign_in_txt_size">18sp</dimen>
-    <dimen name="password_recovery_txt_size">25sp</dimen>
-    <dimen name="password_recovery_msg_size">20sp</dimen>
-    <dimen name="forgot_send_txt_size">20sp</dimen>
+    <dimen name="create_user_sign_in_txt_size">20sp</dimen>
 
 
     <!--OrderHistoryActivity-->
@@ -55,34 +42,22 @@
 
 
     <!--NewUserSignUpActivity-->
-    <dimen name="new_user_sign_up_txt_size">25sp</dimen>
+    <dimen name="new_user_sign_up_txt_size">20sp</dimen>
     <dimen name="new_user_name_txt_size">20sp</dimen>
     <dimen name="new_user_email_txt_size">20sp</dimen>
     <dimen name="new_user_password_txt_size">20sp</dimen>
-    <dimen name="create_act_txt_size">18sp</dimen>
-    <dimen name="terms_policy_txt_size">18sp</dimen>
     <dimen name="create_account_txt_size">20sp</dimen>
     <dimen name="new_user_cancel_txt_size">20sp</dimen>
-    <dimen name="existing_customer_sign_in_txt_size">18sp</dimen>
+    <dimen name="existing_customer_sign_in_txt_size">20sp</dimen>
 
 
     //All day menu screen dimensions
     <dimen name="menu_item_text_size">18sp</dimen>
-    <dimen name="all_day_menu_text_size">20sp</dimen>
+    <dimen name="all_day_menu_text_size">25sp</dimen>
     <dimen name="check_out_txt_size">20sp</dimen>
     <dimen name="special_notes_txt_size">20sp</dimen>
-    <dimen name="menu_home_txt_size">20sp</dimen>
 
-    <!--EditProfileActivity-->
-    <dimen name="edit_profile_txt_size">25sp</dimen>
-    <dimen name="save_txt_size">20sp</dimen>
 
-    <!--ChangePasswordActivity-->
-    <dimen name="change_password_title_txt_size">25sp</dimen>
-    <dimen name="change_save_txt_size">20sp</dimen>
-
-    //Menu Item Screen dimensions
-    <dimen name="no_items_msg_txt_size">25sp</dimen>
     //Menu item single row dimensions
     <dimen name="item_text_size">18sp</dimen>
     <dimen name="more_text_size">18sp</dimen>
@@ -93,17 +68,17 @@
     <dimen name="delivery_text_size">20sp</dimen>
     <dimen name="items_txt_size">20sp</dimen>
     <dimen name="special_txt_size">15sp</dimen>
-    <dimen name="subtotal_txt_size">20sp</dimen>
+    <dimen name="subtotal_txt_size">15sp</dimen>
     <dimen name="apply_coupon_txt_size">15sp</dimen>
-    <dimen name="tip_txt_value">20sp</dimen>
+    <dimen name="tip_txt_value">15sp</dimen>
     <dimen name="view_coupons_txt_size">15sp</dimen>
-    <dimen name="tex_txt_size">20sp</dimen>
-    <dimen name="delivery_charge_txt_size">20sp</dimen>
-    <dimen name="promotion_txt_size">20sp</dimen>
-    <dimen name="tip_txt_size">20sp</dimen>
+    <dimen name="tex_txt_size">15sp</dimen>
+    <dimen name="delivery_charge_txt_size">15sp</dimen>
+    <dimen name="promotion_txt_size">15sp</dimen>
+    <dimen name="tip_txt_size">15sp</dimen>
     <dimen name="tip_msg_txt_size">15sp</dimen>
-    <dimen name="total_txt_size">20sp</dimen>
-    <dimen name="total_size">20sp</dimen>
+    <dimen name="total_txt_size">18sp</dimen>
+    <dimen name="total_size">18sp</dimen>
     <dimen name="cart_check_out_txt_size">20sp</dimen>
     <dimen name="add_item_txt_size">18sp</dimen>
     <dimen name="cart_empty_msg_txt_size">20sp</dimen>
@@ -127,7 +102,6 @@
     <dimen name="coupon_id_txt_size">20sp</dimen>
     <dimen name="coupon_desc_txt_size">20sp</dimen>
     <dimen name="coupon_expiry_date_txt_size">20sp</dimen>
-    <dimen name="no_coupons_available_txt_size">25sp</dimen>
 
     //Item Selection Modifiers Dialog Sizes
     <dimen name="modifiers_txt_size">20sp</dimen>
@@ -168,7 +142,7 @@
     <dimen name="item_details_title_txt_size">18sp</dimen>
     <dimen name="choices_txt_selection_size">18sp</dimen>
     <dimen name="quantity_selection_txt_size">18sp</dimen>
-    <dimen name="quantity_num_txt_selection_size">28sp</dimen>
+    <dimen name="quantity_num_txt_selection_size">18sp</dimen>
     <dimen name="add_to_order_txt_selection_size">20sp</dimen>
     <dimen name="item_price_txt_selection_size">18sp</dimen>
     <dimen name="item_price_size">20sp</dimen>
@@ -208,9 +182,9 @@
     <dimen name="order_confirm_txt_size">25sp</dimen>
     <dimen name="order_no_txt_size">20sp</dimen>
     <dimen name="order_no_size">20sp</dimen>
-    <dimen name="placed_on_txt_size">20sp</dimen>
-    <dimen name="order_date_size">20sp</dimen>
-    <dimen name="ordered_time_size">20sp</dimen>
+    <dimen name="placed_on_txt_size">15sp</dimen>
+    <dimen name="order_date_size">15sp</dimen>
+    <dimen name="ordered_time_size">15sp</dimen>
     <dimen name="time_size">15sp</dimen>
     <dimen name="date_size">15sp</dimen>
     <dimen name="order_confirm_msg_size">0sp</dimen>

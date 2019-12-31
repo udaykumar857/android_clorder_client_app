@@ -5,7 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -90,7 +90,7 @@ public class OrderTimingsActivity extends AppCompatActivity implements ResponseH
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
 
         } catch (JSONException e) {
             e.printStackTrace();

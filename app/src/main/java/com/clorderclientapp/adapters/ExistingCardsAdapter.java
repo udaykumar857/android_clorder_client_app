@@ -54,8 +54,8 @@ public class ExistingCardsAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_card_single_row, null);
             viewHolder.cardTypeImg = (ImageView) convertView.findViewById(R.id.cartTypeImg);
-            viewHolder.editBtn = (ImageView) convertView.findViewById(R.id.editBtn);
-            viewHolder.deleteBtn = (ImageView) convertView.findViewById(R.id.deleteBtn);
+            viewHolder.editBtn = (TextView) convertView.findViewById(R.id.editBtn);
+            viewHolder.deleteBtn = (TextView) convertView.findViewById(R.id.deleteBtn);
             viewHolder.cardLayout = (LinearLayout) convertView.findViewById(R.id.card_layout);
             viewHolder.cardNumTxt = (TextView) convertView.findViewById(R.id.card_num_txt);
             convertView.setTag(viewHolder);
@@ -146,7 +146,7 @@ public class ExistingCardsAdapter extends BaseAdapter {
     public class ViewHolder {
         private TextView cardNumTxt;
         private ImageView cardTypeImg;
-        private ImageView editBtn, deleteBtn;
+        private TextView editBtn, deleteBtn;
         private LinearLayout cardLayout;
     }
 

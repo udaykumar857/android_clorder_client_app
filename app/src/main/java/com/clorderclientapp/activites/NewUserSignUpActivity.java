@@ -2,33 +2,30 @@ package com.clorderclientapp.activites;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.clorderclientapp.R;
 import com.clorderclientapp.httpClient.HttpRequest;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.Utils;
+import com.clorderclientapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NewUserSignUpActivity extends AppCompatActivity implements View.OnClickListener, ResponseHandler, UserActionInterface {
     private Button createAccountBtn, cancelBtn;
@@ -37,8 +34,6 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
     private HttpRequest httpRequest;
     private SharedPreferences sharedPreferences;
     private String email, password;
-    private ImageView backImg;
-    private TextView termsPolicyTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,79 +48,22 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
             passwordEditTxt.setText(getIntent().getStringExtra("password"));
         }
         sharedPreferences = getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
-        String existingTxt = "<font color=#000000>Existing Customer /</font> <font color=#Fb5b5b>Login Here</font>";
-        existingCustomerTxt.setText(Html.fromHtml(existingTxt));
+
     }
 
     private void initViews() {
-        backImg = (ImageView) findViewById(R.id.back_img);
         nameEditTxt = (EditText) findViewById(R.id.name_edit);
         emailEditTxt = (EditText) findViewById(R.id.email_edit);
         passwordEditTxt = (EditText) findViewById(R.id.password_edit);
         createAccountBtn = (Button) findViewById(R.id.create_account_btn);
         cancelBtn = (Button) findViewById(R.id.cancel_btn);
         existingCustomerTxt = (TextView) findViewById(R.id.existing_customer_txt);
-        termsPolicyTxt=findViewById(R.id.termsPolicyTxt);
     }
 
     private void listeners() {
-        backImg.setOnClickListener(this);
         createAccountBtn.setOnClickListener(this);
         existingCustomerTxt.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
-
-        SpannableString SpanString = new SpannableString(
-                "Terms of Use and Privacy Policy");
-//        Terms of Use and Privacy Policy
-
-        ClickableSpan teremsAndCondition = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-
-//                Utils.displayToast("Clickable span terms and codition",
-//                        SignUp.this);
-
-//                Intent mIntent = new Intent(SignUp.this, CommonWebView.class);
-//                mIntent.putExtra("isTermsAndCondition", true);
-//                startActivity(mIntent);
-
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.clorder.com/terms-conditions.html"));
-                startActivity(intent);
-
-            }
-        };
-
-        ClickableSpan privacy = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-
-//                Utils.displayToast("Clickable span terms and codition",
-//                        SignUp.this);
-//
-//                Intent mIntent = new Intent(SignUp.this, CommonWebView.class);
-//                mIntent.putExtra("isPrivacyPolicy", true);
-//                startActivity(mIntent);
-
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.clorder.com/privacy-policy.html"));
-                startActivity(intent);
-
-            }
-        };
-
-        SpanString.setSpan(teremsAndCondition, 0, 12, 0);
-        SpanString.setSpan(privacy, 17, 31, 0);
-        SpanString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colr_red)), 0, 12, 0);
-        SpanString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colr_red)), 17, 31, 0);
-        SpanString.setSpan(new UnderlineSpan(), 0, 12, 0);
-        SpanString.setSpan(new UnderlineSpan(), 17, 31, 0);
-
-        termsPolicyTxt.setMovementMethod(LinkMovementMethod.getInstance());
-        termsPolicyTxt.setText(SpanString, TextView.BufferType.SPANNABLE);
-        termsPolicyTxt.setSelected(true);
 
     }
 
@@ -157,7 +95,7 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
                             if (domainValid(domain)) {
 
                                 if (passwordEditTxt.getText().length() > 0) {
-                                    if (Utils.isValidPassword(passwordEditTxt.getText().toString())) {
+                                    if (isValidPassword(passwordEditTxt.getText().toString())) {
                                         if (Utils.isNetworkAvailable(this)) {
                                             createClorderUser();
                                         } else {
@@ -189,14 +127,9 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.existing_customer_txt:
-                Intent intent=new Intent(this, SignInUserActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.cancel_btn:
                 onBackPressed();
                 break;
-            case R.id.back_img:
+            case R.id.cancel_btn:
                 onBackPressed();
                 break;
         }
@@ -214,7 +147,7 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("Email", emailEditTxt.getText().toString());
             requestObject.put("Password", passwordEditTxt.getText().toString());
             requestObject.put("FullName", nameEditTxt.getText().toString());
@@ -271,7 +204,14 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    public static boolean isValidPassword(final String password) {
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,15}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
 
     @Override
     public void userAction(int actionType) {

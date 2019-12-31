@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,18 +92,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         sharedPreferences = getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
         try {
             restaurantTimingsList = Constants.clientSettingsObject.getJSONObject("ClientSettings").getJSONArray("BusinessHours");
-            int type = Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("DeliveryType");
-            if (type == 1 || type == 4) {
-                pickupBtn.setVisibility(View.VISIBLE);
-            } else {
-                pickupBtn.setVisibility(View.GONE);
-            }
-
-            if (type == 2 || type == 4) {
-                deliveryBtn.setVisibility(View.VISIBLE);
-            } else {
-                deliveryBtn.setVisibility(View.GONE);
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -116,6 +104,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         } else {
             Utils.showPositiveDialog(this, getString(R.string.alert_txt), getString(R.string.request_fail_msg), Constants.ActionClientOrderHistoryDetailsFailed);
         }
+
     }
 
     private void initViews() {
@@ -151,7 +140,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("orderId", orderId);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -281,7 +270,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("OrderID", orderId);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -340,7 +329,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                             e.printStackTrace();
                         }
                         Log.d("CreatedDate", "" + parsed);
-                        TimeZone tz = TimeZone.getTimeZone(Constants.timeZone);
+                        TimeZone tz = TimeZone.getTimeZone("GMT-8");
                         SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
                         destFormat.setTimeZone(tz);
 
@@ -360,7 +349,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 //                        String orderTime[] = responseObject.getString("OrderTime").split(" ");
 //                        placedOnTxt.setText(String.format("%s", "Placed On: " + createdDate[0] + " " + ((hoursCreate < 10) ? ("0" + hoursCreate) : hoursCreate) + ":" + timingCreate[1] + " " + periodCreate));
 
-                        placedOnTxt.setText(String.format("%s", "Placed On: " + placedDate.replace("am", "AM").replace("pm", "PM")));
+                        placedOnTxt.setText(String.format("%s", "Placed On: " + placedDate));
 
                         if (responseObject.getBoolean("IsASAPOrder")) {
                             orderDateDetailTxt.setText(String.format("%s", "Order Date: ASAP"));
@@ -377,7 +366,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                                 e.printStackTrace();
                             }
                             Log.d("Orderdate", "" + parsed1);
-                            TimeZone tz1 = TimeZone.getTimeZone(Constants.timeZone);
+                            TimeZone tz1 = TimeZone.getTimeZone("GMT-8");
                             SimpleDateFormat destFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
                             destFormat1.setTimeZone(tz1);
 
@@ -393,7 +382,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 //                            } else {
 //                                period = "AM";
 //                            }
-                            orderDateDetailTxt.setText(String.format("%s", "Order Date: " + orderDate.replace("am", "AM").replace("pm", "PM")));
+                            orderDateDetailTxt.setText(String.format("%s", "Order Date: " + orderDate));
                         }
                         orderTypeTxt.setText(String.format("%s", "Order Type: " + responseObject.getString("OrderType")));
                         paymentModeTxt.setText(String.format("%s", "Payment Mode: " + responseObject.getString("paymentType")));
@@ -616,7 +605,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                             if (responseObject.getString("TimeSlots").equals("Closed|")) {
                                 scheduleText.setVisibility(View.VISIBLE);
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                 if (nowDate.equals(responseObject.getString("date"))) {
                                     orderNowBtn.setVisibility(View.GONE);
@@ -633,12 +622,12 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                                 String timeDiv[] = responseObject.getString("TimeSlots").split("\\|");
                                 for (int i = 0; i < timeDiv.length; i++) {
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                     String todayDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                     if (timeDiv[i].contains("-")) {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                             String nowTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 
                                             if (timeInMinutes(timeDiv[i].split("-")[1]) > (timeInMinutes(nowTime))) {
@@ -651,7 +640,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                                     } else {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                             String nowTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 //                                            12:00 AM   2:00:00 AM
                                             String timeSplit[] = timeDiv[i].split(" ");
@@ -673,7 +662,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 
                                 }
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                 if (nowDate.equals(responseObject.getString("date"))) {
                                     orderNowBtn.setVisibility(View.VISIBLE);
@@ -984,7 +973,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                                            public void onClick(View v) {
 
                                                Calendar calendar = Calendar.getInstance();
-                                               calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                               calendar.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                                int day = calendar.get(Calendar.DAY_OF_WEEK);
                                                if (scheduleOrder(day - 1)) {
                                                    alertDialog.dismiss();
@@ -1007,7 +996,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 //                                               boolean isAllowedToOrder = false;
 //                                               if (!Constants.TimeSlotsTodayList.get(0).equals("Closed")) {
 //                                                   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-//                                                   simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//                                                   simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 //                                                   String nowTime = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
 //
 //                                                   if (Constants.TimeSlotsTodayList.size() > 1) {
@@ -1167,11 +1156,11 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             calendar.set(Integer.parseInt(selectedDate.split("-")[0]), (Integer.parseInt(selectedDate.split("-")[1]) - 1), Integer.parseInt(selectedDate.split("-")[2]));
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM d", Locale.getDefault());
-//            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             String userSelectedDate = simpleDateFormat.format(new Date(calendar.getTimeInMillis()));
 
             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 
             if (selectedDate.equals(simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis()))) {
                 orderDateTxt.setText(getString(R.string.today_txt));
@@ -1182,7 +1171,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         } else {
             orderDateTxt.setText(getString(R.string.today_txt));
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             fetchRestTimeSlotsRequest(simpleDateFormat.format(Calendar.getInstance().getTimeInMillis()));
         }
 
@@ -1193,13 +1182,13 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 
         if (selectedDate == null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             selectedDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
         }
 //        Calendar cal1 = Calendar.getInstance();
-//        cal1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//        cal1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 //        cal1.set(Calendar.YEAR, Integer.parseInt(simpleDateFormat.format(new Date()).split("-")[0]));
 //        cal1.set(Calendar.MONTH, (Integer.parseInt(simpleDateFormat.format(new Date()).split("-")[1]) - 1));
 //        cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(simpleDateFormat.format(new Date()).split("-")[2]));
@@ -1222,7 +1211,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                 String date = year + "-" + (((monthOfYear + 1) < 10) ? ("0" + (monthOfYear + 1)) : (monthOfYear + 1)) + "-" + ((dayOfMonth < 10) ? ("0" + dayOfMonth) : dayOfMonth);
                 selectedDate = date;
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM d", Locale.getDefault());
-//                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String userSelectedDate = simpleDateFormat.format(calendar.getTimeInMillis());
                 Log.d("Formated Date", "" + userSelectedDate);
                 int day = 0;
@@ -1250,7 +1239,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
                         break;
                 }
                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String todayDate = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 
                 if (date.equals(todayDate)) {
@@ -1266,7 +1255,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 //        Log.d("CurrentCal1Millis1", "" + cal1.getTimeInMillis());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd Z", Locale.getDefault());
         Calendar mCalendar = Calendar.getInstance();
-        format.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        format.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         int dayOfMonth = Integer.parseInt((format.format(mCalendar.getTimeInMillis())).split(" ")[0].split("-")[2]);
         Log.d("dayOfMonth", "" + dayOfMonth);
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -1281,9 +1270,9 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         Log.d("Maximum", "\t" + format.format(mCalendar.getTimeInMillis()));
 //        Log.d("CurrentMillis", "" + (System.currentTimeMillis() - 10000));
 //        simpleDateFormat1.forma
-//        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 //        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//        calendar.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 //        calendar.set(Calendar.YEAR, Integer.parseInt(simpleDateFormat1.format(new Date()).split("-")[0]));
 //        calendar.set(Calendar.MONTH, (Integer.parseInt(simpleDateFormat1.format(new Date()).split("-")[1]) - 1));
 //        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(simpleDateFormat1.format(new Date()).split("-")[2]));
@@ -1354,7 +1343,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 //            }
 
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         String nowTime[] = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis()).split(":");
         int nowMinutes = Integer.parseInt(nowTime[0]) * 60 + Integer.parseInt(nowTime[1]);
         boolean isTimingPres = false;
@@ -1605,7 +1594,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("Date", selectedDate);
             requestObject.put("isPickup", !isDeliveryOrder);
         } catch (JSONException e) {
@@ -1622,15 +1611,15 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         int minutes = 0;
 
         String timeSpilt[] = time.split(" ");
-        if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) + 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) - 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
         }
 

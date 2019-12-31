@@ -13,7 +13,8 @@
             android:id="@+id/order_confirm_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#Fb5b5b"
+            android:layout_alignParentTop="true"
+            android:background="@mipmap/item_list_page"
             android:padding="10dp">
 
             <ImageView
@@ -25,7 +26,7 @@
                 android:layout_centerInParent="true"
                 android:src="@mipmap/left_arrow" />
 
-            <com.clorderclientapp.utils.FontTextViewBoldClass
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -40,47 +41,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:src="@mipmap/logo_oc" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:src="@mipmap/tick_inside_circle" />
-
-            <com.clorderclientapp.utils.FontTextViewRegularClass
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/order_received_txt"
-                android:textColor="@android:color/black" />
-            <!--android:src="@mipmap/logo_oc"-->
+                android:src="@mipmap/johnnies_logo" />
+            <!--android:src="@mipmap/johnnies_logo"-->
             <!--android:src="@mipmap/rsz_1waba_logo"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="right"
+                android:gravity="right"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="right">
 
-                    <com.clorderclientapp.utils.FontTextViewBoldClass
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/order_no_txt"
@@ -88,7 +71,7 @@
                         android:textSize="@dimen/order_no_txt_size"
                         android:textStyle="bold" />
 
-                    <com.clorderclientapp.utils.FontTextViewBoldClass
+                    <TextView
                         android:id="@+id/order_num_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -101,10 +84,9 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_height="wrap_content">
 
-                    <com.clorderclientapp.utils.FontTextViewBoldClass
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/placed_on_txt"
@@ -112,7 +94,7 @@
                         android:textSize="@dimen/placed_on_txt_size"
                         android:textStyle="bold" />
 
-                    <com.clorderclientapp.utils.FontTextViewBoldClass
+                    <TextView
                         android:id="@+id/order_placed_date_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -121,14 +103,13 @@
                         android:textSize="@dimen/order_date_size"
                         android:textStyle="bold" />
 
-                    <com.clorderclientapp.utils.FontTextViewBoldClass
+                    <TextView
                         android:id="@+id/order_placed_time_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" 12:08:58 AM"
                         android:textColor="@color/ordered_time_col"
-                        android:textSize="@dimen/ordered_time_size"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/ordered_time_size" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -136,7 +117,7 @@
         </LinearLayout>
 
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/order_confirm_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -162,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.clorderclientapp.utils.FontTextViewBoldClass
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -172,7 +153,7 @@
                     android:textSize="@dimen/order_time_txt_size"
                     android:textStyle="bold" />
 
-                <com.clorderclientapp.utils.FontTextViewBoldClass
+                <TextView
                     android:id="@+id/order_type_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,7 +165,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/order_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,7 +199,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/customer_name_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -226,7 +207,7 @@
                     android:textColor="@color/customer_name_col"
                     android:textSize="@dimen/customer_name_size" />
 
-                <com.clorderclientapp.utils.FontTextViewBoldClass
+                <TextView
                     android:id="@+id/customer_phone_num_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,7 +232,7 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <com.clorderclientapp.utils.FontTextViewBoldClass
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/instructions_txt"
@@ -259,7 +240,7 @@
                     android:textSize="@dimen/instructions_txt_size"
                     android:textStyle="bold" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/special_instructions_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,16 +253,6 @@
 
         </LinearLayout>
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#C0C0C0"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Food Items"
-            android:textColor="#Fb5b5b"
-            android:textSize="20sp" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -290,7 +261,7 @@
             android:padding="10dp"
             android:weightSum="1">
 
-            <com.clorderclientapp.utils.FontTextViewBoldClass
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
@@ -299,7 +270,7 @@
                 android:textSize="@dimen/qty_txt_size"
                 android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontTextViewBoldClass
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
@@ -308,7 +279,7 @@
                 android:textSize="@dimen/item_text_size"
                 android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontTextViewBoldClass
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
@@ -331,7 +302,7 @@
             android:layout_marginTop="2dp"
             android:background="@color/view_bg" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -358,7 +329,7 @@
                 android:layout_height="wrap_content"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewBoldClass
+                <TextView
                     android:id="@+id/payment_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -368,7 +339,7 @@
                     android:textSize="@dimen/cash_payment_txt_size"
                     android:textStyle="bold" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -376,7 +347,7 @@
                     android:textColor="@color/subtotal_txt_col"
                     android:textSize="@dimen/confirm_order_subtotal_txt_size" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/subtotal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -393,12 +364,12 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -406,7 +377,7 @@
                     android:textColor="@color/tax_txt_col"
                     android:textSize="@dimen/tax_txt_size" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/tax"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -423,12 +394,12 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -436,7 +407,7 @@
                     android:textColor="@color/discount_txt_col"
                     android:textSize="@dimen/discount_txt_size" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/discount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -453,13 +424,13 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -467,7 +438,7 @@
                     android:textColor="@color/delivery_txt_col"
                     android:textSize="@dimen/delivery_text_size" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/delivery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -484,12 +455,12 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -497,7 +468,7 @@
                     android:textColor="@color/order_confirm_tip_txt_col"
                     android:textSize="@dimen/order_confirm_tip_txt_size" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/tip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -515,12 +486,12 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -529,7 +500,7 @@
                     android:textSize="@dimen/order_confirm_total_txt_size"
                     android:textStyle="bold" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -548,20 +519,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/note_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/note_txt" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/note_msg_txt" />
         </LinearLayout>
 
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -583,7 +554,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:src="@mipmap/open_map" />
+            android:src="@mipmap/openmap_bg" />
 
 
         <ImageView
@@ -592,7 +563,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:src="@mipmap/button_done" />
+            android:src="@mipmap/done_bg" />
 
     </LinearLayout>
 </ScrollView>

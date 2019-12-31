@@ -1,58 +1,42 @@
 <resources>
     <!--<string name="app_name">WabaGrill</string>-->
-    <string name="app_name">Banana Leaf</string>
+    <string name="app_name">OrderFoodOnline</string>
 
     //Home screen strings
-    <string name="create_account_text">LOGIN</string>
-    <string name="sign_out_txt">LOGOUT</string>
-
-    //Location Screen strings
-    <string name="all_locations">All Locations</string>
-    <string name="no_locations_msg_txt">No Locations Found.</string>
+    <string name="create_account_text">Sign In or Create an Account</string>
+    <string name="sign_out_txt">Sign out</string>
 
 
     //Johnnies screen strings
-    <string name="re_order_last_order_text">REORDER YOUR LAST ORDER</string>
     <string name="pickup_text">PICKUP</string>
     <string name="delivery_text">DELIVERY</string>
-    <string name="login_txt">LOGIN</string>
-    <string name="register_txt">REGISTER</string>
-    <string name="powered_by_txt">Powered by:</string>
-    <string name="new_user_register_txt">New User / Register</string>
 
 
     <!--SignInOrderActivity-->
-    <string name="customer_log_in_txt">Customer Login</string>
+    <string name="customer_log_in_txt">CUSTOMER LOG IN</string>
     <string name="email_sign_in_txt">Email</string>
     <string name="password_sign_in_txt">Password</string>
-    <string name="forgot_password_txt">Forgot Password ?</string>
-    <string name="sign_in_txt">LOGIN</string>
-    <string name="guest_log_in_txt">GUEST LOGIN</string>
-    <string name="login_via_txt">-- Login via --</string>_)
+    <string name="sign_in_txt">Sign-In</string>
+    <string name="guest_log_in_txt">Guest Login</string>
+    <string name="or_txt">OR</string>
     <string name="email_empty_sign_in_msg">Email address can\'t be empty</string>
     <string name="email_valid_sign_in_msg">Please enter valid email address</string>
     <string name="password_empty_sign_in_msg">Password can\'t be empty</string>
     <string name="user_credentials_wrong_msg">Invalid login credentials !</string>
     <string name="register_user_sign_in_txt">Register User</string>
     <string name="google_sign_out_btn_txt">Sign out From Google</string>
-    <string name="facebook_app_id">197169944444288</string>
+    <string name="facebook_app_id">1743014702690004</string>
     <!--<string name="fb_login_protocol_scheme">fb1743014702690004</string>-->
-    <string name="password_recovery_txt">Password Recovery</string>
-    <string name="password_recovery_msg">Please enter the email address you used to create your Clorder account.\n We will send you a temporary password.</string>
-    <string name="forgot_send_txt">Send</string>
-    <string name="site_key">6Lfl2l8UAAAAAHAK6pZyZkMa3yHLGA-kCbI_VlJY</string>
 
 
     <!--NewUserSignUpActivity-->
-    <string name="new_user_sign_up_txt">Registration</string>
+    <string name="new_user_sign_up_txt">NEW USER SIGN UP</string>
     <string name="new_user_name_txt">Name</string>
-    <string name="new_user_email_txt">Email Id</string>
+    <string name="new_user_email_txt">Email</string>
     <string name="new_user_password_txt">Password</string>
-    <string name="create_act_txt">By creating an account you agree to our</string>
-    <string name="terms_policy_txt">Terms of Use and Privacy Policy</string>
     <string name="create_account_txt">Create Account</string>
     <string name="new_user_cancel_txt">Cancel</string>
-    <string name="existing_customer_sign_in_txt">Existing Customer / Login Here</string>
+    <string name="existing_customer_sign_in_txt">Existing Customer-Sign In Here</string>
     <string name="email_empty_msg">Email address can\'t be empty</string>
     <string name="email_valid_msg">Please enter valid email Address</string>
     <string name="password_empty_msg">Password can\'t be empty</string>
@@ -60,7 +44,7 @@
     <string name="password_validation_msg">Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.</string>
 
     <!--OrderHistoryActivity-->
-    <string name="order_history_txt">My Orders</string>
+    <string name="order_history_txt">ORDER HISTORY</string>
     <string name="no_past_orders_msg_txt">You have no past orders so far. \n Your orders when placed after signing in will be shown here for quick ordering in future.</string>
     <string name="order_id_history_txt">Order Id:</string>
     <string name="total_history_txt">TOTAL:</string>
@@ -68,7 +52,7 @@
 
     <!--OrderHistoryDetailsActivity-->
     <string name="order_information_txt">Order Information</string>
-    <string name="order_details_txt">Order Details</string>
+    <string name="order_details_txt">ORDER DETAILS</string>
     <string name="special_notes_txt">SPECIAL NOTES:</string>
     <string name="qty_details_txt">QTY</string>
     <string name="item_name_details_txt">ITEM</string>
@@ -82,7 +66,7 @@
     <string name="total_details_txt">TOTAL</string>
     <string name="order_now_details_txt">Order Now</string>
     <string name="order_history_pickup_text">PICKUP</string>
-    <string name="order_history_delivery_text">Delivery</string>
+    <string name="order_history_delivery_text">DELIVERY</string>
 
     <string name="select_order_type">Select Order Type</string>
     <string name="select_order_cancel">Cancel</string>
@@ -91,7 +75,6 @@
     //All day menu screen strings
     <string name="all_day_menu_text">ALL DAY MENU</string>
     <string name="check_out_text">CHECKOUT</string>
-    <string name="view_cart_txt">VIEW CART</string>
     <string-array name="menu_list">
         <item>Appetizers</item>
         <item>Beverages</item>
@@ -103,37 +86,10 @@
         <item>Family Take Out Meal</item>
         <item>Fresh Juices</item>
     </string-array>
-    <string name="home_txt">Home</string>
-    <string name="my_orders_txt">My Orders</string>
-    <string name="change_password_txt">Change Password</string>
-    <string name="logout_txt">Logout</string>
-    <string name="logout_msg">Are you sure want to Logout.</string>
-    <string name="action_Cart">Cart</string>
 
-
-    <!--EditProfileActivity-->
-    <string name="edit_profile_txt">Edit Profile</string>
-    <string name="save_txt">Save</string>
-
-    <!--ChangePasswordActivity-->
-    <string name="change_password_title_txt">Change Password</string>
-    <string name="old_password_txt">Old Password</string>
-    <string name="new_password_txt">New Password</string>
-    <string name="confirm_password_txt">Confirm Password</string>
-    <string name="change_save_txt">Save</string>
-    <string name="old_password_empty_msg">Old password can\'t be empty</string>
-    <string name="new_password_empty_msg">New password can\'t be empty</string>
-    <string name="confirm_password_empty_msg">Confirm password can\'t be empty</string>
-    <string name="old_password_validation_msg">Please enter valid old password.</string>
-    <string name="new_password_validation_msg">Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.</string>
-    <string name="new_confirm_password_validation_msg">New password and confirm password is not same.</string>
-    <string name="change_password_success">Your password has been changed successfully, Please login again.</string>
-
-    //Menu Item Screen
-    <string name="no_items_msg_txt">No Items Found</string>
 
     //Cart Screen Strings
-    <string name="your_food_order_txt">Your Food Order</string>
+    <string name="your_food_order_txt">YOUR FOOD ORDER</string>
     <string name="items_text">ITEMS</string>
     <string name="qty_text">QTY</string>
     <string name="price_text">PRICE</string>
@@ -180,12 +136,10 @@
     <string name="ok_button_txt">OK</string>
 
     <!--RestaurantPromotionsActivity-->
-    <string name="coupons_txt_title">Apply Promo Code</string>
+    <string name="coupons_txt_title">COUPONS</string>
     <string name="coupon_id_txt">Coupon Id</string>
     <string name="coupon_desc_txt">Coupon Description</string>
     <string name="coupon_expiry_date_txt">Expiry Date</string>
-    <string name="apply_txt">APPLY</string>
-    <string name="no_coupons_available_txt">No Coupons Available</string>
 
     <!--MenuItemActivity-->
     <string name="more_text">MORE&#046;&#046;&#046;&#046;</string>
@@ -202,22 +156,22 @@
 
     <!--ItemSelectionActivity-->
     <string name="special_make_pizza_txt">MAKE YOUR OWN-</string>
-    <string name="item_details_selection_txt">Item Details</string>
-    <string name="required_choices_selection_txt">Required Choices</string>
+    <string name="item_details_selection_txt">ITEM DETAILS</string>
+    <string name="required_choices_selection_txt">REQUIRED CHOICES</string>
     <string name="make_your_selection">Make your selection</string>
-    <string name="item_price_selection_txt">Item Price</string>
+    <string name="item_price_selection_txt">ITEM PRICE</string>
     <string name="options_txt">Options:</string>
     <string name="choose_txt">Choose</string>
     <string name="make_your_selection_txt">Make your selection</string>
-    <string name="quantity_selection_txt">Quantity</string>
-    <string name="special_instructions_txt">Special Instructions</string>
-    <string name="add_to_orders_selection_txt">ADD TO CART</string>
+    <string name="quantity_selection_txt">QUANTITY</string>
+    <string name="special_instructions_txt">SPECIAL INSTRUCTIONS</string>
+    <string name="add_to_orders_selection_txt">ADD TO ORDER</string>
     <string name="no_modifiers_add_msg">No modifiers present for this item</string>
 
 
     <!--DeliveryAddressActivity-->
-    <string name="delivery_address_txt">Delivery Address</string>
-    <string name="customer_address_txt">Customer Address</string>
+    <string name="delivery_address_txt">DELIVERY ADDRESS</string>
+    <string name="customer_address_txt">CUSTOMER ADDRESS</string>
     <string name="address_title_txt">ADDRESS</string>
     <string name="name_txt">Name*</string>
     <string name="address_txt">Address*</string>
@@ -242,36 +196,27 @@
     <string name="email_empty_txt">Please enter your email</string>
     <string name="email_valid_for_order_txt">Please enter valid email address</string>
 
-
     <!--AccountUpdateActivity-->
-    <string name="account_update_txt">Account Update</string>
-    <string name="payment_info_txt">Payment Info</string>
+    <string name="account_update_txt">ACCOUNT UPDATE</string>
+    <string name="payment_info_txt">PAYMENT INFO</string>
     <string name="your_existing_cards_txt">YOUR EXISTING CARD(S)</string>
-    <string name="add_new_card">Add New Card</string>
+    <string name="add_new_card">ADD A NEW CREDIT CARD</string>
     <string name="payment_information_txt">Your payment information will be strictly used for easy checkouts.It is stored in compliance with industry&#8242;s best security practices.</string>
     <string name="add_a_card_txt">ADD A CARD</string>
     <string name="card_update_msg">Please sign out and sign in again if any cards have been added from any other device.</string>
-    <string name="account_update_skip">Skip</string>
+    <string name="account_update_skip">SKIP</string>
     <string name="account_update_pay_cash">Pay Cash</string>
     <string name="payment_add_card_txt">PAYMENT-ADD A CARD</string>
-    <string name="payment_update_card_txt">PAYMENT-UPDATE CARD</string>
     <string name="name_on_card_txt">Name on Card*</string>
     <string name="card_num_txt">Card Number*</string>
     <string name="card_num_suggestion_txt">enter number without space</string>
     <string name="expiry_date_txt">Expiry Date*</string>
     <string name="cvv_txt">CVV*</string>
     <string name="billing_zip_code_txt">Billing ZIP Code*</string>
-    <string name="add_card_txt">Add Card</string>
+    <string name="add_card_txt">ADD CARD</string>
     <string name="add_card_edit_txt">Edit</string>
     <string name="add_card_delete_txt">Delete</string>
     <string name="pay_with_pay_pal_txt">Pay with PayPal</string>
-    <string name="pay_with_google_pay_txt">Google Pay</string>
-    <string name="pay_with_card_txt">Pay With Card</string>
-    <string name="googlepay_status_unavailable" translatable="false">Unfortunately, Google Pay is not available on this phone.</string>
-    <string name="update_txt">Update</string>
-    <!--<string name="places_apiKey">AIzaSyDm2Fx7Z9HbfHqNTyqqHjMUmE5tmiOYfj0</string>-->
-    <string name="places_apiKey">AIzaSyDiPrdHbb4WEjBy3OCIarioZe8rfGW6NEk</string>
-
 
     <string name="name_on_card_empty_msg">Please enter the name present on the card</string>
     <string name="card_num_empty_msg">Please enter the card number</string>
@@ -298,20 +243,20 @@
 
     </string-array>
 
-    <!--<string-array name="expiry_year">-->
-    <!--<item>2016</item>-->
-    <!--<item>2017</item>-->
-    <!--<item>2018</item>-->
-    <!--<item>2019</item>-->
-    <!--<item>2020</item>-->
-    <!--<item>2021</item>-->
-    <!--<item>2022</item>-->
-    <!--<item>2023</item>-->
-    <!--<item>2024</item>-->
-    <!--<item>2025</item>-->
-    <!--<item>2026</item>-->
-    <!--<item>2027</item>-->
-    <!--</string-array>-->
+    <string-array name="expiry_year">
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+    </string-array>
 
     //Error dialog Strings
     <string name="ok_txt">OK</string>
@@ -335,8 +280,8 @@
     <string name="done_txt">DONE</string>
 
     <!--OrderConfirmationActivity-->
-    <string name="order_confirm_txt">Order Confirmation</string>
-    <string name="order_no_txt">Order No: </string>
+    <string name="order_confirm_txt">ORDER CONFIRMATION</string>
+    <string name="order_no_txt">ORDER No: </string>
     <string name="placed_on_txt">Placed On: </string>
     <string name="order_confirm_msg">For price adjustments or any other issues, please contact</string>
     <string name="order_confirm_payment_msg">Credit Card/PayPal Transaction are shown as \'Clorder\' in your statements.</string>
@@ -357,7 +302,6 @@
     <string name="note_txt">Note:</string>
     <string name="note_msg_txt">Order changes and cancellations are accepted only if request is made within a reasonable time as accepted by the business.</string>
     <string name="restaurant_location_txt">Restaurant Location</string>
-    <string name="order_received_txt">Thank you.\nYour order has been received.</string>
 
 
     <string name="qty_txt">Qty</string>
@@ -368,7 +312,6 @@
     //Dialog Utils Strings
     <string name="unable_to_get_menus_msg">Unable to get data.</string>
     <string name="guest_user_re_order_msg">No order history for guest users.</string>
-    <string name="unable_process_req">Unable to process the request.</string>
     <string name="request_fail_msg">Unable to process your request. Please check your internet connection</string>
     <string name="order_successfully_place_msg">Thank you, your order has been submitted and your order id is:</string>
     <string name="order_failed_msg">Your order failed.</string>
@@ -396,7 +339,6 @@
     <string name="coupon_not_valid">This coupon is not valid for</string>
     <string name="cash_amount_max_limit">Maximum amount for cash orders is</string>
     <string name="menu_item_not_available">This menu is not available for the selected time.</string>
-    <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
 
     <!--<string name="server_client_id">578434548677-fuoqgdsjfhi8vfviu70jb4nvp44tmffl.apps.googleusercontent.com</string>-->
 </resources>

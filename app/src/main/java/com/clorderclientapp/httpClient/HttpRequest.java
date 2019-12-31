@@ -35,37 +35,6 @@ public class HttpRequest implements RequestInterface {
 
 
     @Override
-    public void fetchClientChildLocations(Activity mActivity, JSONObject requestObject, final int requestNumber) {
-        mCallBack = (ResponseHandler) mActivity;
-        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.FETCH_CLIENT_CHILD_LOCATIONS, requestObject, new VolleyRequest.onSuccess() {
-            @Override
-            public void onResponse(int statusCode, Object response) {
-                try {
-                    JSONObject responseData = new JSONObject(response.toString());
-                    Log.d("fetchClientChildLoca", "" + responseData.toString());
-                    if (responseData.has("status")) {
-                        mCallBack.responseHandler(responseData, requestNumber);
-                    } else {
-                        mCallBack.responseHandler(null, requestNumber);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new VolleyRequest.onFailure() {
-            @Override
-            public void onError(int statusCode, Object errorResponse) {
-                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
-                mCallBack.responseHandler(null, requestNumber);
-            }
-        });
-        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
-    }
-
-    @Override
     public void fetchMenuWithCategories(Activity mActivity, JSONObject requestObject, final int requestNumber) {
         mCallBack = (ResponseHandler) mActivity;
         VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.FETCH_MENU_WITH_CATEGORIES, requestObject, new VolleyRequest.onSuccess() {
@@ -96,15 +65,6 @@ public class HttpRequest implements RequestInterface {
                                     categoryModel.setCategoryId(clientCategoriesArray.getJSONObject(j).getInt("CategoryId"));
                                     categoryModel.setCategoryTitle(clientCategoriesArray.getJSONObject(j).getString("CategoryTitle"));
                                     categoryModel.setCategoryMode(clientCategoriesArray.getJSONObject(j).getInt("Mode"));
-                                    if (clientCategoriesArray.getJSONObject(j).has("CategoryImageURL")) {
-                                        categoryModel.setImageUrl(clientCategoriesArray.getJSONObject(j).getString("CategoryImageURL"));
-                                    } else {
-                                        categoryModel.setImageUrl("https://s3.amazonaws.com/Clorder/Client/chickenplate-wb.png");
-                                    }
-                                    categoryModel.setExpanded(false);
-                                    if (clientCategoriesArray.getJSONObject(j).has("Items")) {
-                                        categoryModel.setItemsCnt(clientCategoriesArray.getJSONObject(j).getJSONArray("Items").length());
-                                    }
                                     categoryModelArrayList.add(categoryModel);
                                 }
                                 menuModel.setCategoryArrayList(categoryModelArrayList);
@@ -197,66 +157,6 @@ public class HttpRequest implements RequestInterface {
     }
 
     @Override
-    public void changeUserPassword(Activity mActivity, JSONObject requestObject, final int requestNumber) {
-        mCallBack = (ResponseHandler) mActivity;
-        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.CHANGE_USER_PASSWORD, requestObject,
-                new VolleyRequest.onSuccess() {
-                    @Override
-                    public void onResponse(int statusCode, Object response) {
-                        try {
-                            JSONObject responseData = new JSONObject(response.toString());
-                            Log.d("changeUserPassword", "" + responseData.toString());
-                            if (responseData.has("status")) {
-                                mCallBack.responseHandler(responseData, requestNumber);
-                            } else {
-                                mCallBack.responseHandler(null, requestNumber);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new VolleyRequest.onFailure() {
-            @Override
-            public void onError(int statusCode, Object errorResponse) {
-                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
-                mCallBack.responseHandler(null, requestNumber);
-            }
-        });
-        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
-    }
-
-    @Override
-    public void resetUserPassword(Activity mActivity, JSONObject requestObject, final int requestNumber) {
-        mCallBack = (ResponseHandler) mActivity;
-        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.RESET_USER_PASSWORD, requestObject,
-                new VolleyRequest.onSuccess() {
-                    @Override
-                    public void onResponse(int statusCode, Object response) {
-                        try {
-                            JSONObject responseData = new JSONObject(response.toString());
-                            Log.d("resetUserPassword", "" + responseData.toString());
-                            mCallBack.responseHandler(responseData, requestNumber);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new VolleyRequest.onFailure() {
-            @Override
-            public void onError(int statusCode, Object errorResponse) {
-                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
-                mCallBack.responseHandler(null, requestNumber);
-            }
-        });
-        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
-    }
-
-    @Override
     public void fetchClientOrderHistory(final Activity mActivity, JSONObject requestObject, final int requestNumber) {
         mCallBack = (ResponseHandler) mActivity;
         VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.FETCH_CLIENT_ORDER_HISTORY, requestObject,
@@ -275,7 +175,7 @@ public class HttpRequest implements RequestInterface {
 
 //                                    "OrderDate":"12/9/2016 7:21:41 AM"
                                     String orderDate = clientOrdersArray.getJSONObject(i).getString("OrderDate");
-                                    Log.d("OrderDate", orderDate);
+                                    Log.d("OrderDate",orderDate);
                                     SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aaa");
                                     sourceFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
                                     Date parsed = null;
@@ -285,7 +185,7 @@ public class HttpRequest implements RequestInterface {
                                         e.printStackTrace();
                                     }
                                     Log.d("OrderTime8", "" + parsed);
-                                    TimeZone tz = TimeZone.getTimeZone(Constants.timeZone);
+                                    TimeZone tz = TimeZone.getTimeZone("GMT-8");
                                     SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
                                     destFormat.setTimeZone(tz);
 
@@ -890,10 +790,10 @@ public class HttpRequest implements RequestInterface {
     }
 
     @Override
-    public void confirmOrderPostPayment(Activity mActivity, JSONObject requestObject, final int requestNumber) {
+    public void confirmPayPalOrder(Activity mActivity, JSONObject requestObject, final int requestNumber) {
 
         mCallBack = (ResponseHandler) mActivity;
-        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.CONFIRM_ORDER_POST_PAYMENT, requestObject,
+        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.CONFIRM_PAY_PAL_ORDER, requestObject,
                 new VolleyRequest.onSuccess() {
                     @Override
                     public void onResponse(int statusCode, Object response) {

@@ -1,7 +1,7 @@
 package com.clorderclientapp.adapters;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +32,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(OrderHistoryViewHolder holder, int position) {
         holder.itemName.setText(orderHistoryList.get(position).getClientName());
         holder.orderIdTxt.setText(String.format("%s", "Order Id: " + orderHistoryList.get(position).getOrderId()));
-        holder.orderDateTxt.setText(String.format("%s", "Date :" + orderHistoryList.get(position).getOrderDate().replace("am", "AM").replace("pm","PM")));
+        holder.orderDateTxt.setText(orderHistoryList.get(position).getOrderDate());
         holder.orderTotalTxt.setText(String.format("%s", "Total :$" + Utils.roundFloatString(Float.parseFloat(orderHistoryList.get(position).getOrderTotal()), 2)));
         holder.orderOptionsTxt.setOnClickListener(new View.OnClickListener() {
             @Override

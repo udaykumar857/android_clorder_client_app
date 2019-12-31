@@ -1,57 +1,21 @@
 package com.clorderclientapp.utils;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import androidx.appcompat.app.AlertDialog;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clorderclientapp.R;
-import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.interfaces.UserActionInterface;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.security.ProviderInstaller;
 
 import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.net.ssl.SSLContext;
-
-import io.realm.Realm;
-
-import static com.clorderclientapp.activites.JohnniesPizzaScreenActivity.mGoogleApiClient;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class Utils {
@@ -77,11 +41,6 @@ public class Utils {
         }
     }
 
-    public static int getClientId(Context mContext) {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
-        return sharedPreferences.getInt("ClientID", Constants.clientId);
-    }
-
     public static void toastDisplay(Context mContext, String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
     }
@@ -94,8 +53,6 @@ public class Utils {
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
         dialogBuilder.setCancelable(false);
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(mContext.getAssets(), "Lora-Bold.ttf");
         dialogBuilder.setPositiveButton(mContext.getString(R.string.alert_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -110,12 +67,6 @@ public class Utils {
         if (alertDialog == null) {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
-            TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
-            msgTxt.setTypeface(font);
-            titleTxt.setTypeface(fontBold);
-            Button pstBtn = alertDialog.findViewById(android.R.id.button1);
-            pstBtn.setTypeface(fontBold);
         }
     }
 
@@ -128,8 +79,6 @@ public class Utils {
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
         dialogBuilder.setCancelable(false);
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(mContext.getAssets(), "Lora-Bold.ttf");
         dialogBuilder.setPositiveButton(mContext.getString(R.string.alert_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -150,30 +99,17 @@ public class Utils {
         if (alertDialog == null) {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
-            TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
-            msgTxt.setTypeface(font);
-            titleTxt.setTypeface(fontBold);
-            Button pstBtn = alertDialog.findViewById(android.R.id.button1);
-            pstBtn.setTypeface(fontBold);
-            Button ngBtn = alertDialog.findViewById(android.R.id.button2);
-            ngBtn.setTypeface(fontBold);
         }
 
     }
-
 
     public static void showScheduleOrderDialog(final Context mContext,
                                                final String title,
                                                final String message,
                                                final int actionType, final int actionType1) {
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(mContext.getAssets(), "Lora-Bold.ttf");
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
-
-
         dialogBuilder.setCancelable(false);
 
 
@@ -202,86 +138,8 @@ public class Utils {
         if (alertDialog == null) {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
-            TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
-            msgTxt.setTypeface(font);
-            titleTxt.setTypeface(fontBold);
-            Button pstBtn = alertDialog.findViewById(android.R.id.button1);
-            pstBtn.setTypeface(fontBold);
-            Button ngBtn = alertDialog.findViewById(android.R.id.button2);
-            ngBtn.setTypeface(fontBold);
         }
 
-    }
-
-
-    public static void logout(Context mContext) {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove("userCredentials");
-        editor.apply();
-//                                0:clorderSignIn/SignUp
-//                                1:Facebook Login
-//                                2:Google Login
-
-        int loginFrom = sharedPreferences.getInt("isFromLogin", 0);
-
-        switch (loginFrom) {
-            case 0:
-                break;
-            case 1:
-                //Facebook signout
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                LoginManager.getInstance().logOut();
-                break;
-            case 2:
-                //Google Signout
-                signOutGoogle();
-                if (mGoogleApiClient.isConnected()) {
-                    revokeAccess();
-                }
-                break;
-        }
-        Utils.resetOrderTimings();
-
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.beginTransaction();
-            realm.delete(CartModel.class);
-            realm.commitTransaction();
-        } catch (Exception e) {
-            e.printStackTrace();
-            realm.cancelTransaction();
-        }
-
-        //Clearing previous Data of delivery address....
-        boolean isUserDetails = sharedPreferences.contains("userDetails");
-        if (isUserDetails) {
-            SharedPreferences.Editor editor1 = sharedPreferences.edit();
-            editor1.remove("userDetails");
-            editor1.apply();
-        }
-
-    }
-
-    private static void signOutGoogle() {
-
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-
-                    }
-                });
-    }
-
-    private static void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                    }
-                });
     }
 
 
@@ -298,19 +156,6 @@ public class Utils {
         } else {
             return false;
         }
-    }
-
-    public static boolean domainValid(String domainString) {
-        boolean isDomain = false;
-        String domainList[] = {"com", "co.in", "net", "org", "edu", "co.nz"};
-        for (int i = 0; i < domainList.length; i++) {
-            if (domainString.equals(domainList[i])) {
-                isDomain = true;
-                break;
-            }
-
-        }
-        return isDomain;
     }
 
     public static float roundUpFloatValue(float d, int decimalPlace) {
@@ -355,42 +200,6 @@ public class Utils {
             }
         }
         return false;
-    }
-
-    public static void hideKeyboard(Activity activity, View v) {
-        InputMethodManager imm2 = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm2 != null) {
-            imm2.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
-    }
-
-    public static void initializeSSLContext(Context mContext) {
-        try {
-            SSLContext.getInstance("TLSv1.2");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        try {
-            ProviderInstaller.installIfNeeded(mContext.getApplicationContext());
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void resetOrderTimings() {
-        Constants.selectedTime = null;
-        Constants.selectedDate = null;
-    }
-
-    public static boolean isValidPassword(final String password) {
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,15}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-        return matcher.matches();
     }
 
     private static int checkCreditCardType(String cardNumberText) {
@@ -619,75 +428,23 @@ public class Utils {
         }
     }
 
-    public static Bitmap drawMultilineTextToBitmap(Context gContext,
-                                            int gResId,
-                                            String gText) {
 
-        // prepare canvas
-        Resources resources = gContext.getResources();
-        float scale = resources.getDisplayMetrics().density;
-        Log.d("scale", "" + scale);
-        Bitmap bitmap = BitmapFactory.decodeResource(resources, gResId);
-
-        android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
-        // set default bitmap config if none
-        if (bitmapConfig == null) {
-            bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
-        }
-        // resource bitmaps are imutable,
-        // so we need to convert it to mutable one
-        bitmap = bitmap.copy(bitmapConfig, true);
-
-        Canvas canvas = new Canvas(bitmap);
-
-        // new antialiased Paint
-        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        // text color - #3D3D3D
-        paint.setColor(Color.rgb(255, 255, 255));
-        // text size in pixels
-        paint.setTextSize((int) (16 * scale));
-        // text shadow
-        paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
-
-        // set text width to canvas width minus 16dp padding
-        int textWidth = canvas.getWidth() - (int) (16 * scale);
-
-        // init StaticLayout for text
-        StaticLayout textLayout = new StaticLayout(
-                gText, paint, textWidth, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-
-        // get height of multiline text
-        int textHeight = textLayout.getHeight();
-
-        // get position of text's top left corner
-        float x = (bitmap.getWidth() - textWidth) / 2;
-        float y = (bitmap.getHeight() - textHeight) / 2;
-        Rect bounds = new Rect();
-        // draw text to the Canvas center
-        canvas.save();
-        canvas.translate(x, bounds.top + 10);
-        textLayout.draw(canvas);
-        canvas.restore();
-
-        return bitmap;
-    }
-
-
-    public boolean isDayLightSavings(Date isDayLightDate) {
-        boolean isDaylight = false;
-        String timezoneList[] = {"America/Santa_Isabel", "America/Los_Angeles", "America/Ensenada", "America/Dawson", "America/Tijuana",
-                "America/Vancouver", "America/Whitehorse", "Canada/Pacific", "Canada/Saskatchewan", "Canada/Yukon", "Etc/GMT+8",
-                "Mexico/BajaNorte", "Pacific/Pitcairn", "PST8PDT", "US/Pacific", "US/Pacific-New"};
-        for (int i = 0; i < timezoneList.length; i++) {
-            TimeZone timeZone = TimeZone.getTimeZone(timezoneList[i]);
-            boolean isDay = timeZone.inDaylightTime(new Date("2016-12-08 9:45 AM"));
-            if (isDay) {
-                isDaylight = true;
+    public boolean isDayLightSavings(Date isDayLightDate){
+        boolean isDaylight=false;
+      String timezoneList[]={"America/Santa_Isabel","America/Los_Angeles","America/Ensenada","America/Dawson","America/Tijuana",
+              "America/Vancouver", "America/Whitehorse","Canada/Pacific","Canada/Saskatchewan","Canada/Yukon","Etc/GMT+8",
+              "Mexico/BajaNorte","Pacific/Pitcairn","PST8PDT","US/Pacific","US/Pacific-New"};
+        for(int i=0;i<timezoneList.length;i++){
+            TimeZone timeZone=TimeZone.getTimeZone(timezoneList[i]);
+            boolean isDay=timeZone.inDaylightTime(new Date("2016-12-08 9:45 AM"));
+            if(isDay){
+                isDaylight=true;
             }
-            Log.d(timezoneList[i], "" + isDay);
+            Log.d(timezoneList[i],""+isDay);
         }
         return isDaylight;
     }
+
 
 
 //    America/Santa_Isabel

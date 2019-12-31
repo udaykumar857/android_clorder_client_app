@@ -6,17 +6,12 @@ import android.app.Activity;
 import org.json.JSONObject;
 
 public interface RequestInterface {
-    public void fetchClientChildLocations(Activity mActivity, JSONObject requestObject, int requestNumber);
 
     public void fetchMenuWithCategories(Activity mActivity, JSONObject requestObject, int requestNumber);
 
     public void registerClorderUser(Activity mActivity, JSONObject requestObject, int requestNumber);
 
     public void loginUser(Activity mActivity, JSONObject requestObject, int requestNumber);
-
-    public void changeUserPassword(Activity mActivity, JSONObject requestObject, int requestNumber);
-
-    public void resetUserPassword(Activity mActivity, JSONObject requestObject, int requestNumber);
 
     public void fetchClientOrderHistory(Activity mActivity, JSONObject requestObject, int requestNumber);
 
@@ -48,7 +43,7 @@ public interface RequestInterface {
 
     public void getOrderDetailsForReorder(Activity mActivity, JSONObject requestObject, int requestNumber);
 
-    public void confirmOrderPostPayment(Activity mActivity, JSONObject requestObject, int requestNumber);
+    public void confirmPayPalOrder(Activity mActivity, JSONObject requestObject, int requestNumber);
 
 
 }

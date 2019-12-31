@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
@@ -94,21 +94,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private AlertDialog alertDialog;
     private TextView scheduleText;
     private Button orderNowBtn, scheduleLaterBtn;
-    private ArrayList<String> tipList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cart_activity);
         initView();
-        String tList[] = getResources().getStringArray(R.array.tip_array);
-        tipList = new ArrayList<>();
-        for (int i = 0; i < tList.length; i++) {
-            tipList.add(tList[i]);
-        }
-        ArrayAdapter<String> tipAdapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_text_view, tipList);
-        tipSpinner.setAdapter(tipAdapter);
+
         try {
             if (Constants.clientSettingsObject.getJSONObject("ClientSettings").has("EnableTip")) {
                 if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getBoolean("EnableTip")) {
@@ -140,22 +132,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 pickUpTickImg.setVisibility(View.VISIBLE);
                 deliveryTickImg.setVisibility(View.INVISIBLE);
-            }
-            try {
-                int type = Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("DeliveryType");
-                if (type == 1 || type == 4) {
-                    pickUpLayout.setVisibility(View.VISIBLE);
-                } else {
-                    pickUpLayout.setVisibility(View.GONE);
-                }
-
-                if (type == 2 || type == 4) {
-                    deliveryLayout.setVisibility(View.VISIBLE);
-                } else {
-                    deliveryLayout.setVisibility(View.GONE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
             Log.d("CartModel", cartModel.toString());
             cartItemList = cartModel.getCartItemList();
@@ -526,7 +502,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                calendar.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
                 if (scheduleOrder(day - 1)) {
                     alertDialog.dismiss();
@@ -634,7 +610,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
 
             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             if (selectedDate.equals(simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis()))) {
                 orderDateTxt.setText(getString(R.string.today_txt));
             } else {
@@ -646,7 +622,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             orderDateTxt.setText(getString(R.string.today_txt));
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             fetchRestTimeSlotsRequest(simpleDateFormat.format(Calendar.getInstance().getTimeInMillis()));
         }
 
@@ -657,7 +633,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         if (selectedDate == null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
             selectedDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
         }
 
@@ -680,7 +656,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 String date = year + "-" + (((monthOfYear + 1) < 10) ? ("0" + (monthOfYear + 1)) : (monthOfYear + 1)) + "-" + ((dayOfMonth < 10) ? ("0" + dayOfMonth) : dayOfMonth);
                 selectedDate = date;
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM d", Locale.getDefault());
-//                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String userSelectedDate = simpleDateFormat.format(calendar.getTimeInMillis());
                 Log.d("Formated Date", "" + userSelectedDate);
                 int day = 0;
@@ -708,7 +684,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                 }
                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String todayDate = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 
                 if (date.equals(todayDate)) {
@@ -724,7 +700,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 //        Log.d("CurrentCal1Millis1", "" + cal1.getTimeInMillis());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd Z", Locale.getDefault());
         Calendar mCalendar = Calendar.getInstance();
-        format.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        format.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         int dayOfMonth = Integer.parseInt((format.format(mCalendar.getTimeInMillis())).split(" ")[0].split("-")[2]);
         Log.d("dayOfMonth", "" + dayOfMonth);
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -752,7 +728,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("Date", selectedDate);
             requestObject.put("isPickup", !isDeliveryOrder);
         } catch (JSONException e) {
@@ -774,11 +750,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     couponCode.setText(coupon);
                     validForOrderType = data.getExtras().getInt("validForOrderType");
                     discountType = data.getExtras().getInt("discountType");
-                    if (couponCode.getText().toString().trim().length() > 0) {
-                        fetchDiscountRequest();
-                    } else {
-                        Utils.toastDisplay(this, getString(R.string.discount_msg));
-                    }
                     break;
             }
         }
@@ -1030,7 +1001,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 Utils.startLoadingScreen(this);
                 JSONObject requestObject = new JSONObject();
                 try {
-                    requestObject.put("clientId", Utils.getClientId(this));
+                    requestObject.put("clientId", Constants.clientId);
                     Realm realm = Realm.getDefaultInstance();
                     CartModel cartModel = realm.where(CartModel.class).findFirst();
                     requestObject.put("SubTotal", "" + cartModel.getSubtotal());
@@ -1076,7 +1047,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         boolean restaurantStatus = false;
         JSONArray restaurantTimingsList;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         int day = dayOfWeek - 1;//android Calender will be start with sun and by response it start with Mon
@@ -1107,7 +1078,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         boolean restaurantStatus = false;
         JSONArray restaurantTimingsList;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         int day = dayOfWeek - 1;//android Calender will be start with sun and by response it start with Mon
@@ -1150,7 +1121,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             JSONObject requestObject = new JSONObject();
             try {
                 if (isAddressDetails) {
-                    requestObject.put("clientId", Utils.getClientId(this));
+                    requestObject.put("clientId", Constants.clientId);
                     JSONObject userDetails = new JSONObject(sharedPreferences.getString("userDetails", ""));
                     requestObject.put("Address1", userDetails.getString("address"));
                     requestObject.put("Address2", userDetails.getString("buildings"));
@@ -1189,7 +1160,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
             JSONObject requestObject = new JSONObject();
             try {
-                requestObject.put("clientId", Utils.getClientId(this));
+                requestObject.put("clientId", Constants.clientId);
 
                 Realm realm = Realm.getDefaultInstance();
                 CartModel cartModel = realm.where(CartModel.class).findFirst();
@@ -1215,7 +1186,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 //        }
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1569,7 +1540,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             if (responseObject.getString("TimeSlots").equals("Closed|")) {
                                 scheduleText.setVisibility(View.VISIBLE);
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                 if (nowDate.equals(responseObject.getString("date"))) {
                                     orderNowBtn.setVisibility(View.GONE);
@@ -1586,12 +1557,12 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                 String timeDiv[] = responseObject.getString("TimeSlots").split("\\|");
                                 for (int i = 0; i < timeDiv.length; i++) {
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                     String todayDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                     if (timeDiv[i].contains("-")) {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                             String nowTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 
                                             if (timeInMinutes(timeDiv[i].split("-")[1]) > (timeInMinutes(nowTime))) {
@@ -1604,7 +1575,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     } else {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                             String nowTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 //                                            12:00 AM   2:00:00 AM
                                             String timeSplit[] = timeDiv[i].split(" ");
@@ -1624,7 +1595,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     }
                                 }
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                 if (nowDate.equals(responseObject.getString("date"))) {
                                     orderNowBtn.setVisibility(View.VISIBLE);
@@ -1889,7 +1860,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+        simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
         String nowTime[] = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis()).split(":");
         int nowMinutes = Integer.parseInt(nowTime[0]) * 60 + Integer.parseInt(nowTime[1]);
         boolean isTimingPres = false;
@@ -2135,15 +2106,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         int minutes = 0;
 
         String timeSpilt[] = time.split(" ");
-        if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) + 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) - 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
         }
 

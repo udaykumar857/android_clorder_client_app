@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#Fb5b5b</color>
-    <color name="colorPrimaryDark">#Fb5b5b</color>
-    <color name="colorAccent">#Fb5b5b</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="sub_text_col_grey">#737373</color>
-    <color name="colr_red">#Fb5b5b</color>
 
 
     //Home screen colors
     <color name="create_account_text_color">#371E00</color>
-    <color name="re_order_last_order_text_col">#Fb5b5b</color>
-
-    //Multi Locations Screen Colors
-    <color name="all_locations_txt_col">#FFFFFF</color>
 
     <!--SignInOrderActivity-->
     <color name="new_order_sign_in_txt_col">#FFFFFF</color>
-    <color name="new_order_sign_in_txt_bg_col">#Fb5b5b</color>
+    <color name="new_order_sign_in_txt_bg_col">#F49438</color>
     <color name="email_sign_in_txt_col">#FFFFFF</color>
     <color name="password_sign_in_txt_col">#FFFFFF</color>
     <color name="sign_in_txt_col">#FFFFFF</color>
     <color name="guest_user_txt_col">#FFFFFF</color>
-    <color name="or_txt_col">#000000</color>
-    <color name="password_recovery_txt_col">#FFFFFF</color>
+    <color name="or_txt_col">#FFFFFF</color>
 
 
     <!--OrderHistoryActivity-->
-    <color name="order_history_txt_col">#FFFFFF</color>
+    <color name="order_history_txt_col">#EC9D4D</color>
     <color name="item_history_txt_col">#000000</color>
     <color name="order_id_history_txt_col">#000000</color>
-    <color name="total_history_txt_col">#e48b3b</color>
+    <color name="total_history_txt_col">#000000</color>
     <color name="options_history_txt_col">#000000</color>
 
     <!--OrderHistoryDetailsActivity-->
-    <color name="order_details_txt_col">#FFFFFF</color>
+    <color name="order_details_txt_col">#EC9D4D</color>
     <color name="order_details_id_txt_col">#000000</color>
     <color name="placed_on_details_txt_col">#000000</color>
     <color name="order_date_details_txt_col">#000000</color>
@@ -66,55 +60,46 @@
 
     <!--NewUserSignUpActivity-->
     <color name="new_user_sign_up_txt_col">#FFFFFF</color>
-    <color name="new_user_sign_up_txt_bg_col">#FB5B5B</color>
+    <color name="new_user_sign_up_txt_bg_col">#F49438</color>
     <color name="new_user_name_txt_col">#FFFFFF</color>
     <color name="new_user_email_txt_col">#FFFFFF</color>
     <color name="new_user_password_txt_col">#FFFFFF</color>
     <color name="create_account_txt_col">#FFFFFF</color>
     <color name="new_user_cancel_txt_col">#FFFFFF</color>
-    <color name="existing_customer_sign_in_txt_col">#fb5b5b</color>
+    <color name="existing_customer_sign_in_txt_col">#371E00</color>
     <color name="create_user_sign_in_txt_col">#FFFFFF</color>
 
 
     //All Day menu colors
-    <color name="all_day_menu_text_col">#000000</color>
+    <color name="all_day_menu_text_col">#EC9D4D</color>
     <color name="special_notes_txt_bg_col">#ECECEC</color>
     <color name="special_notes_txt_col">#000000</color>
-    <color name="menu_item_price_col">#000000</color>
-    <color name="home_txt_col">#Fb5b5b</color>
-
-    <!--EditProfileActivity-->
-    <color name="edit_profile_txt_col">#FFFFFF</color>
-
-    <!--ChangePasswordActivity-->
-    <color name="change_password_title_txt_col">#FFFFFF</color>
 
 
     //Cart Screen Colors
     <color name="apply_coupon_txt_col">#88C93D</color>
     <color name="tip_txt_col">#27C9F4</color>
-    <color name="total_text_col">#FB5B5B</color>
-    <color name="add_item_btn_col">#FB5B5B</color>
+    <color name="total_text_col">#EC9D4D</color>
+    <color name="add_item_btn_col">#00C8F1</color>
     <color name="add_item_txt_col">#FFFFFF</color>
-    <color name="your_food_order_txt_col">#FFFFFF</color>
+    <color name="your_food_order_txt_col">#EC9D4D</color>
 
     //Schedule Order Dialog colors
     <color name="schedule_order_txt_col">#FFFFFF</color>
-    <color name="schedule_order_txt_bg_col">#Fb5b5b</color>
+    <color name="schedule_order_txt_bg_col">#00C8F1</color>
     <color name="order_date_schedule_txt_col">#000000</color>
     <color name="order_time_schedule_txt_col">#000000</color>
     <color name="order_now_schedule_txt_col">#FFFFFF</color>
-    <color name="order_now_schedule_txt_bg_col">#Fb5b5b</color>
+    <color name="order_now_schedule_txt_bg_col">#F49438</color>
 
 
     <!--RestaurantPromotionsActivity-->
-    <color name="coupons_txt_title_col">#FFFFFF</color>
+    <color name="coupons_txt_title_col">#EC9D4D</color>
     <color name="coupon_bg_col">#EFEFEF</color>
     <color name="coupon_id_txt_col">#000000</color>
     <color name="coupon_id_txt_bg_col">#449D44</color>
     <color name="coupon_desc_txt_col">#000000</color>
     <color name="coupon_expiry_date_txt_col">#000000</color>
-    <color name="apply_txt_col">#FB5B5B</color>
 
     //Menu item single row dimensions
     <color name="item_text_col">#000000</color>
@@ -132,27 +117,26 @@
     <color name="add_to_order_txt_col">#FFFFFF</color>
 
     <!--ItemSelectionActivity-->
-    <color name="item_details_txt_selection_bg">#C0C0C0</color>
-    <color name="item_details_txt_selection_col">#000000</color>
-    <color name="required_choices_selection_txt_bg">#C0C0C0</color>
-    <color name="required_choices_selection_txt_col">#000000</color>
+    <color name="item_details_txt_selection_bg">#F49438</color>
+    <color name="item_details_txt_selection_col">#FFFFFF</color>
+    <color name="required_choices_selection_txt_bg">#F49438</color>
+    <color name="required_choices_selection_txt_col">#FFFFFF</color>
     <color name="item_details_title_txt_col">#000000</color>
     <color name="choices_selection_txt_col">#000000</color>
-    <color name="item_price_txt_selection_col">#000000</color>
-    <color name="item_price_col">#F49438</color>
+    <color name="item_price_txt_selection_col">#F49438</color>
+    <color name="item_price_col">#000000</color>
     <color name="options_txt_col">#000000</color>
     <color name="options_txt1_col">#000000</color>
     <color name="options_txt2_col">#000000</color>
-    <color name="quantity_selection_txt_col">#000000</color>
+    <color name="quantity_selection_txt_col">#F49438</color>
     <color name="quantity_num_txt_selection_col">#000000</color>
-    <color name="special_instructions_txt_col">#000000</color>
-    <color name="special_make_pizza_txt_col">#FFFFFF</color>
+    <color name="special_instructions_txt_col">#F49438</color>
+    <color name="special_make_pizza_txt_col">#EC9D4D</color>
     <color name="add_to_order_txt_selection_col">#FFFFFF</color>
 
 
     <!--DeliveryAddressActivity-->
-    <color name="delivery_address_title_bg">#Fb5b5b</color>
-    <color name="delivery_address_txt_col">#FFFFFF</color>
+    <color name="delivery_address_txt_col">#EC9D4D</color>
     <color name="address_txt_bg">#F49438</color>
     <color name="address_txt_col">#FFFFFF</color>
     <color name="order_address_txt_col">#000000</color>
@@ -176,19 +160,17 @@
     <color name="add_to_cart_custom_txt_bg_col">#F49438</color>
 
     <!--AccountUpdateActivity-->
-    <color name="account_update_txt_col">#FFFFFF</color>
-    <color name="payments_txt_bg">#C0C0C0</color>
-    <color name="payments_txt_col">#000000</color>
-    <color name="your_card_list_txt_col">#000000</color>
-    <color name="your_card_list_txt_bg_col">#C0C0C0</color>
+    <color name="account_update_txt_col">#EC9D4D</color>
+    <color name="payments_txt_bg">#F49438</color>
+    <color name="payments_txt_col">#FFFFFF</color>
+    <color name="your_card_list_txt_col">#FFFFFF</color>
+    <color name="your_card_list_txt_bg_col">#F49438</color>
     <color name="payment_information_txt_col">#000000</color>
     <color name="add_a_card_btn_bg">#00C8F1</color>
-    <color name="add_a_card_btn_txt">#Fb5b5b</color>
-    <color name="account_update_done_txt_bg">#Fb5b5b</color>
+    <color name="add_a_card_btn_txt">#FFFFFF</color>
+    <color name="account_update_done_txt_bg">#00562A</color>
     <color name="pay_pal_btn_txt_col">#FFFFFF</color>
-    <color name="pay_with_google_pay_txt_col">#FFFFFF</color>
-
-    <color name="pay_pal_btn_txt_bg">#Fb5b5b</color>
+    <color name="pay_pal_btn_txt_bg">#00C8F1</color>
     <color name="account_update_done_txt_col">#FFFFFF</color>
     <color name="payment_add_card_txt_col">#FFFFFF</color>
     <color name="payment_add_card_txt_bg">#F49438</color>
@@ -205,21 +187,19 @@
 
     //Item Selection Modifiers Dialog Colors
     <color name="modifiers_txt_col">#FFFFFF</color>
-    <color name="modifiers_txt_bg_col">#FB5b5b</color>
-    <color name="tip_txt_bg_col">#FB5B5B</color>
+    <color name="modifiers_txt_bg_col">#2C2F37</color>
     <color name="salad_options_txt_col">#000000</color>
     <color name="extras_txt_col">#000000</color>
     <color name="add_to_cart_txt_col">#FFFFFF</color>
     <color name="add_to_cart_txt_bg_col">#F49438</color>
-    <color name="done_txt_bg_col">#Fb5b5b</color>
 
     <!--OrderConfirmationActivity-->
-    <color name="order_confirm_txt_col">#FFFFFF</color>
-    <color name="order_no_txt_col">#000000</color>
-    <color name="order_no_col">#000000</color>
-    <color name="placed_on_txt_col">#000000</color>
-    <color name="order_date_col">#000000</color>
-    <color name="ordered_time_col">#000000</color>
+    <color name="order_confirm_txt_col">#EC9D4D</color>
+    <color name="order_no_txt_col">#F69A5B</color>
+    <color name="order_no_col">#2C2F37</color>
+    <color name="placed_on_txt_col">#F69A5B</color>
+    <color name="order_date_col">#2C2F37</color>
+    <color name="ordered_time_col">#2C2F37</color>
     <color name="order_confirm_msg_col">#000000</color>
     <color name="order_time_txt_col">#2C2F37</color>
     <color name="order_type_col">#2C2F37</color>
@@ -228,7 +208,7 @@
     <color name="instructions_txt_col">#2C2F37</color>
     <color name="instructions_msg_col">#2C2F37</color>
     <color name="end_of_order_txt_col">#2A2E33</color>
-    <color name="cash_payment_txt_col">#Fb5b5b</color>
+    <color name="cash_payment_txt_col">#F69A5B</color>
     <color name="subtotal_txt_col">#2A2E33</color>
     <color name="tax_txt_col">#2A2E33</color>
     <color name="discount_txt_col">#2A2E33</color>
@@ -237,7 +217,7 @@
     <color name="order_confirm_total_txt_col">#2A2E33</color>
     <color name="note_txt_col">#DC001C</color>
     <color name="note_msg_txt_col">#000000</color>
-    <color name="restaurant_location_txt_col">#Fb5b5b</color>
+    <color name="restaurant_location_txt_col">#F69A5B</color>
 
     //View background color
     <color name="view_bg">#EBEBEB</color>

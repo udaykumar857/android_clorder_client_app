@@ -6,9 +6,9 @@
     <RelativeLayout
         android:id="@+id/address_title"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/delivery_address_title_bg"
+        android:background="@mipmap/item_list_page"
         android:padding="10dp">
 
         <ImageView
@@ -18,22 +18,21 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:src="@mipmap/left_arrow" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/address_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/delivery_address_txt"
             android:textColor="@color/delivery_address_txt_col"
-            android:textSize="@dimen/delivery_address_txt_size" />
+            android:textSize="@dimen/delivery_address_txt_size"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:id="@+id/payments_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,178 +59,153 @@
             android:orientation="vertical">
 
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/name_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/name_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/nameEditTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/drawable_black_border_bg"
                 android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ-."
-                android:hint="@string/name_txt"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:padding="15dp"
+                android:padding="5dp"
                 android:singleLine="true" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
-                android:id="@+id/phoneNumberEditTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/phone_num_txt"
-                android:imeOptions="actionNext"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:padding="15dp" />
-
-            <com.clorderclientapp.utils.FontEditTextRegularClass
-                android:id="@+id/emailEditTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_address_txt"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:padding="15dp" />
-
-
-            <com.clorderclientapp.utils.FontTextViewRegularClass
-                android:id="@+id/addressTxt"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/address_txt"
                 android:textColor="@color/order_address_txt_col"
                 android:textSize="@dimen/order_address_txt_size"
-                 />
+                android:textStyle="bold" />
 
-
-            <Spinner
-                android:id="@+id/addressSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/spinner_bg">
-
-            </Spinner>
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/address_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
-
-
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/addressEditTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/address_txt"
+                android:background="@drawable/drawable_black_border_bg"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:padding="15dp" />
+                android:padding="5dp" />
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/apt_suite_building_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/apt_suite_building_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/buildingEditTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/apt_suite_building_txt"
+                android:background="@drawable/drawable_black_border_bg"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:padding="15dp" />
+                android:padding="5dp" />
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/city_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/city_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/cityEditTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/city_txt"
+                android:background="@drawable/drawable_black_border_bg"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:padding="15dp" />
+                android:padding="5dp" />
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/zip_code_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:imeOptions="actionNext"
+                android:text="@string/zip_code_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/zipCodeEditTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/zip_code_txt"
-
-                android:imeOptions="actionDone"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLength="5"
-                android:padding="15dp" />
+                android:padding="5dp" />
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/phone_num_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/phone_num_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
+            <EditText
+                android:id="@+id/phoneNumberEditTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="5dp" />
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/email_address_txt"-->
-            <!--android:textColor="@color/order_address_txt_col"-->
-            <!--android:textSize="@dimen/order_address_txt_size"-->
-            <!--android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/email_address_txt"
+                android:textColor="@color/order_address_txt_col"
+                android:textSize="@dimen/order_address_txt_size"
+                android:textStyle="bold" />
 
-
+            <EditText
+                android:id="@+id/emailEditTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/drawable_black_border_bg"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="5dp" />
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/next_step_menu_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:background="#Fb5b5b"
+        android:background="@mipmap/add_to_order_bg"
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:layout_width="223dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.3"
-            android:drawableRight="@mipmap/right_arrow_border"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -241,15 +215,13 @@
             android:textSize="@dimen/next_step_txt_size"
             android:textStyle="bold" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/next_screen_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:text="@string/add_card_delivery_txt"
             android:textColor="@color/menu_txt_col"

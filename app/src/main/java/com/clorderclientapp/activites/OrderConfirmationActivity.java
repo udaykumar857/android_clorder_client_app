@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -115,7 +115,7 @@ public class OrderConfirmationActivity extends AppCompatActivity implements View
             Utils.startLoadingScreen(this);
             JSONObject requestObject = new JSONObject();
             try {
-                requestObject.put("clientId", Utils.getClientId(this));
+                requestObject.put("clientId", Constants.clientId);
                 requestObject.put("ItemId", Constants.discountObject.getString("ItemIdofFreeItem"));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -222,7 +222,7 @@ public class OrderConfirmationActivity extends AppCompatActivity implements View
 //        orderPlacedTimeTxt.setText(String.format("%s", " " + cartModel.getOrderPlacedTime()));
 
         orderPlacedDateTxt.setText(placedTime.split(" ")[0]);
-        orderPlacedTimeTxt.setText(" " + placedTime.split(" ")[1] + " " + placedTime.split(" ")[2].replace("am", "AM").replace("pm","PM"));
+        orderPlacedTimeTxt.setText(" " + placedTime.split(" ")[1] + " " + placedTime.split(" ")[2]);
 
         if (cartModel.isFutureOrder) {
             String orderDate;
@@ -236,14 +236,14 @@ public class OrderConfirmationActivity extends AppCompatActivity implements View
                 e.printStackTrace();
             }
             Log.d("OrderTime8", "" + parsed);
-            TimeZone tz = TimeZone.getTimeZone(Constants.timeZone);
+            TimeZone tz = TimeZone.getTimeZone("GMT-8");
             SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
             destFormat.setTimeZone(tz);
 
             orderDate = destFormat.format(parsed);
 
 
-            orderTimeTxt.setText(orderDate.replace("am", "AM").replace("pm","PM") + "(" + getString(R.string.future_order_txt) + ")");
+            orderTimeTxt.setText(orderDate + "(" + getString(R.string.future_order_txt) + ")");
         } else {
             orderTimeTxt.setText(getString(R.string.asap_order_txt));
         }

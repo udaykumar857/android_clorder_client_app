@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#Fb5B5B"
+        android:background="@mipmap/item_list_page"
         android:padding="10dp">
 
         <ImageView
@@ -21,7 +21,7 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/left_arrow" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -33,14 +33,12 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/cardScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/paymentLayout"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/skip_btn"
         android:layout_below="@+id/account_update_layout"
         android:layout_marginBottom="10dp"
-        android:fillViewport="true"
-        android:visibility="invisible">
+        android:fillViewport="true">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -55,7 +53,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/your_card_list_txt_bg_col"
@@ -71,13 +69,12 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/payments_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_card_list_layout"
                 android:background="@color/payments_txt_bg"
-                android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/add_new_card"
                 android:textColor="@color/payments_txt_col"
@@ -85,7 +82,7 @@
                 android:textStyle="bold" />
 
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/payment_information_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,25 +94,25 @@
                 android:textStyle="bold" />
 
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <Button
                 android:id="@+id/add_a_card_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/payment_information_txt"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/drawable_add_card_bg"
-                android:drawableEnd="@mipmap/plus_card"
-                android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/plus_card"
+                android:background="@drawable/drawable_add_a_card_bg"
+                android:drawableLeft="@mipmap/account_update_add_button"
+                android:drawablePadding="3dp"
+                android:drawableStart="@mipmap/account_update_add_button"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="@string/add_a_card_txt"
-                android:textAllCaps="false"
                 android:textColor="@color/add_a_card_btn_txt"
-                android:textSize="@dimen/add_a_card_txt_size" />
+                android:textSize="@dimen/add_a_card_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_a_card_btn"
@@ -127,72 +124,33 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/paymentLayout"
+
+    <TextView
+        android:id="@+id/pay_pal_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/skip_btn"
+        android:layout_centerInParent="true"
+        android:background="@color/pay_pal_btn_txt_bg"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/pay_with_pay_pal_txt"
+        android:textColor="@color/pay_pal_btn_txt_col"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/skip_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:id="@+id/payWithcard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/account_update_done_txt_bg"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/pay_with_card_txt"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:id="@+id/google_pay_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/pay_pal_btn_txt_bg"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/pay_with_google_pay_txt"
-            android:textColor="@color/pay_with_google_pay_txt_col"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:id="@+id/pay_pal_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/pay_pal_btn_txt_bg"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/pay_with_pay_pal_txt"
-            android:textColor="@color/pay_pal_btn_txt_col"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:id="@+id/skip_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/account_update_done_txt_bg"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/account_update_skip"
-            android:textColor="@color/account_update_done_txt_col"
-            android:textSize="@dimen/account_update_txt_size"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-
-    </LinearLayout>
-
+        android:background="@color/account_update_done_txt_bg"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/account_update_skip"
+        android:textColor="@color/account_update_done_txt_col"
+        android:textSize="@dimen/account_update_txt_size"
+        android:textStyle="bold" />
 
 </RelativeLayout>

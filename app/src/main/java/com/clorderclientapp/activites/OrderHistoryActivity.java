@@ -3,9 +3,9 @@ package com.clorderclientapp.activites;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -95,7 +95,7 @@ public class OrderHistoryActivity extends AppCompatActivity implements ResponseH
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("userId", userId);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,13 +114,13 @@ public class OrderHistoryActivity extends AppCompatActivity implements ResponseH
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(this, JohnniesPizzaScreenActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//        finish();
-//    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, JohnniesPizzaScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void responseHandler(Object response, int requestType) {

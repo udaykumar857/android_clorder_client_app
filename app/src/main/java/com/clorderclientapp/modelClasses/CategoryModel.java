@@ -7,9 +7,6 @@ public class CategoryModel {
     public int categoryId;
     public String categoryTitle;
     public int categoryMode;
-    private boolean isExpanded;
-    private int itemsCnt;
-    private String imageUrl;
 
     public String getCategoryDesc() {
         return categoryDesc;
@@ -41,29 +38,5 @@ public class CategoryModel {
 
     public void setCategoryMode(int categoryMode) {
         this.categoryMode = categoryMode;
-    }
-
-    public boolean isExpanded() {
-        return isExpanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
-    }
-
-    public int getItemsCnt() {
-        return itemsCnt;
-    }
-
-    public void setItemsCnt(int itemsCnt) {
-        this.itemsCnt = itemsCnt;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

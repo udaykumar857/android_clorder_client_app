@@ -5,19 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.InputType;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.clorderclientapp.R;
@@ -25,30 +21,12 @@ import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.httpClient.HttpRequest;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
-import com.clorderclientapp.modelClasses.AddressModel;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.Utils;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-//import com.google.android.gms.location.places.AutocompleteFilter;
-//import com.google.android.gms.location.places.Place;
-//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import io.realm.Realm;
@@ -63,11 +41,6 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
     private HttpRequest httpRequest;
     private int isReOrder = 0;
     private int isReOrderCart = 0;
-    private int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1000;
-    private Spinner addressSpinner;
-    private int addressSpinnerPosition = 0;
-    ArrayList<AddressModel> addressArrayList;
-    private TextView addressTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +49,6 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         initViews();
         listeners();
         httpRequest = new HttpRequest();
-
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getResources().getString(R.string.places_apiKey));
-        }
-
 
 
         sharedPreferences = getSharedPreferences("MySharedPreferences", MODE_PRIVATE);
@@ -140,215 +108,26 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         phoneNumberEditTxt = (EditText) findViewById(R.id.phoneNumberEditTxt);
         emailEditTxt = (EditText) findViewById(R.id.emailEditTxt);
         addressEditTxt = (EditText) findViewById(R.id.addressEditTxt);
-        addressEditTxt.setInputType(InputType.TYPE_NULL);
-        addressTxt = (TextView) findViewById(R.id.addressTxt);
-        addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
     }
 
     private void listeners() {
         backImage.setOnClickListener(this);
         nextStepMenuLayout.setOnClickListener(this);
-        addressEditTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Log.d("addressEditTxt", "fire");
-                    Utils.hideKeyboard(DeliveryAddressActivity.this, addressEditTxt);
-                    addressRequest();
-                }
+
+    }
+
+    private boolean domainValid(String domainString) {
+        boolean isDomain = false;
+        String domainList[] = {"com", "co.in", "net", "org", "edu", "co.nz"};
+        for (int i = 0; i < domainList.length; i++) {
+            if (domainString.equals(domainList[i])) {
+                isDomain = true;
+                break;
             }
-        });
 
-        addressEditTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("addressOnClick", "fire");
-                Utils.hideKeyboard(DeliveryAddressActivity.this, addressEditTxt);
-                addressRequest();
-            }
-        });
-
-        try {
-            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
-
-                //        Westlake - 31303 Agoura Road, Westlake village, CA 91361
-                //        Agoura - 29701 Agoura Road, Agoura Hills, CA 91301
-                //        Amgen - 1290 Rancho Conego Blvd Newbury Park CA 91320
-                //        Simi Valley - 2801 Cochran Stree Simivalley CA 93065
-                addressTxt.setVisibility(View.VISIBLE);
-                addressSpinner.setVisibility(View.VISIBLE);
-                buildingEditTxt.setVisibility(View.GONE);
-                cityEditTxt.setVisibility(View.GONE);
-                zipCodeEditTxt.setVisibility(View.GONE);
-                addressEditTxt.setVisibility(View.GONE);
-                try {
-                    JSONObject obj = new JSONObject(loadJSONFromAsset());
-
-                    addressArrayList = new ArrayList<>();
-                    ArrayList<String> addressNameList = new ArrayList<>();
-                    JSONArray m_jArry;
-                    if (Constants.addressList != null) {
-                        m_jArry = Constants.addressList;
-                    } else {
-                        m_jArry = obj.getJSONArray("locations");
-                    }
-                    for (int i = 0; i < m_jArry.length(); i++) {
-                        AddressModel addressModel = new AddressModel();
-                        addressModel.setName(m_jArry.getJSONObject(i).getString("Address1"));
-                        addressModel.setAddress1(m_jArry.getJSONObject(i).getString("Address1"));
-                        addressModel.setAddress2(m_jArry.getJSONObject(i).getString("Address2"));
-                        addressModel.setCity(m_jArry.getJSONObject(i).getString("City"));
-                        addressModel.setZipCode(m_jArry.getJSONObject(i).getString("ZipPostalCode"));
-                        addressArrayList.add(addressModel);
-                        addressNameList.add(m_jArry.getJSONObject(i).getString("Address1"));
-                    }
-                    ArrayAdapter<String> orderTimeAdapter = new ArrayAdapter<String>(this,
-                            R.layout.spinner_text_view, addressNameList);
-                    addressSpinner.setAdapter(orderTimeAdapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        addressSpinnerPosition = position;
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-            } else {
-                addressTxt.setVisibility(View.GONE);
-                addressSpinner.setVisibility(View.GONE);
-                buildingEditTxt.setVisibility(View.VISIBLE);
-                cityEditTxt.setVisibility(View.VISIBLE);
-                zipCodeEditTxt.setVisibility(View.VISIBLE);
-                addressEditTxt.setVisibility(View.VISIBLE);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
+        return isDomain;
     }
-
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("grand_bawarchi.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
-
-    private void addressRequest() {
-//        try {
-//            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-//                    .setCountry("US")
-//                    .build();
-//            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-//                    .setFilter(typeFilter)
-//                    .build(this);
-//            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-//        } catch (GooglePlayServicesRepairableException e) {
-//            // TODO: Handle the error.
-//        } catch (GooglePlayServicesNotAvailableException e) {
-//            // TODO: Handle the error.
-//        }
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PLUS_CODE,
-                Place.Field.ADDRESS_COMPONENTS);
-
-        Log.d("Fields",fields.toString());
-
-//             Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setCountry("US")
-
-                .build(this);
-        startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                addressEditTxt.setText("");
-                cityEditTxt.setText("");
-                zipCodeEditTxt.setText("");
-//                Place place = PlaceAutocomplete.getPlace(this, data);
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i("TAG", "Place: " + place.getName());
-                Log.i("TAG", "Place: " + place.getAddress());
-                Log.i("TAG", "Place: " + place.getPhoneNumber());
-//                Log.i("TAG", "Place: " + place.getPlaceTypes());
-//                Log.i("TAG", "Place: " + place.getLocale());
-                String zip = null;
-                String placeName = null;
-                String city = null;
-                try {
-                    String addr = place.getAddress().toString();
-                    String placeDetails[] = {};
-
-                    placeName = place.getName().toString();
-                    if (addr.contains(",")) {
-                        placeDetails = addr.split(",");
-                        for (int i = 0; i < placeDetails.length; i++) {
-                            Log.i("placeDetails" + i, "" + placeDetails[i]);
-                            if (i == 1) {
-                                city = placeDetails[i].trim();
-                            }
-                            if (i == 2) {
-                                String zipcode[] = placeDetails[i].trim().split(" ");
-                                zip = zipcode[1].trim();
-                                Log.i("zipcode" + i, "" + zipcode[1]);
-                            }
-                        }
-                    }
-                    Log.d("PlaceString", "" + placeName + "\t" + city + "\t" + zip);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (zip != null) {
-                    if (zip.length() > 0) {
-                        zipCodeEditTxt.setText(zip);
-                    }
-                }
-                if (city != null) {
-                    if (city.length() > 0) {
-                        cityEditTxt.setText(city);
-                    }
-                }
-                if (placeName != null) {
-                    if (placeName.length() > 0) {
-                        addressEditTxt.setText(placeName);
-                    }
-                }
-
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                Status status = Autocomplete.getStatusFromIntent(data);
-                // TODO: Handle the error.
-                Log.i("TAG", status.getStatusMessage());
-
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
-    }
-
-
 
 
     @Override
@@ -359,103 +138,89 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
                 onBackPressed();
                 break;
             case R.id.next_step_menu_layout:
-                try {
-
-
-                    if (nameEditTxt.getText().toString().trim().length() > 0) {
-                        if (phoneNumberEditTxt.getText().toString().trim().length() > 0) {
-                            String mobileRegex = "^[0-9]{10}$";
-                            boolean isPhoneValid = Pattern.matches(mobileRegex, phoneNumberEditTxt.getText());
-                            if (isPhoneValid) {
-                                if (emailEditTxt.getText().toString().trim().length() > 0) {
-                                    boolean isEmailValid = Patterns.EMAIL_ADDRESS.matcher(emailEditTxt.getText()).matches();
-                                    if (isEmailValid) {
-                                        String userName[] = emailEditTxt.getText().toString().trim().split("@");
+                if (nameEditTxt.getText().toString().trim().length() > 0) {
+                    if (addressEditTxt.getText().toString().trim().length() > 0) {
+                        if (cityEditTxt.getText().toString().trim().length() > 0) {
+                            if (zipCodeEditTxt.getText().toString().trim().length() >= 5) {
+                                if (phoneNumberEditTxt.getText().toString().trim().length() > 0) {
+                                    String mobileRegex = "^[0-9]{10}$";
+                                    boolean isPhoneValid = Pattern.matches(mobileRegex, phoneNumberEditTxt.getText());
+                                    if (isPhoneValid) {
+                                        if (emailEditTxt.getText().toString().trim().length() > 0) {
+                                            boolean isEmailValid = Patterns.EMAIL_ADDRESS.matcher(emailEditTxt.getText()).matches();
+                                            if (isEmailValid) {
+                                                String userName[] = emailEditTxt.getText().toString().trim().split("@");
 //                            .com, .co.in, .net, .org, .edu, .co.nz
-                                        String domain = userName[1].split("\\.", 2)[1];
-                                        if (Utils.domainValid(domain)) {
-                                            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
-                                                getData();
-                                                //key Board Dismiss
-//                                            InputMethodManager imm1 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//                                            imm1.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                                                updateClorderUser();
-                                            } else {
-                                                if (addressEditTxt.getText().toString().trim().length() > 0) {
-                                                    if (cityEditTxt.getText().toString().trim().length() > 0) {
-                                                        if (zipCodeEditTxt.getText().toString().trim().length() >= 5) {
-                                                            getData();
-                                                            //key Board Dismiss
-                                                            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                                                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                                                            updateClorderUser();
-                                                        } else {
-                                                            zipCodeEditTxt.requestFocus();
-                                                            InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                                            imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                                            Utils.toastDisplay(this, getString(R.string.zip_code_empty_txt));
-                                                        }
-                                                    } else {
-                                                        cityEditTxt.requestFocus();
-                                                        InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                                        imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                                        Utils.toastDisplay(this, getString(R.string.city_empty_txt));
-                                                    }
+                                                String domain = userName[1].split("\\.", 2)[1];
+                                                if (domainValid(domain)) {
+                                                    getData();
+                                                    //key Board Dismiss
+                                                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                                                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                                                    updateClorderUser();
                                                 } else {
-                                                    addressEditTxt.requestFocus();
+                                                    emailEditTxt.requestFocus();
                                                     InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                                     imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                                    Utils.toastDisplay(this, getString(R.string.address_empty_txt));
+                                                    Utils.toastDisplay(this, getString(R.string.email_valid_for_order_txt));
                                                 }
+
+                                            } else {
+                                                emailEditTxt.requestFocus();
+                                                InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                                                Utils.toastDisplay(this, getString(R.string.email_valid_for_order_txt));
                                             }
 
                                         } else {
                                             emailEditTxt.requestFocus();
                                             InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                             imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                            Utils.toastDisplay(this, getString(R.string.email_valid_for_order_txt));
+                                            Utils.toastDisplay(this, getString(R.string.email_empty_txt));
                                         }
-
                                     } else {
-                                        emailEditTxt.requestFocus();
+                                        phoneNumberEditTxt.requestFocus();
                                         InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                         imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                        Utils.toastDisplay(this, getString(R.string.email_valid_for_order_txt));
+                                        Utils.toastDisplay(this, getString(R.string.phone_num_valid_msg));
                                     }
-
                                 } else {
-                                    emailEditTxt.requestFocus();
+                                    phoneNumberEditTxt.requestFocus();
                                     InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                     imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                    Utils.toastDisplay(this, getString(R.string.email_empty_txt));
+                                    Utils.toastDisplay(this, getString(R.string.phone_num_empty_txt));
                                 }
                             } else {
-                                phoneNumberEditTxt.requestFocus();
+                                zipCodeEditTxt.requestFocus();
                                 InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                                Utils.toastDisplay(this, getString(R.string.phone_num_valid_msg));
+                                Utils.toastDisplay(this, getString(R.string.zip_code_empty_txt));
                             }
                         } else {
-                            phoneNumberEditTxt.requestFocus();
+                            cityEditTxt.requestFocus();
                             InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                            Utils.toastDisplay(this, getString(R.string.phone_num_empty_txt));
+                            Utils.toastDisplay(this, getString(R.string.city_empty_txt));
                         }
 
+
                     } else {
-                        nameEditTxt.requestFocus();
+                        addressEditTxt.requestFocus();
                         InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                        Utils.toastDisplay(this, getString(R.string.name_empty_txt));
+                        Utils.toastDisplay(this, getString(R.string.address_empty_txt));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                } else {
+                    nameEditTxt.requestFocus();
+                    InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    Utils.toastDisplay(this, getString(R.string.name_empty_txt));
                 }
 
 
                 break;
         }
-
     }
 
     @Override
@@ -473,12 +238,10 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
             try {
                 JSONObject userDetails = new JSONObject((String) sharedPreferences.getString("userDetails", ""));
                 nameEditTxt.setText(userDetails.getString("name"));
-                if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
-                    addressEditTxt.setText(userDetails.getString("address"));
-                    buildingEditTxt.setText(userDetails.getString("buildings"));
-                    cityEditTxt.setText(userDetails.getString("city"));
-                    zipCodeEditTxt.setText(userDetails.getString("zipCode"));
-                }
+                addressEditTxt.setText(userDetails.getString("address"));
+                buildingEditTxt.setText(userDetails.getString("buildings"));
+                cityEditTxt.setText(userDetails.getString("city"));
+                zipCodeEditTxt.setText(userDetails.getString("zipCode"));
                 phoneNumberEditTxt.setText(userDetails.getString("phoneNumber"));
                 emailEditTxt.setText(userDetails.getString("email"));
 
@@ -503,12 +266,10 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
 //                                "ZipPostalCode": "08816"
 //                    },
                         JSONObject userAddressObject = userCredentials.getJSONObject("UserAddress");
-                        if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
-                            addressEditTxt.setText(userAddressObject.getString("Address1"));
-                            buildingEditTxt.setText(userAddressObject.getString("Address2"));
-                            cityEditTxt.setText(userAddressObject.getString("City"));
-                            zipCodeEditTxt.setText(userAddressObject.getString("ZipPostalCode"));
-                        }
+                        addressEditTxt.setText(userAddressObject.getString("Address1"));
+                        buildingEditTxt.setText(userAddressObject.getString("Address2"));
+                        cityEditTxt.setText(userAddressObject.getString("City"));
+                        zipCodeEditTxt.setText(userAddressObject.getString("ZipPostalCode"));
                         phoneNumberEditTxt.setText(userAddressObject.getString("PhoneNumber"));
                     }
                 } catch (JSONException e) {
@@ -526,18 +287,10 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         JSONObject userDetails = new JSONObject();
         try {
             userDetails.put("name", nameEditTxt.getText().toString());
-            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
-                userDetails.put("address", addressArrayList.get(addressSpinnerPosition).getAddress1());
-                userDetails.put("buildings", addressArrayList.get(addressSpinnerPosition).getAddress2());
-                userDetails.put("city", addressArrayList.get(addressSpinnerPosition).getCity());
-                userDetails.put("zipCode", addressArrayList.get(addressSpinnerPosition).getZipCode());
-            } else {
-                userDetails.put("address", addressEditTxt.getText().toString());
-                userDetails.put("buildings", buildingEditTxt.getText().toString());
-                userDetails.put("city", cityEditTxt.getText().toString());
-                userDetails.put("zipCode", zipCodeEditTxt.getText().toString());
-            }
-
+            userDetails.put("address", addressEditTxt.getText().toString());
+            userDetails.put("buildings", buildingEditTxt.getText().toString());
+            userDetails.put("city", cityEditTxt.getText().toString());
+            userDetails.put("zipCode", zipCodeEditTxt.getText().toString());
             userDetails.put("phoneNumber", phoneNumberEditTxt.getText().toString());
             userDetails.put("email", emailEditTxt.getText().toString());
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -579,9 +332,6 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
 //            ]
 //        }
 
-//1 cash remove
-//                4 paypal
-//                2
 
         try {
 
@@ -589,7 +339,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
                 if (Utils.isNetworkAvailable(this)) {
                     Utils.startLoadingScreen(this);
                     JSONObject requestObject = new JSONObject();
-                    requestObject.put("clientId", Utils.getClientId(this));
+                    requestObject.put("clientId", Constants.clientId);
                     boolean isUserCredentialsData = sharedPreferences.contains("userCredentials");
                     if (isUserCredentialsData) {
                         JSONObject userCredentials = new JSONObject((String) sharedPreferences.getString("userCredentials", ""));
@@ -673,7 +423,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
             try {
 
                 if (isAddressDetails) {
-                    requestObject.put("clientId", Utils.getClientId(this));
+                    requestObject.put("clientId", Constants.clientId);
                     JSONObject userDetails = new JSONObject(sharedPreferences.getString("userDetails", ""));
                     requestObject.put("Address1", userDetails.getString("address"));
                     requestObject.put("Address2", userDetails.getString("buildings"));

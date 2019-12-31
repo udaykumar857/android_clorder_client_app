@@ -4,23 +4,18 @@ import com.clorderclientapp.modelClasses.CategoryItemModel;
 import com.clorderclientapp.modelClasses.CategoryModel;
 import com.clorderclientapp.modelClasses.ExistingCardModel;
 import com.clorderclientapp.modelClasses.MenuModel;
-import com.clorderclientapp.modelClasses.MultiLocationModel;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.wallet.WalletConstants;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class Constants {
-    public static int clientId = 5;
-    public static int selectedRestaurantId = 5;
+    public static final int clientId = 5;
     public static final ArrayList<MenuModel> MenuArrayList = new ArrayList<>();
     public static final ArrayList<CategoryModel> MenuCategoryArrayList = new ArrayList<>();
     public static final ArrayList<CategoryItemModel> CategoryItemList = new ArrayList<>();
     public static final ArrayList<String> TimeSlotsTodayList = new ArrayList<>();
-    public static final ArrayList<MultiLocationModel> MultiLocationList = new ArrayList<>();
     public static boolean isRestaurantClosed = false;
     public static boolean isRestaurantDeliveryClosed = false;
     public static boolean isGuestUserLogin = false;
@@ -28,9 +23,6 @@ public class Constants {
     public static JSONObject discountObject;
     public static String selectedDate = null, selectedTime = null;
     public static String itemId = "";
-    public static JSONArray addressList = null;
-
-    public static String timeZone = "America/Los_Angeles";
 
 
     public static final int FetchMenuWithCategories = 1000;
@@ -51,11 +43,8 @@ public class Constants {
     public static final int ClorderFacebookSignup = 1015;
     public static final int FetchClientSettings = 1016;
     public static final int FetchRestTimeSlots = 1017;
-    public static final int GetOrderDetailsForReorder = 1018;
-    public static final int confirmOrderPostPayment = 1019;
-    public static final int ResetUserPassword = 1020;
-    public static final int FetchClientChildLocations=1021;
-    public static final int ChangeUserPassword=1021;
+    public static final int GetOrderDetailsForReorder=1018;
+    public static final int ConfirmPayPalOrder=1019;
 
 
     //Dialog Action Types
@@ -97,14 +86,6 @@ public class Constants {
     public static final int ActionSchedulePickUpChange = 2034;
     public static final int ActionItemModifierFailed = 2035;
     public static final int ActionFetchCouponFailed = 2036;
-    public static final int ActionGetOrderDetailsForReorderFailed = 2037;
-    public static final int ActionPasswordValidationAlert = 2038;
-    public static final int ActionLogout = 2039;
-    public static final int ActionResetUserPassword = 2040;
-    public static final int ActionResetUserPasswordFailed = 2041;
-    public static final int ActionGooglePayAvailable = 2042;
-    public static final int ActionBrainTreeCardDetailsWrong=2043;
-    public static final int ActionChangePasswordStatus=2044;
-    public static final int ActionChangePasswordSuccess=2045;
-
+    public static final int ActionGetOrderDetailsForReorderFailed=2037;
+    public static final int ActionPasswordValidationAlert=2038;
 }

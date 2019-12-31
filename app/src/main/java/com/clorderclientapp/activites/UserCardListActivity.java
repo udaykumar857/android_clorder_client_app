@@ -1,30 +1,19 @@
 package com.clorderclientapp.activites;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.braintreepayments.api.BraintreeFragment;
-import com.braintreepayments.api.GooglePayment;
-import com.braintreepayments.api.exceptions.BraintreeError;
-import com.braintreepayments.api.exceptions.ErrorWithResponse;
-import com.braintreepayments.api.exceptions.InvalidArgumentException;
-import com.braintreepayments.api.interfaces.BraintreeCancelListener;
-import com.braintreepayments.api.interfaces.BraintreeErrorListener;
-import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
-import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.clorderclientapp.R;
 import com.clorderclientapp.RealmModels.CartItemModel;
 import com.clorderclientapp.RealmModels.CartModel;
@@ -37,18 +26,7 @@ import com.clorderclientapp.interfaces.UserActionInterface;
 import com.clorderclientapp.modelClasses.ExistingCardModel;
 import com.clorderclientapp.modelClasses.ItemModifiersModel;
 import com.clorderclientapp.utils.Constants;
-import com.clorderclientapp.utils.PaymentsUtil;
 import com.clorderclientapp.utils.Utils;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.wallet.AutoResolveHelper;
-import com.google.android.gms.wallet.PaymentData;
-import com.google.android.gms.wallet.PaymentDataRequest;
-import com.google.android.gms.wallet.PaymentMethodToken;
-import com.google.android.gms.wallet.PaymentsClient;
-import com.google.android.gms.wallet.TransactionInfo;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -71,9 +49,9 @@ import java.util.TimeZone;
 import io.realm.Realm;
 import io.realm.RealmList;
 
-public class UserCardListActivity extends AppCompatActivity implements View.OnClickListener, HandleInterface, ResponseHandler, UserActionInterface, PaymentMethodNonceCreatedListener, BraintreeCancelListener, BraintreeErrorListener {
-    private TextView addACardBtn;
-    private TextView skipBtn, payPalTxt, payWithcard, googlePayTxt;
+public class UserCardListActivity extends AppCompatActivity implements View.OnClickListener, HandleInterface, ResponseHandler, UserActionInterface {
+    private Button addACardBtn;
+    private TextView skipBtn, payPalTxt;
     private ImageView accountUpdateBack;
     private ListView cardListView;
     private ExistingCardsAdapter existingCardsAdapter;
@@ -97,12 +75,7 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
     private static final int REQUEST_CODE_PAYMENT = 1;
     private String orderId = "0";
-    private String postResponse = "";
-    private PaymentsClient mPaymentsClient;
-    private static final int LOAD_PAYMENT_DATA_REQUEST_CODE = 991;
-    private ScrollView cardScroll;
-    private PaymentData googlePaymentData = null;
-
+    private String payPalResponse = "";
 
     // note that these credentials will differ between live & sandbox environments.
     //Sandbox
@@ -110,7 +83,8 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
 //    Ad832inWYflRVVajE2fEdOkud078w0xcXnYRto2eMY_O_aDW1OGZ8v30LIn4A_oshtdqtfBoYhMsqGl2  ---> Saurab Credentials
     //    AT6cGxBwRvDtcg5ZovY3buRT28DbZP7MBRaHEON8YZvUUd1FSz6ZHNQ1ejvc  ---> Clorder SandBox
     //    AVHn_BDAMoZIsKAAo7GjwIOM-7e1Gnc2XacJhYL4a5tvPeBuXbCqBC2AWGO3 ---->Clorder Live
-        //Live
+
+    //Live
     private static final String CONFIG_CLIENT_ID = "AVHn_BDAMoZIsKAAo7GjwI0M-7e1Gnc2XacJhYL4a5tvPeBuXbCqBC2AWGO3";
 
 
@@ -118,11 +92,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
             .environment(CONFIG_ENVIRONMENT)
             .clientId(CONFIG_CLIENT_ID);
     private static final String TAG = "paymentExample";
-    private BraintreeFragment mBraintreeFragment;
-    private String mAuthorization = "";
-    private String tokenizationKey = "production_hkggt9bz_9qx7w4yw7cdm4mbk";
-//    production_hkggt9bz_9qx7w4yw7cdm4mbk
-//    sandbox_m32bhjjg_x8xhk82f9y5vzx8k
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,30 +100,17 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
         initViews();
         listeners();
         httpRequest = new HttpRequest();
-
         if (getIntent() != null) {
             isFromUserCreation = getIntent().getIntExtra("isFromUserCreation", 0);
         }
         sharedPreferences = getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
-
-        try {
-            mBraintreeFragment = BraintreeFragment.newInstance(this, tokenizationKey);
-            // mBraintreeFragment is ready to use!
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-            Log.d("authorization", "authorizationIssue");
-            // There was an issue with your authorization string.
-        }
-
         if (isFromUserCreation == 1) {
             skipBtn.setText(getString(R.string.account_update_skip));
-            skipBtn.setVisibility(View.VISIBLE);
-            cardScroll.setVisibility(View.VISIBLE);
         } else {
+            payPalTxt.setVisibility(View.VISIBLE);
             skipBtn.setText(getString(R.string.account_update_pay_cash));
-            paymentButtons();
         }
-        if (!Constants.isGuestUserLogin || Constants.isGuestUserLogin || existingCardList == null) {
+        if (!Constants.isGuestUserLogin || existingCardList == null) {
             existingCardList = new ArrayList<>();
         }
 
@@ -170,15 +126,12 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initViews() {
-        addACardBtn = (TextView) findViewById(R.id.add_a_card_btn);
+        addACardBtn = (Button) findViewById(R.id.add_a_card_btn);
         skipBtn = (TextView) findViewById(R.id.skip_btn);
         accountUpdateBack = (ImageView) findViewById(R.id.account_update_back);
         cardListView = (ListView) findViewById(R.id.card_list);
         addCardListLayout = (LinearLayout) findViewById(R.id.add_card_list_layout);
         payPalTxt = (TextView) findViewById(R.id.pay_pal_txt);
-        payWithcard = findViewById(R.id.payWithcard);
-        googlePayTxt = findViewById(R.id.google_pay_txt);
-        cardScroll = findViewById(R.id.cardScroll);
     }
 
     private void listeners() {
@@ -186,105 +139,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
         skipBtn.setOnClickListener(this);
         payPalTxt.setOnClickListener(this);
         accountUpdateBack.setOnClickListener(this);
-        payWithcard.setOnClickListener(this);
-        googlePayTxt.setOnClickListener(this);
-    }
-
-
-    private void paymentButtons() {
-        int paymentSet = 7;
-        try {
-            paymentSet = Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("PaymentSetting");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d("paymentSet", "" + paymentSet);
-
-        //PaymentSetting =1 cash
-        //PaymentSetting =2 card
-        //PaymentSetting =3 cash,card
-        //PaymentSetting =4 paypal
-        //PaymentSetting =5 paypal,cash
-        //PaymentSetting =6 card, paypal
-        //PaymentSetting =7 cash, card, paypal
-
-        //64 -- google pay
-        //128 ---Apple Pay  XOR
-
-        int paymentPref[] = {128, 64, 32, 16, 8, 4, 2, 1};
-
-        // XOR operation between paymentSetting value and above list
-        for (int i = 0; i < paymentPref.length; i++) {
-            if (paymentPref[i] <= paymentSet) {
-                paymentSet = paymentSet - paymentPref[i];
-                if (paymentSet == 0) {
-                    paymentButtonsEnable(paymentPref[i]);
-                    break;
-                } else {
-                    paymentButtonsEnable(paymentPref[i]);
-                }
-            }
-        }
-    }
-
-
-    private void paymentButtonsEnable(int paymentSet) {
-        switch (paymentSet) {
-            case 1:
-                skipBtn.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-                payWithcard.setVisibility(View.VISIBLE);
-                cardScroll.setVisibility(View.VISIBLE);
-                break;
-            case 4:
-                payPalTxt.setVisibility(View.VISIBLE);
-                break;
-            case 64:
-//                googlePayTxt.setVisibility(View.VISIBLE);
-                break;
-        }
-    }
-
-    private void handlePaymentSuccess(PaymentData paymentData) {
-        // PaymentMethodToken contains the payment information, as well as any additional
-        // requested information, such as billing and shipping address.
-        //
-        // Refer to your processor's documentation on how to proceed from here.
-        PaymentMethodToken token = paymentData.getPaymentMethodToken();
-
-        Log.d("paymentData", "" + paymentData);
-
-        // getPaymentMethodToken will only return null if PaymentMethodTokenizationParameters was
-        // not set in the PaymentRequest.
-        if (token != null) {
-            // If the gateway is set to example, no payment information is returned - instead, the
-            // token will only consist of "examplePaymentMethodToken".
-            if (token.getToken().equals("examplePaymentMethodToken")) {
-                AlertDialog alertDialog = new AlertDialog.Builder(this)
-                        .setTitle("Warning")
-                        .setMessage("Gateway name set to \"example\" - please modify " +
-                                "Constants.java and replace it with your own gateway.")
-                        .setPositiveButton("OK", null)
-                        .create();
-                alertDialog.show();
-            }
-
-            String billingName = paymentData.getCardInfo().getBillingAddress().getName();
-            Log.d("paymentData", paymentData.getEmail() + "/t" + paymentData.getCardInfo() + "/t" + paymentData.getGoogleTransactionId() + "/t" + paymentData.getPaymentMethodToken() + "/t" + paymentData.getShippingAddress() + "/t" + paymentData.getExtraData());
-            Toast.makeText(this, getString(R.string.payments_show_name, billingName), Toast.LENGTH_LONG).show();
-
-            // Use token.getToken() to get the token string.
-            Log.d("PaymentData", "PaymentMethodToken received");
-        }
-    }
-
-    private void handleError(int statusCode) {
-        // At this stage, the user has already seen a popup informing them an error occurred.
-        // Normally, only logging is required.
-        // statusCode will hold the value of any constant from CommonStatusCode or one of the
-        // WalletConstants.ERROR_CODE_* constants.
-        Log.w("loadPaymentData failed", String.format("Error code: %d", statusCode));
     }
 
 
@@ -296,19 +150,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                 Intent intent = new Intent(this, PaymentAddCardActivity.class);
                 intent.putExtra("isNewCard", true);
                 startActivityForResult(intent, ADD_CARD);
-                break;
-            case R.id.payWithcard:
-                if (existingCardList != null && existingCardList.size() > 0) {
-                    paymentType = 2;
-                    billingZipCode = existingCardList.get(0).getBillingZipCode();
-                    creditCardCSC = existingCardList.get(0).getCreditCardCSC();
-                    creditCardExpired = existingCardList.get(0).getCreditCardExpired();
-                    creditCardNumber = existingCardList.get(0).getCreditCardNumber();
-                    creditCardType = existingCardList.get(0).getCreditCardType();
-                    cartSubmit();
-                } else {
-                    Utils.toastDisplay(this, "Please add your card.");
-                }
                 break;
             case R.id.skip_btn:
                 if (isFromUserCreation == 1) {
@@ -337,10 +178,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                 paymentType = 4;
                 cartSubmit();
                 break;
-            case R.id.google_pay_txt:
-                paymentType = 64;
-                cartSubmit();
-                break;
         }
     }
 
@@ -349,32 +186,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
         super.onBackPressed();
     }
 
-
-    @Override
-    public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
-        // Send this nonce to your server
-        String nonce = paymentMethodNonce.getNonce();
-
-        JSONObject googlePayResponseObject = new JSONObject();
-        try {
-            googlePayResponseObject.put("email", googlePaymentData.getEmail());
-            googlePayResponseObject.put("transactionId", googlePaymentData.getGoogleTransactionId());
-            Realm realm = Realm.getDefaultInstance();
-            CartModel cartModel = realm.where(CartModel.class).findFirst();
-            googlePayResponseObject.put("Amount", String.valueOf(cartModel.getOrderTotal()));
-
-            SimpleDateFormat currentDate = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa", Locale.getDefault());
-            currentDate.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
-
-            googlePayResponseObject.put("Time", currentDate.format(Calendar.getInstance().getTimeInMillis()));
-            googlePayResponseObject.put("nonce", nonce);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        postResponse = googlePayResponseObject.toString();
-        confirmPostOrder();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -403,6 +214,8 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                             addCardListLayout.setVisibility(View.VISIBLE);
                             existingCardsAdapter.notifyDataSetChanged();
                         }
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -418,10 +231,10 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                             Log.i(TAG, confirm.toJSONObject().toString(4));
                             Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
 
-                            postResponse = confirm.toJSONObject().getJSONObject("response").toString();
-                            Log.d("Paypal Response", "" + postResponse);
+                            payPalResponse = confirm.toJSONObject().getJSONObject("response").toString();
+                            Log.d("Paypal Response", "" + payPalResponse);
 
-                            confirmPostOrder();
+                            confirmPayPalOrder();
 
                             /**
                              *  TODO: send 'confirm' (and possibly confirm.getPayment() to your server for verification
@@ -432,48 +245,18 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                              * For sample mobile backend interactions, see
                              * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
                              */
-//                           displayResultText("PaymentConfirmation info received from PayPal");
+//                        displayResultText("PaymentConfirmation info received from PayPal");
+
+
                         } catch (JSONException e) {
                             Log.e(TAG, "an extremely unlikely failure occurred: ", e);
                         }
                     }
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     Log.i(TAG, "The user canceled.");
-                    Utils.showPositiveDialog(this,"Transaction has been Cancel!!","Please initiate the payment again",0);
                 } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                     Log.i(TAG, "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
                 }
-                break;
-            case LOAD_PAYMENT_DATA_REQUEST_CODE:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
-                        googlePaymentData = PaymentData.getFromIntent(data);
-
-//                        Log.d("paymentData Object", paymentData);
-
-
-//                        handlePaymentSuccess(paymentData);
-
-
-//
-                        Log.d("googlePaymentData", googlePaymentData.getEmail() + "/t" + googlePaymentData.getCardInfo() + "/t" + googlePaymentData.getGoogleTransactionId() + "/t" + googlePaymentData.getPaymentMethodToken() + "/t" + googlePaymentData.getShippingAddress() + "/t" + googlePaymentData.getExtraData());
-
-                        GooglePayment.tokenize(mBraintreeFragment, googlePaymentData);
-
-//
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        // Nothing to here normally - the user simply cancelled without selecting a
-                        // payment method.
-                        break;
-                    case AutoResolveHelper.RESULT_ERROR:
-                        Status status = AutoResolveHelper.getStatusFromIntent(data);
-                        handleError(status.getStatusCode());
-                        break;
-                }
-
-                // Re-enables the Pay with Google button.
-                googlePayTxt.setClickable(true);
                 break;
         }
 
@@ -577,60 +360,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-
-    private void checkIsReadyToPay() {
-        // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
-        // OnCompleteListener to be triggered when the result of the call is known.
-        PaymentsUtil.isReadyToPay(mPaymentsClient).addOnCompleteListener(
-                new OnCompleteListener<Boolean>() {
-                    public void onComplete(Task<Boolean> task) {
-                        try {
-                            boolean result = task.getResult(ApiException.class);
-                            setGooglePayAvailable(result);
-                        } catch (ApiException exception) {
-                            // Process error
-                            Log.w("isReadyToPay failed", exception);
-                        }
-                    }
-                });
-    }
-
-    private void setGooglePayAvailable(boolean available) {
-        // If isReadyToPay returned true, show the button and hide the "checking" text. Otherwise,
-        // notify the user that Pay with Google is not available.
-        // Please adjust to fit in with your current user flow. You are not required to explicitly
-        // let the user know if isReadyToPay returns false.
-        if (!available) {
-            Utils.showPositiveDialog(this, getResources().getString(R.string.alert_txt), getResources().getString(R.string.googlepay_status_unavailable), Constants.ActionGooglePayAvailable);
-        } else {
-
-            requestPayment();
-        }
-    }
-
-    public void requestPayment() {
-        // Disables the button to prevent multiple clicks.
-        googlePayTxt.setClickable(false);
-
-        // The price provided to the API should include taxes and shipping.
-        // This price is not displayed to the user.
-        Realm realm = Realm.getDefaultInstance();
-        CartModel cartModel = realm.where(CartModel.class).findFirst();
-        String price = PaymentsUtil.microsToString(cartModel.getOrderTotal());
-
-        Log.d("TotalPrice Google Pay->", cartModel.getOrderTotal() + "<--->" + price);
-
-        TransactionInfo transaction = PaymentsUtil.createTransaction(price);
-        PaymentDataRequest request = PaymentsUtil.createPaymentDataRequest(transaction);
-        Task<PaymentData> futurePaymentData = mPaymentsClient.loadPaymentData(request);
-
-
-        // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-        // AutoResolveHelper to wait for the user interacting with it. Once completed,
-        // onActivityResult will be called with the result.
-        AutoResolveHelper.resolveTask(futurePaymentData, this, LOAD_PAYMENT_DATA_REQUEST_CODE);
-    }
-
     private void updateClorderUser(int position) {
 //        {
 //            "clientId": 5,
@@ -663,7 +392,7 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             boolean isUserCredentialsData = sharedPreferences.contains("userCredentials");
             if (isUserCredentialsData) {
                 JSONObject userCredentials = new JSONObject((String) sharedPreferences.getString("userCredentials", ""));
@@ -759,18 +488,10 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
             try {
                 Realm realm = Realm.getDefaultInstance();
                 CartModel cartModel = realm.where(CartModel.class).findFirst();
-                int value = cartModel.getOrderId();
-                Log.d("value",""+value);
-                if (value != 0){
-                    cartObject.put("OrderId", value );
-                    Log.d("valuefired",""+value);
-                } else {
-                    cartObject.put("OrderId", 0 );
-                    Log.d("valueofbase",""+value);
-                }
+                //Cart Object
                 cartObject.put("IpAddress", "");
-//                cartObject.put("OrderId", 0 );
-                cartObject.put("ClientId", Utils.getClientId(this));
+                cartObject.put("OrderId", 0);
+                cartObject.put("ClientId", Constants.clientId);
                 cartObject.put("PaymentType", paymentType);
 
                 boolean isUserCredentials = sharedPreferences.contains("userCredentials");
@@ -790,7 +511,7 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                     orderDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
 
                     SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-//                    simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//                    simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                     Constants.selectedTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
                 } else {
 //                    "OrderDate":"2016-12-08 9:45 AM"
@@ -798,9 +519,9 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                     orderDate = Constants.selectedDate + " " + Constants.selectedTime;
 
                     Log.d("OrderTimeOriginal", "" + orderDate);
-                    SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa", Locale.getDefault());
+                    SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa",Locale.getDefault());
 
-                    sourceFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+//                    sourceFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
 
                     Date parsed = null;
                     try {
@@ -810,7 +531,7 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                     }
                     Log.d("OrderTime8", "" + parsed);
                     TimeZone tz = TimeZone.getTimeZone("GMT");
-                    SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa", Locale.getDefault());
+                    SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
                     destFormat.setTimeZone(tz);
 
                     orderDate = destFormat.format(parsed);
@@ -820,11 +541,11 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
-                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String nowTime = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
 
                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                 String nowDate = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
 
                 if (nowDate.equals(Constants.selectedDate)) {
@@ -947,20 +668,20 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void confirmPostOrder() {
+    private void confirmPayPalOrder() {
 
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("ClientId", Utils.getClientId(this));
-            requestObject.put("OrderId",orderId);
-            requestObject.put("PaymentResponse", postResponse);
+            requestObject.put("ClientId", Constants.clientId);
+            requestObject.put("OrderId", orderId);
+            requestObject.put("PaypalResponse", payPalResponse);
             Log.d("Confirm Paypal Req", "" + requestObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        httpRequest.confirmOrderPostPayment(this, requestObject, Constants.confirmOrderPostPayment);
+        httpRequest.confirmPayPalOrder(this, requestObject, Constants.ConfirmPayPalOrder);
     }
 
     @Override
@@ -1006,8 +727,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                                 case 4:
                                     cartModel.setPaymentType("PayPal Prepaid");
                                     break;
-                                case 64:
-                                    cartModel.setPaymentType("Google Pay");
                                 default:
                                     cartModel.setPaymentType("Cash Payment");
                                     break;
@@ -1027,36 +746,18 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                             realm.copyToRealmOrUpdate(cartModel);
                             realm.commitTransaction();
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa", Locale.getDefault());
-                            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-8"));
                             pstCurrentTime = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
-                            switch (paymentType) {
-                                case 4:
-                                    Intent intent1 = new Intent(this, PayPalService.class);
-                                    intent1.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-                                    startService(intent1);
-                                    getThingToBuy();
-                                    break;
-                                case 64:
-                                    mPaymentsClient = PaymentsUtil.createPaymentsClient(this);
-                                    checkIsReadyToPay();
-                                    break;
-                                default:
-                                    Utils.showPositiveDialog(this, "OrderSuccess", getString(R.string.order_successfully_place_msg) + responseObject.getString("OrderId"), Constants.ActionCartSubmitSuccess);
-                                    break;
+                            if (paymentType == 4) {
+                                Intent intent1 = new Intent(this, PayPalService.class);
+                                intent1.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                                startService(intent1);
+                                getThingToBuy();
+                            } else {
+                                Utils.showPositiveDialog(this, "OrderSuccess", getString(R.string.order_successfully_place_msg) + responseObject.getString("OrderId"), Constants.ActionCartSubmitSuccess);
                             }
-//                            if (paymentType == 4) {
-//
-//                            } else {
-//
-//                            }
 
                         } else {
-                            Realm realm = Realm.getDefaultInstance();
-                            CartModel cartModel = realm.where(CartModel.class).findFirst();
-                            realm.beginTransaction();
-                            cartModel.setOrderId(responseObject.getInt("OrderId"));
-                            realm.copyToRealmOrUpdate(cartModel);
-                            realm.commitTransaction();
                             Utils.showPositiveDialog(this, "OrderFailed", responseObject.getString("statusMessage"), Constants.ActionCartSubmitFailed);
                         }
                     } catch (JSONException e) {
@@ -1067,9 +768,9 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
 
-            case Constants.confirmOrderPostPayment:
+            case Constants.ConfirmPayPalOrder:
                 if (response != null) {
-                    Log.d("ConfirmOrderPost", "" + response.toString());
+                    Log.d("ConfirmPayPalOrder", "" + response.toString());
                     try {
                         JSONObject responseObject = new JSONObject((String) response);
                         if (responseObject.getBoolean("isSuccess")) {
@@ -1081,8 +782,6 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
                         e.printStackTrace();
                     }
 
-                } else {
-                    Utils.showPositiveDialog(this, "Alert", getString(R.string.unable_process_req), Constants.ActionNetworkFailed);
                 }
                 break;
         }
@@ -1199,25 +898,4 @@ public class UserCardListActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    @Override
-    public void onCancel(int i) {
-
-    }
-
-    @Override
-    public void onError(Exception e) {
-        if (e instanceof ErrorWithResponse) {
-            ErrorWithResponse errorWithResponse = (ErrorWithResponse) e;
-            BraintreeError cardErrors = errorWithResponse.errorFor("creditCard");
-            if (cardErrors != null) {
-                // There is an issue with the credit card.
-                BraintreeError expirationMonthError = cardErrors.errorFor("expirationMonth");
-                if (expirationMonthError != null) {
-                    // There is an issue with the expiration month.
-                    Utils.showPositiveDialog(this, "Message", expirationMonthError.getMessage(), Constants.ActionBrainTreeCardDetailsWrong);
-//                    setErrorMessage(expirationMonthError.getMessage());
-                }
-            }
-        }
-    }
 }

@@ -1,40 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@mipmap/home_screen_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/address_title"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
         android:background="@color/new_order_sign_in_txt_bg_col"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/back_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:src="@mipmap/left_arrow" />
-
-        <com.clorderclientapp.utils.FontTextViewRegularClass
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/customer_log_in_txt"
-            android:textColor="@color/new_order_sign_in_txt_col"
-            android:textSize="@dimen/new_order_sign_in_txt_size" />
-
-    </RelativeLayout>
-
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/customer_log_in_txt"
+        android:textColor="@color/new_order_sign_in_txt_col"
+        android:textSize="@dimen/new_order_sign_in_txt_size"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -49,56 +30,55 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/new_user_email_txt"
+                android:textColor="@color/email_sign_in_txt_col"
+                android:textSize="@dimen/email_sign_in_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/email_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:drawableLeft="@mipmap/rsz_1emailid"
-                android:drawablePadding="10dp"
-                android:drawableStart="@mipmap/rsz_1emailid"
-                android:hint="@string/new_user_email_txt"
+                android:background="@drawable/drawable_white_bg"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:padding="15dp" />
+                android:padding="8dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/password_sign_in_txt"
+                android:textColor="@color/password_sign_in_txt_col"
+                android:textSize="@dimen/password_sign_in_txt_size"
+                android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontEditTextRegularClass
+            <EditText
                 android:id="@+id/password_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:drawableLeft="@mipmap/rsz_password"
-                android:drawablePadding="10dp"
-                android:drawableStart="@mipmap/rsz_password"
-                android:hint="@string/password_sign_in_txt"
+                android:background="@drawable/drawable_white_bg"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:padding="15dp" />
+                android:padding="8dp" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
-                android:id="@+id/forgotPasswordTxt"
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/create_user_txt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:gravity="end"
-                android:textColor="@android:color/black"
-                android:text="@string/forgot_password_txt"
-
-                />
-
-
-
-            <!--<TextView-->
-            <!--android:id="@+id/create_user_txt"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:autoLink="none"-->
-            <!--android:text="@string/register_user_sign_in_txt"-->
-            <!--android:textColor="@color/create_user_sign_in_txt_col"-->
-            <!--android:textSize="@dimen/create_user_sign_in_txt_size" />-->
+                android:layout_gravity="right"
+                android:autoLink="none"
+                android:text="@string/register_user_sign_in_txt"
+                android:textColor="@color/create_user_sign_in_txt_col"
+                android:textSize="@dimen/create_user_sign_in_txt_size" />
 
 
             <LinearLayout
@@ -107,47 +87,45 @@
                 android:layout_margin="10dp"
                 android:gravity="center">
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/sign_in_btn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/drawable_button_blue_bg"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:padding="10dp"
                     android:text="@string/sign_in_txt"
                     android:textColor="@color/sign_in_txt_col"
-                    android:textSize="@dimen/sign_in_txt_size" />
+                    android:textSize="@dimen/sign_in_txt_size"
+                    android:textStyle="bold" />
 
-                <com.clorderclientapp.utils.FontTextViewRegularClass
+                <TextView
                     android:id="@+id/guest_user_btn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/drawable_button_blue_bg"
+                    android:ems="7"
                     android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:padding="10dp"
                     android:text="@string/guest_log_in_txt"
                     android:textColor="@color/guest_user_txt_col"
-                    android:textSize="@dimen/guest_user_txt_size" />
+                    android:textSize="@dimen/guest_user_txt_size"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-            <ImageView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="@string/login_via_txt"
-                android:src="@mipmap/login_via"
+                android:text="@string/or_txt"
                 android:textColor="@color/or_txt_col"
-                android:textSize="@dimen/or_txt_size" />
+                android:textSize="@dimen/or_txt_size"
+                android:textStyle="bold" />
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb_login_btn"
@@ -164,73 +142,33 @@
                 android:textSize="15dp"
                 android:visibility="gone" />
 
+
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/fb_sign_in"
-                android:layout_margin="10dp"
                 android:id="@+id/fb_image"
-                />
-            <ImageView
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/google_sign_in"
-                android:id="@+id/g_image"
-                />
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/fb_image"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:src="@drawable/facebook" />-->
-
-                <!--<ImageView-->
-                <!--android:id="@+id/fb_image"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:adjustViewBounds="true"-->
-                <!--android:scaleType="centerInside"-->
-                <!--android:src="@mipmap/facebook2" />-->
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@mipmap/facebook2" />
 
 
-                <!--<com.google.android.gms.common.SignInButton-->
-                <!--android:id="@+id/google_sign_in_btn"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--android:visibility="gone" />-->
-
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/g_image"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:src="@drawable/google_plus" />-->
-            <!--</LinearLayout>-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/g_image"-->
+            <!--<com.google.android.gms.common.SignInButton-->
+            <!--android:id="@+id/google_sign_in_btn"-->
             <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:adjustViewBounds="true"-->
-            <!--android:scaleType="centerInside"-->
-            <!--android:src="@mipmap/google_plus2" />-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:visibility="gone" />-->
+
+            <ImageView
+                android:id="@+id/g_image"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@mipmap/google_plus2" />
 
 
             <Button
@@ -241,21 +179,8 @@
                 android:text="@string/google_sign_out_btn_txt"
                 android:textAllCaps="false"
                 android:visibility="gone" />
-
-            <com.clorderclientapp.utils.FontTextViewRegularClass
-                android:id="@+id/create_user_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="@string/new_user_register_txt"
-                android:textColor="#Fb5b5b"
-                android:textSize="@dimen/create_user_sign_in_txt_size" />
-
         </LinearLayout>
 
 
     </ScrollView>
-
 </LinearLayout>

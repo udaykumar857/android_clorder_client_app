@@ -9,7 +9,7 @@
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FB5B5B"
+        android:background="@mipmap/item_list_page"
         android:padding="10dp">
 
         <ImageView
@@ -21,7 +21,7 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/left_arrow" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <com.clorderclientapp.utils.FontTextViewBoldClass
+    <TextView
         android:id="@+id/order_information_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/order_id_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:textStyle="bold" />
 
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/placed_on_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:textSize="@dimen/placed_on_details_txt_size"
             android:textStyle="bold" />
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/order_date_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:textStyle="bold" />
 
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/order_type_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:textStyle="bold" />
 
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/payment_mode_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
         android:background="#2DBCE6"
         android:weightSum="5">
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:id="@+id/quantity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
             android:background="#ffffff" />
 
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -156,7 +156,7 @@
             android:layout_height="match_parent"
             android:background="#ffffff" />
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:id="@+id/price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -212,13 +212,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/subtotal_details_txt" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/subtotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -232,13 +232,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
+
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/discount_details_txt" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/discount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -252,13 +253,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
+
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/tax_details_txt" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/tax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -272,13 +274,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
+
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/delivery_fee_txt" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/delivery_fee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -292,13 +295,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
+
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/tip_details_txt" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/detail_tip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -336,7 +340,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp">
 
-                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                    <TextView
                         android:id="@+id/payment_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -348,14 +352,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true">
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:text="@string/total_details_txt"
                             android:textSize="@dimen/total_details_txt_size" />
 
-                        <com.clorderclientapp.utils.FontTextViewRegularClass
+                        <TextView
                             android:id="@+id/order_total_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -374,7 +378,7 @@
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
-                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                    <TextView
                         android:id="@+id/special_notes_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -382,7 +386,7 @@
                         android:textColor="@color/special_notes_details_txt_col"
                         android:textSize="@dimen/special_notes_details_txt_size" />
 
-                    <com.clorderclientapp.utils.FontTextViewRegularClass
+                    <TextView
                         android:id="@+id/special_notes_msg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -437,7 +441,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <com.clorderclientapp.utils.FontButtonRegularClass
+            <Button
                 android:id="@+id/pickup_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -450,7 +454,7 @@
                 android:textSize="@dimen/order_history_delivery_type_text_size"
                 android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontButtonRegularClass
+            <Button
                 android:id="@+id/delivery_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

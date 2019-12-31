@@ -4,14 +4,15 @@ package com.clorderclientapp.activites;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.Html;
+import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.Base64;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -51,9 +52,6 @@ import com.google.android.gms.common.api.Status;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import io.realm.Realm;
 
 public class SignInUserActivity extends AppCompatActivity implements View.OnClickListener, ResponseHandler,
@@ -71,8 +69,7 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
     private GoogleApiClient mGoogleApiClient;
     CallbackManager callbackManager;
     private Button googleSignOutBtn;
-    private ImageView googleImage, fbImage, backImg;
-    private TextView forgotPasswordTxt;
+    private ImageView googleImage, fbImage;
 
 
     @Override
@@ -97,44 +94,39 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
                 .build();
 //        googleSignInBtn.setStyle(SignInButton.SIZE_WIDE, SignInButton.COLOR_AUTO);
 
-        String createTxt = "<font color=#000000>New User /</font> <font color=#Fb5b5b>Register</font>";
-        createUserTxt.setText(Html.fromHtml(createTxt));
+        SpannableString ss = new SpannableString("Register User");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent intent = new Intent(SignInUserActivity.this, NewUserSignUpActivity.class);
+                intent.putExtra("email", emailEditTxt.getText().toString());
+                intent.putExtra("password", passwordEditTxt.getText().toString());
+                startActivity(intent);
+            }
 
-//        SpannableString ss = new SpannableString("New User / Register");
-//        ClickableSpan clickableSpan = new ClickableSpan() {
-//            @Override
-//            public void onClick(View textView) {
-//                Intent intent = new Intent(SignInUserActivity.this, NewUserSignUpActivity.class);
-//                intent.putExtra("email", emailEditTxt.getText().toString());
-//                intent.putExtra("password", passwordEditTxt.getText().toString());
-//                startActivity(intent);
-//            }
-//
-//            @Override
-//            public void updateDrawState(TextPaint ds) {
-//                super.updateDrawState(ds);
-//                ds.setUnderlineText(false);
-//            }
-//        };
-//        ss.setSpan(clickableSpan, 0, 19, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-//        createUserTxt.setText(ss);
-//        createUserTxt.setLinkTextColor(Color.parseColor("#fb5b5b"));
-//        createUserTxt.setMovementMethod(LinkMovementMethod.getInstance());
-//        createUserTxt.setHighlightColor(Color.parseColor("#1242aa"));
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+            }
+        };
+        ss.setSpan(clickableSpan, 0, 13, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        createUserTxt.setText(ss);
+        createUserTxt.setLinkTextColor(Color.parseColor("#FFFFFF"));
+        createUserTxt.setMovementMethod(LinkMovementMethod.getInstance());
+        createUserTxt.setHighlightColor(Color.parseColor("#1242aa"));
 //        fbLoginBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 //        fbLoginBtn.setText("");
 //        fbLoginBtn.setBackgroundResource(R.mipmap.facebook);
     }
 
     private void initViews() {
-        backImg = (ImageView) findViewById(R.id.back_img);
         googleImage = (ImageView) findViewById(R.id.g_image);
         fbImage = (ImageView) findViewById(R.id.fb_image);
         emailEditTxt = (EditText) findViewById(R.id.email_edit);
         passwordEditTxt = (EditText) findViewById(R.id.password_edit);
         signInBtn = (TextView) findViewById(R.id.sign_in_btn);
         guestUserBtn = (TextView) findViewById(R.id.guest_user_btn);
-        forgotPasswordTxt = findViewById(R.id.forgotPasswordTxt);
         fbLoginBtn = (LoginButton) findViewById(R.id.fb_login_btn);
 //        googleSignInBtn = (SignInButton) findViewById(R.id.google_sign_in_btn);
         createUserTxt = (TextView) findViewById(R.id.create_user_txt);
@@ -143,7 +135,6 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
 
     private void listeners() {
         callbackManager = CallbackManager.Factory.create();
-        backImg.setOnClickListener(this);
         fbLoginBtn.setReadPermissions("email");
         fbLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -189,8 +180,7 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
         fbLoginBtn.setOnClickListener(this);
         googleImage.setOnClickListener(this);
         googleSignOutBtn.setOnClickListener(this);
-        createUserTxt.setOnClickListener(this);
-        forgotPasswordTxt.setOnClickListener(this);
+
     }
 
 
@@ -198,13 +188,14 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
         Utils.startLoadingScreen(this);
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("Email", emailEditTxt.getText().toString());
             requestObject.put("Password", passwordEditTxt.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         httpRequest.loginUser(this, requestObject, Constants.LoginUser);
+
     }
 
     @Override
@@ -272,7 +263,7 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
 //                    "Email":"mobigo1234@gmail.com",
 //                    "FirstName":"mobigo 123"
 //            }
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
             requestObject.put("Email", email);
             requestObject.put("FullName", name);
             Log.d("clorderGoogleSignUpReq", " " + requestObject.toString());
@@ -290,16 +281,6 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.back_img:
-                onBackPressed();
-                break;
-            case R.id.create_user_txt:
-                Intent intent = new Intent(SignInUserActivity.this, NewUserSignUpActivity.class);
-                intent.putExtra("email", emailEditTxt.getText().toString());
-                intent.putExtra("password", passwordEditTxt.getText().toString());
-                startActivity(intent);
-                finish();
-                break;
             case R.id.sign_in_btn:
                 Constants.isGuestUserLogin = false;
                 if (emailEditTxt.getText().length() > 0) {
@@ -336,9 +317,9 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
                     Utils.showPositiveDialog(this, getString(R.string.message_txt), getString(R.string.guest_user_re_order_msg), Constants.ActionReOrderGuestUser);
                 } else {
                     Constants.isGuestUserLogin = true;
-                    Intent intent1 = new Intent(this, DeliveryAddressActivity.class);
-                    intent1.putExtra("isFromUserCreation", 0);
-                    startActivity(intent1);
+                    Intent intent = new Intent(this, DeliveryAddressActivity.class);
+                    intent.putExtra("isFromUserCreation", 0);
+                    startActivity(intent);
                 }
 
 
@@ -362,24 +343,24 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
             case R.id.fb_login_btn:
                 Constants.isGuestUserLogin = false;
                 // Initialize the SDK before executing any other operations,
-                PackageInfo info;
-                try {
-                    info = getPackageManager().getPackageInfo("com.clorderclientapp", PackageManager.GET_SIGNATURES);
-                    for (Signature signature : info.signatures) {
-                        MessageDigest md;
-                        md = MessageDigest.getInstance("SHA");
-                        md.update(signature.toByteArray());
-                        String something = new String(Base64.encode(md.digest(), 0));
-//                        String something = new String(Base64.encodeBytes(md.digest()));
-                        Log.e("hash key", something);
-                    }
-                } catch (PackageManager.NameNotFoundException e1) {
-                    Log.e("name not found", e1.toString());
-                } catch (NoSuchAlgorithmException e) {
-                    Log.e("no such an algorithm", e.toString());
-                } catch (Exception e) {
-                    Log.e("exception", e.toString());
-                }
+//                PackageInfo info;
+//                try {
+//                    info = getPackageManager().getPackageInfo("com.clorderclientapp", PackageManager.GET_SIGNATURES);
+//                    for (Signature signature : info.signatures) {
+//                        MessageDigest md;
+//                        md = MessageDigest.getInstance("SHA");
+//                        md.update(signature.toByteArray());
+//                        String something = new String(Base64.encode(md.digest(), 0));
+//                        //String something = new String(Base64.encodeBytes(md.digest()));
+//                        Log.e("hash key", something);
+//                    }
+//                } catch (PackageManager.NameNotFoundException e1) {
+//                    Log.e("name not found", e1.toString());
+//                } catch (NoSuchAlgorithmException e) {
+//                    Log.e("no such an algorithm", e.toString());
+//                } catch (Exception e) {
+//                    Log.e("exception", e.toString());
+//                }
                 break;
 //            case R.id.google_sign_in_btn:
 //                Constants.isGuestUserLogin = false;
@@ -408,10 +389,6 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
             case R.id.google_sign_out_btn:
                 Constants.isGuestUserLogin = false;
                 signOut();
-                break;
-
-            case R.id.forgotPasswordTxt:
-                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 break;
 
         }
@@ -761,7 +738,5 @@ public class SignInUserActivity extends AppCompatActivity implements View.OnClic
         }
 
     }
-
-
 
 }

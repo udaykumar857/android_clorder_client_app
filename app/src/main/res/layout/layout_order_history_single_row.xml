@@ -14,8 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@mipmap/logo_oh" />
-        <!--android:src="@mipmap/logo_oh"-->
+            android:src="@mipmap/johnnies_round_logo" />
+        <!--android:src="@mipmap/johnnies_round_logo"-->
         <!--android:src="@mipmap/waba_logo"-->
 
         <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_marginStart="10dp"
             android:orientation="vertical">
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 android:textSize="@dimen/order_name_txt_size"
                 android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/order_id_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,13 +42,10 @@
                 android:textSize="@dimen/order_id_history_txt_size"
                 android:textStyle="bold" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/order_date_txt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/order_name_txt_size"
-                android:textColor="@color/order_id_history_txt_col"
-                android:textStyle="bold"/>
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -66,7 +63,7 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/order_total_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -84,7 +81,7 @@
             android:visibility="invisible" />
 
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:id="@+id/order_options_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

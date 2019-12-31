@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content">
 
 
-            <com.clorderclientapp.utils.FontTextViewBoldClass
+            <TextView
                 android:id="@+id/itemname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/makeitwith_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:textColor="@color/make_it_with_txt_col"
                 android:visibility="gone" />
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/makeitwith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:orientation="horizontal">
 
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/note_text"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:visibility="gone" />
 
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <TextView
                 android:id="@+id/note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.clorderclientapp.utils.FontTextViewRegularClass
+        <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

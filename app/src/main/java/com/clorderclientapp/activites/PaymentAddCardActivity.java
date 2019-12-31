@@ -5,15 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.clorderclientapp.R;
 import com.clorderclientapp.httpClient.HttpRequest;
@@ -27,10 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class PaymentAddCardActivity extends AppCompatActivity implements View.OnClickListener, ResponseHandler, UserActionInterface {
 
@@ -45,7 +40,6 @@ public class PaymentAddCardActivity extends AppCompatActivity implements View.On
     private SharedPreferences sharedPreferences;
     private ArrayList<String> monthList;
     private ArrayList<String> yearList;
-    private TextView paymentsTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +53,6 @@ public class PaymentAddCardActivity extends AppCompatActivity implements View.On
         if (getIntent() != null) {
             isNewCard = getIntent().getBooleanExtra("isNewCard", false);
             if (!isNewCard) {
-                addCardBtn.setText(getResources().getString(R.string.update_txt));
-                paymentsTxt.setText(getResources().getString(R.string.payment_update_card_txt));
                 existingCardModel = getIntent().getParcelableExtra("cardObject");
                 setData();
             }
@@ -76,28 +68,9 @@ public class PaymentAddCardActivity extends AppCompatActivity implements View.On
         monthSpinner = (Spinner) findViewById(R.id.month_spinner);
         yearSpinner = (Spinner) findViewById(R.id.year_spinner);
         addCardBtn = (Button) findViewById(R.id.add_card_btn);
-        paymentsTxt = findViewById(R.id.payments_txt);
     }
 
     private void listeners() {
-        yearList = new ArrayList<>();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
-        int currentYear = Integer.parseInt(simpleDateFormat.format(new Date()));
-        for (int i = 0; i < 21; i++) {
-            yearList.add(String.valueOf(currentYear + i));
-        }
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this,
-                R.layout.card_spinner_text_view, yearList);
-        yearSpinner.setAdapter(yearAdapter);
-        monthList = new ArrayList<>();
-        String mList[] = getResources().getStringArray(R.array.expiry_month);
-        for (int j = 0; j < mList.length; j++) {
-            monthList.add(mList[j]);
-        }
-        ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(this,
-                R.layout.card_spinner_text_view, monthList);
-        monthSpinner.setAdapter(monthAdapter);
-
         accountUpdateBack.setOnClickListener(this);
         addCardBtn.setOnClickListener(this);
     }
@@ -177,9 +150,9 @@ public class PaymentAddCardActivity extends AppCompatActivity implements View.On
         String year = date[0];
         String month = date[1];
 
-//        String years[] = getResources().getStringArray(R.array.expiry_year);
-        for (int i = 0; i < yearList.size(); i++) {
-            if (yearList.get(i).equals(year)) {
+        String years[] = getResources().getStringArray(R.array.expiry_year);
+        for (int i = 0; i < years.length; i++) {
+            if (years[i].equals(year)) {
                 yearSpinner.setSelection(i);
                 break;
             }
@@ -223,7 +196,7 @@ public class PaymentAddCardActivity extends AppCompatActivity implements View.On
                 Utils.startLoadingScreen(this);
                 JSONObject requestObject = new JSONObject();
                 try {
-                    requestObject.put("clientId", Utils.getClientId(this));
+                    requestObject.put("clientId", Constants.clientId);
                     boolean isUserCredentialsData = sharedPreferences.contains("userCredentials");
                     if (isUserCredentialsData) {
                         JSONObject userCredentials = new JSONObject((String) sharedPreferences.getString("userCredentials", ""));

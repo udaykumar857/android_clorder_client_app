@@ -7,10 +7,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/schedule_order_txt_bg_col">
 
-        <com.clorderclientapp.utils.FontTextViewBoldClass
+        <TextView
             android:id="@+id/schedule_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
     </RelativeLayout>
 
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:id="@+id/schedule_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,24 +49,25 @@
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone" />
 
-    <com.clorderclientapp.utils.FontButtonRegularClass
+    <Button
         android:id="@+id/order_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/drawable_button_blue_bg"
-        android:ems="7"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:background="@color/order_now_schedule_txt_bg_col"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:text="@string/order_now_schedule_txt"
         android:textAllCaps="false"
         android:textColor="@color/order_now_schedule_txt_col"
         android:textStyle="bold" />
 
 
-    <com.clorderclientapp.utils.FontTextViewBoldClass
+    <TextView
         android:id="@+id/or_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +78,7 @@
         android:textStyle="bold" />
 
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -88,7 +89,7 @@
         android:textColor="@color/order_date_schedule_txt_col"
         android:textSize="@dimen/order_date_schedule_txt_size" />
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:id="@+id/order_date_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
         android:paddingStart="10dp"
         android:textColor="@android:color/black" />
 
-    <com.clorderclientapp.utils.FontTextViewRegularClass
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -123,7 +124,6 @@
         android:layout_marginRight="30dp"
         android:background="@mipmap/spinner_bg"
         android:gravity="start|center"
-        android:padding="5dp"
         android:textColor="@android:color/black" />
 
     <!--<LinearLayout-->
@@ -151,16 +151,17 @@
     <!---->
     <!--</LinearLayout>-->
 
-    <com.clorderclientapp.utils.FontButtonRegularClass
+    <Button
         android:id="@+id/schedule_later"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/drawable_button_blue_bg"
-        android:ems="9"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/order_now_schedule_txt_bg_col"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:text="@string/schedule_later_txt"
         android:textAllCaps="false"
         android:textColor="@color/order_now_schedule_txt_col"

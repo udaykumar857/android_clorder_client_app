@@ -3,12 +3,11 @@ package com.clorderclientapp.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.clorderclientapp.adapters.RestaurantPromotionsAdapter;
 import com.clorderclientapp.httpClient.HttpRequest;
@@ -31,7 +30,6 @@ public class RestaurantPromotionsActivity extends AppCompatActivity implements R
     ArrayList<RestaurantPromotionsModel> restaurantPromotionsList;
     RestaurantPromotionsAdapter restaurantPromotionsAdapter;
     ImageView promotionsBack;
-    private TextView noCouponsTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,6 @@ public class RestaurantPromotionsActivity extends AppCompatActivity implements R
         promotionsrecyclerView = (RecyclerView) findViewById(R.id.coupon_list);
         restaurantPromotionsList = new ArrayList<>();
         promotionsBack = (ImageView) findViewById(R.id.promotions_back);
-        noCouponsTxt = findViewById(R.id.no_coupons_txt);
     }
 
     private void listeners() {
@@ -72,7 +69,7 @@ public class RestaurantPromotionsActivity extends AppCompatActivity implements R
 
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("clientId", Utils.getClientId(this));
+            requestObject.put("clientId", Constants.clientId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -89,13 +86,6 @@ public class RestaurantPromotionsActivity extends AppCompatActivity implements R
                     restaurantPromotionsList.clear();
                     restaurantPromotionsList.addAll((ArrayList<RestaurantPromotionsModel>) response);
                     restaurantPromotionsAdapter.notifyDataSetChanged();
-                    if (restaurantPromotionsList.size() > 0) {
-                        promotionsrecyclerView.setVisibility(View.VISIBLE);
-                        noCouponsTxt.setVisibility(View.GONE);
-                    }else{
-                        promotionsrecyclerView.setVisibility(View.GONE);
-                        noCouponsTxt.setVisibility(View.VISIBLE);
-                    }
                 }
                 break;
 
@@ -122,7 +112,7 @@ public class RestaurantPromotionsActivity extends AppCompatActivity implements R
         Intent promotionsIntent = new Intent(this, CartActivity.class);
         promotionsIntent.putExtra("validForOrderType", restaurantPromotionsList.get(position).getValidForOrderType());
         promotionsIntent.putExtra("couponCode", restaurantPromotionsList.get(position).getCouponTitle());
-        promotionsIntent.putExtra("discountType", restaurantPromotionsList.get(position).getDiscountType());
+        promotionsIntent.putExtra("discountType",restaurantPromotionsList.get(position).getDiscountType());
         setResult(RESULT_OK, promotionsIntent);
         finish();
     }
