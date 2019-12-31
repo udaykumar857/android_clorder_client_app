@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<TextView-->
+    <!--android:id="@+id/address_type"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="0.1"-->
+    <!--android:background="@mipmap/item_list_page"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/order_food_online_txt"-->
+    <!--android:textColor="@color/delivery_address_txt_col"-->
+    <!--android:textSize="@dimen/delivery_address_txt_size"-->
+    <!--android:textStyle="bold" />-->
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="#FB5B5B"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp">
+
+        <ImageView
+            android:id="@+id/backImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/left_arrow"
+            android:visibility="invisible" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/order_food_online_txt"
+            android:textColor="@color/delivery_address_txt_col"
+            android:textSize="@dimen/delivery_address_txt_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:background="@mipmap/rsz_find_bg1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/enterAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:background="@drawable/search_bar_bg"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="@string/enter_address"
+                android:textSize="20sp"
+                android:textColor="#808080" />
+
+            <ImageView
+                android:id="@+id/gpsPoint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.1"
+                android:src="@mipmap/gps" />
+
+        </LinearLayout>
+
+        <com.clorderclientapp.utils.FontButtonRegularClass
+            android:id="@+id/findRestaurantBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawable_button_blue_bg"
+            android:padding="5dp"
+            android:text="@string/find_restaurants"
+            android:textAllCaps="false"
+            android:ems="8"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
+
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/use_current_location"-->
+        <!--android:layout_weight="1"-->
+        <!--android:textAllCaps="false" />-->
+
+        <!---->
+
+        <!--</LinearLayout>-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/facebookImg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/facebook" />
+
+        <ImageView
+            android:id="@+id/twitterImg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/twitter" />
+
+        <ImageView
+            android:id="@+id/googlePlusImg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/google_plus" />
+
+        <ImageView
+            android:id="@+id/instagramImg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/instagram" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

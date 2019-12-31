@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,18 +21,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.clorderclientapp.R;
+import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.httpClient.HttpRequest;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.FontTextViewRegularClass;
 import com.clorderclientapp.utils.Utils;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,11 +45,12 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import io.realm.Realm;
 
 public class JohnniesPizzaScreenActivity extends AppCompatActivity implements View.OnClickListener,
         ResponseHandler, UserActionInterface, GoogleApiClient.OnConnectionFailedListener {
@@ -74,6 +80,11 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
         httpRequest = new HttpRequest();
         initView();
         listeners();
+        if (Constants.MultiLocationList.size() > 1) {
+            multionLocationChange.setVisibility(View.VISIBLE);
+        } else {
+            multionLocationChange.setVisibility(View.INVISIBLE);
+        }
         sharedPreferences = getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("ClientID", Constants.selectedRestaurantId);
@@ -549,7 +560,7 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
                             restaurantTimingsList = responseObject.getJSONObject("ClientSettings").getJSONArray("BusinessHours");
                             Calendar calendar = Calendar.getInstance();
 //                            calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
-                            calendar.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                            calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
                             int day = calendar.get(Calendar.DAY_OF_WEEK);
                             long timeGmt = calendar.getTimeInMillis();
                             Log.d("dayOfWeek", "" + day);//Sunday=1,Monday=2,Tueday=3Wednesday=4,Thursday=5,Friday=6,Saturday=7;
@@ -604,12 +615,11 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
                     try {
                         JSONObject responseObject = (JSONObject) response;
                         if (responseObject.getBoolean("isSuccess")) {
-                            Log.d("responseObject", responseObject.toString());
                             if (responseObject.getString("TimeSlots").equals("Closed|")) {
                                 scheduleText.setVisibility(View.VISIBLE);
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 //                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
-                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                 if (nowDate.equals(responseObject.getString("date"))) {
                                     orderNowBtn.setVisibility(View.GONE);
@@ -624,26 +634,25 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
                             } else {
                                 orderTimeList.clear();
                                 String timeDiv[] = responseObject.getString("TimeSlots").split("\\|");
-                                Log.d("timeDiv1", Arrays.toString(timeDiv));
                                 for (int i = 0; i < timeDiv.length; i++) {
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 //                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
-                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
                                     String todayDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
                                     if (timeDiv[i].contains("-")) {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
 //                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
-                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
+                                            simpleDateFormat1.setTimeZone(TimeZone.getTimeZone("GMT"));
                                             String nowTime = simpleDateFormat1.format(Calendar.getInstance().getTimeInMillis());
-                                            Log.d("nowTime", timeDiv[i].split("-")[1] + "/t" + nowTime);
-                                            Log.d("Diff", "" + timeInMinutes(timeDiv[i].split("-")[1]) + "/t" + (timeInMinutes(nowTime)));
-                                            if (timeInMinutes(timeDiv[i].split("-")[1]) > (timeInMinutes(simpleDateFormat1.format(new Date())))) {
+
+                                            if (timeInMinutes(timeDiv[i].split("-")[1]) > (timeInMinutes(nowTime))) {
                                                 orderTimeList.add(timeDiv[i].split("-")[1]);
                                             }
                                         } else {
                                             orderTimeList.add(timeDiv[i].split("-")[1]);
                                         }
+
                                     } else {
                                         if (responseObject.getString("date").equals(todayDate)) {
                                             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm aaa", Locale.getDefault());
@@ -668,7 +677,6 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
 
 
                                 }
-                                Log.d("orderTimeList", orderTimeList.toString());
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 //                                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Constants.timeZone));
                                 String nowDate = simpleDateFormat.format(Calendar.getInstance().getTimeInMillis());
@@ -914,7 +922,9 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
 
         );
 
-        scheduleLaterBtn.setOnClickListener(new View.OnClickListener() {
+        scheduleLaterBtn.setOnClickListener(new View.OnClickListener()
+
+                                            {
                                                 @Override
                                                 public void onClick(View v) {
                                                     if (orderTimeList.get(orderTimeSpinner.getSelectedItemPosition()).equals("Closed")) {
@@ -957,7 +967,9 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
 
         );
 
-        scheduleCloseBtn.setOnClickListener(new View.OnClickListener() {
+        scheduleCloseBtn.setOnClickListener(new View.OnClickListener()
+
+                                            {
                                                 @Override
                                                 public void onClick(View v) {
                                                     alertDialog.dismiss();
@@ -966,7 +978,9 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
 
         );
 
-        orderDateTxt.setOnClickListener(new View.OnClickListener() {
+        orderDateTxt.setOnClickListener(new View.OnClickListener()
+
+                                        {
                                             @Override
                                             public void onClick(View v) {
                                                 datePick();
@@ -1437,15 +1451,15 @@ public class JohnniesPizzaScreenActivity extends AppCompatActivity implements Vi
         int minutes = 0;
 
         String timeSpilt[] = time.split(" ");
-        if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) + 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) - 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
         }
 

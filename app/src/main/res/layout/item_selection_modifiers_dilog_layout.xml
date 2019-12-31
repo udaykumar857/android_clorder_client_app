@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <RelativeLayout
         android:id="@+id/modifiers_txt_layout"
@@ -35,18 +36,18 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/done_btn"
-            android:layout_alignParentTop="true">
+            android:layout_height="0dp"
+            android:layout_weight="9.2"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/modifiers_layout"
@@ -64,15 +65,16 @@
         <Button
             android:id="@+id/done_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center|bottom"
+            android:layout_margin="15dp"
+            android:layout_weight="0.8"
             android:background="@color/done_txt_bg_col"
             android:ems="5"
+            android:gravity="center"
             android:text="@string/done_txt"
             android:textColor="@color/add_to_cart_txt_col"
             android:textSize="@dimen/add_to_cart_txt_size"
             android:textStyle="bold" />
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

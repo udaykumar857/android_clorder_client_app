@@ -1,6 +1,37 @@
 <resources>
     <!--<string name="app_name">WabaGrill</string>-->
-    <string name="app_name">Banana Leaf</string>
+    <string name="app_name">OrderFoodOnline</string>
+    <string name="order_food_online_txt">Order Food Online</string>
+
+    //Find Restaurant screen strings
+    <string name="enter_address">Enter Your Address</string>
+    <string name="use_current_location">Use Current Location</string>
+    <string name="find_restaurants">Find Restaurants</string>
+    <string name="location_permission_missing_message">The Location permission is missing.\n\nTo grant this permission,click on OPEN SETTINGS,the Permissions and turn the Location permission on.</string>
+    <string name="missing_permission_title">Permission Missing</string>
+
+
+    //RestaurantList screen strings
+    <string name="search_by_res">Search By Restaurant</string>
+    <string name="restaurant_img">Image</string>
+    <string name="noRestaurants">No Restaurants In Your Area</string>
+    <string-array name="distanceList">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
+    <string-array name="priceList">
+        <item>No Price</item>
+        <item>$10</item>
+        <item>$100</item>
+        <item>$1000</item>
+    </string-array>
+    <string name="filters_txt">FILTERS</string>
+    <string name="addressTxt">Address</string>
+    <string name="distanceTxt">Distance(miles):</string>
+
+
 
     //Home screen strings
     <string name="create_account_text">LOGIN</string>
@@ -35,7 +66,7 @@
     <string name="user_credentials_wrong_msg">Invalid login credentials !</string>
     <string name="register_user_sign_in_txt">Register User</string>
     <string name="google_sign_out_btn_txt">Sign out From Google</string>
-    <string name="facebook_app_id">197169944444288</string>
+    <string name="facebook_app_id">1743014702690004</string>
     <!--<string name="fb_login_protocol_scheme">fb1743014702690004</string>-->
     <string name="password_recovery_txt">Password Recovery</string>
     <string name="password_recovery_msg">Please enter the email address you used to create your Clorder account.\n We will send you a temporary password.</string>
@@ -265,13 +296,10 @@
     <string name="add_card_edit_txt">Edit</string>
     <string name="add_card_delete_txt">Delete</string>
     <string name="pay_with_pay_pal_txt">Pay with PayPal</string>
-    <string name="pay_with_google_pay_txt">Google Pay</string>
+    <string name="pay_with_google_pay_txt">Pay with Google</string>
     <string name="pay_with_card_txt">Pay With Card</string>
     <string name="googlepay_status_unavailable" translatable="false">Unfortunately, Google Pay is not available on this phone.</string>
     <string name="update_txt">Update</string>
-    <!--<string name="places_apiKey">AIzaSyDm2Fx7Z9HbfHqNTyqqHjMUmE5tmiOYfj0</string>-->
-    <string name="places_apiKey">AIzaSyDiPrdHbb4WEjBy3OCIarioZe8rfGW6NEk</string>
-
 
     <string name="name_on_card_empty_msg">Please enter the name present on the card</string>
     <string name="card_num_empty_msg">Please enter the card number</string>
@@ -397,6 +425,10 @@
     <string name="cash_amount_max_limit">Maximum amount for cash orders is</string>
     <string name="menu_item_not_available">This menu is not available for the selected time.</string>
     <string name="payments_show_name" translatable="false">Successfully received payment data for %s!</string>
+    <string name="location_not_enabled_title">Location Services Disabled</string>
+    <string name="location_not_enabled_message">Please enable location services</string>
+    <string name="open_location_settings">ENABLE</string>
+    <string name="open_settings">OPEN SETTINGS</string>
 
     <!--<string name="server_client_id">578434548677-fuoqgdsjfhi8vfviu70jb4nvp44tmffl.apps.googleusercontent.com</string>-->
 </resources>

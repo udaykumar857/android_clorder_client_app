@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,9 +14,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import androidx.appcompat.app.AlertDialog;
+import android.net.Uri;
+import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -94,8 +99,6 @@ public class Utils {
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
         dialogBuilder.setCancelable(false);
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(mContext.getAssets(), "Lora-Bold.ttf");
         dialogBuilder.setPositiveButton(mContext.getString(R.string.alert_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -110,12 +113,6 @@ public class Utils {
         if (alertDialog == null) {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
-            TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
-            msgTxt.setTypeface(font);
-            titleTxt.setTypeface(fontBold);
-            Button pstBtn = alertDialog.findViewById(android.R.id.button1);
-            pstBtn.setTypeface(fontBold);
         }
     }
 
@@ -128,8 +125,6 @@ public class Utils {
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
         dialogBuilder.setCancelable(false);
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "Lora-Regular.ttf");
-        Typeface fontBold = Typeface.createFromAsset(mContext.getAssets(), "Lora-Bold.ttf");
         dialogBuilder.setPositiveButton(mContext.getString(R.string.alert_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -150,14 +145,6 @@ public class Utils {
         if (alertDialog == null) {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
-            TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
-            msgTxt.setTypeface(font);
-            titleTxt.setTypeface(fontBold);
-            Button pstBtn = alertDialog.findViewById(android.R.id.button1);
-            pstBtn.setTypeface(fontBold);
-            Button ngBtn = alertDialog.findViewById(android.R.id.button2);
-            ngBtn.setTypeface(fontBold);
         }
 
     }
@@ -203,7 +190,7 @@ public class Utils {
             alertDialog = dialogBuilder.create();
             alertDialog.show();
             TextView msgTxt = alertDialog.findViewById(android.R.id.message);
-            TextView titleTxt = alertDialog.findViewById(androidx.appcompat.R.id.alertTitle);
+            TextView titleTxt = alertDialog.findViewById(android.support.v7.appcompat.R.id.alertTitle);
             msgTxt.setTypeface(font);
             titleTxt.setTypeface(fontBold);
             Button pstBtn = alertDialog.findViewById(android.R.id.button1);
@@ -212,6 +199,72 @@ public class Utils {
             ngBtn.setTypeface(fontBold);
         }
 
+    }
+
+    public static void showNoLocationDialog(final Context mContext) {
+        LocationManager lm = (LocationManager)mContext.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+        if(!gps_enabled && !network_enabled) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+            dialogBuilder.setTitle(mContext.getString(R.string.location_not_enabled_title));
+            dialogBuilder.setMessage(mContext.getString(R.string.location_not_enabled_message));
+            dialogBuilder.setPositiveButton(mContext.getString(R.string.open_location_settings), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog = null;
+                    dialog.dismiss();
+                    mContext.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }
+            });
+            dialogBuilder.setCancelable(false);
+            if (alertDialog == null) {
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+            }
+        }
+    }
+
+
+    public static void showMissingPermissionDialog(final Context mContext,
+                                                   final Fragment mFragment,
+                                                   final String title,
+                                                   final String message,
+                                                   final Integer actionType) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        dialogBuilder.setTitle(title);
+        dialogBuilder.setMessage(message);
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setPositiveButton(mContext.getString(R.string.open_settings),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        alertDialog = null;
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+                        mContext.startActivity(intent);
+                    }
+                });
+        dialogBuilder.setNegativeButton(mContext.getString(R.string.alert_cancel), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                alertDialog = null;
+            }
+        });
+        if (alertDialog == null) {
+            alertDialog = dialogBuilder.create();
+            alertDialog.show();
+        }
     }
 
 
@@ -620,8 +673,8 @@ public class Utils {
     }
 
     public static Bitmap drawMultilineTextToBitmap(Context gContext,
-                                            int gResId,
-                                            String gText) {
+                                                   int gResId,
+                                                   String gText) {
 
         // prepare canvas
         Resources resources = gContext.getResources();
@@ -671,7 +724,6 @@ public class Utils {
 
         return bitmap;
     }
-
 
     public boolean isDayLightSavings(Date isDayLightDate) {
         boolean isDaylight = false;

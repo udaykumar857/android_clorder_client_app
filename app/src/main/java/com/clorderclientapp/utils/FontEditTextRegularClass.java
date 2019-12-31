@@ -2,7 +2,7 @@ package com.clorderclientapp.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import androidx.appcompat.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
 public class FontEditTextRegularClass extends AppCompatEditText{

@@ -11,31 +11,32 @@
 
         <ImageView
             android:id="@+id/restImg"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
+            android:layout_weight="0.3"
             android:padding="5dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.7"
             android:orientation="vertical"
             android:padding="5dp">
 
-            <com.clorderclientapp.utils.FontTextViewRegularClass
+            <com.clorderclientapp.utils.FontTextViewBoldClass
                 android:id="@+id/restNameTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/restaurantName_txt_size" />
+                android:textSize="@dimen/restName_txt_size" />
 
             <com.clorderclientapp.utils.FontTextViewRegularClass
                 android:id="@+id/addressTxt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -43,7 +44,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#E4E4E4" />
 
 </LinearLayout>

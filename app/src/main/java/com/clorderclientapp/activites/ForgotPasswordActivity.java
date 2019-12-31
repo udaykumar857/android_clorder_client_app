@@ -2,8 +2,8 @@ package com.clorderclientapp.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -40,6 +40,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         httpRequest = new HttpRequest();
         initViews();
         listeners();
+
     }
 
     private void initViews() {
@@ -170,6 +171,5 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 startActivity(new Intent(this, JohnniesPizzaScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
         }
-
     }
 }

@@ -1,9 +1,7 @@
 {
   "project_info": {
     "project_number": "887622949350",
-    "firebase_url": "https://fir-orderfoodonline.firebaseio.com",
-    "project_id": "firebase-orderfoodonline",
-    "storage_bucket": "firebase-orderfoodonline.appspot.com"
+    "project_id": "firebase-orderfoodonline"
   },
   "client": [
     {
@@ -15,23 +13,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "887622949350-cd6c2qe1vhcen4fc1q9h00o0657ittru.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.clorderclientapp",
-            "certificate_hash": "d50f12b9df295f9222cfc18ab984961fe250358b"
-          }
-        },
-        {
           "client_id": "887622949350-d68fld6bmak7p0op8vqae1c2nfkakcic.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.clorderclientapp",
-            "certificate_hash": "71576fb82c093778eb73751fe4e6884032c40776"
+            "certificate_hash": "71576FB82C093778EB73751FE4E6884032C40776"
           }
         },
         {
-          "client_id": "887622949350-tr1p155bl6rkfikefvksabg1l7uk5nep.apps.googleusercontent.com",
+          "client_id": "887622949350-uijb28ltnavqsbqa5ji1blk380sbat1e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -41,13 +31,15 @@
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 1
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "887622949350-tr1p155bl6rkfikefvksabg1l7uk5nep.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
         }
       }
     }

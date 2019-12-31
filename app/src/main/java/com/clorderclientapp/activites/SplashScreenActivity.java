@@ -2,9 +2,10 @@ package com.clorderclientapp.activites;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.clorderclientapp.R;
@@ -12,6 +13,7 @@ import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.httpClient.HttpRequest;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
+import com.clorderclientapp.modelClasses.MultiLocationModel;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.Utils;
 
@@ -23,7 +25,6 @@ import io.realm.Realm;
 
 public class SplashScreenActivity extends AppCompatActivity implements ResponseHandler, UserActionInterface {
     private static int SPLASH_TIME_OUT = 3000;
-    private HttpRequest httpRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,6 @@ public class SplashScreenActivity extends AppCompatActivity implements ResponseH
         Utils.initializeSSLContext(this);
         resetOrderTimings();
         Realm realm = Realm.getDefaultInstance();
-        httpRequest = new HttpRequest();
         try {
             realm.beginTransaction();
             realm.delete(CartModel.class);
@@ -49,7 +49,8 @@ public class SplashScreenActivity extends AppCompatActivity implements ResponseH
                 // This method will be executed once the timer is over
 //                startActivity(new Intent(SplashScreenActivity.this, JohnniesPizzaScreenActivity.class));
 //                finish();
-                getLocations();
+                startActivity(new Intent(SplashScreenActivity.this, FindRestaurantActivity.class));
+                finish();
             }
         }, SPLASH_TIME_OUT);
     }
@@ -61,60 +62,13 @@ public class SplashScreenActivity extends AppCompatActivity implements ResponseH
     }
 
 
-    private void getLocations() {
-        if (Utils.isNetworkAvailable(this)) {
-            JSONObject requestObject = new JSONObject();
-            try {
-                requestObject.put("clientId", Constants.clientId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Utils.startLoadingScreen(this);
-            httpRequest.fetchClientChildLocations(this, requestObject, Constants.FetchClientChildLocations);
-        } else {
-            Utils.showPositiveDialog(this, getString(R.string.alert_txt), getString(R.string.request_fail_msg), Constants.ActionNetworkFailed);
-        }
-
-    }
-
-
     @Override
     public void responseHandler(Object response, int requestType) {
-        switch (requestType) {
-            case Constants.FetchClientChildLocations:
-                Utils.cancelLoadingScreen();
-                if (response != null) {
-                    try {
-                        Constants.MultiLocationList.clear();
-                        JSONObject locObj = (JSONObject) response;
-                        if (locObj.getBoolean("isSuccess")) {
-                            JSONArray locationArray = locObj.getJSONArray("ChildLocations");
-                            Log.d("LocationList", locationArray.toString());
-                            if (locationArray.length() == 1) {
-                                startActivity(new Intent(this, JohnniesPizzaScreenActivity.class));
-                                finish();
-                            } else {
-                                startActivity(new Intent(SplashScreenActivity.this, MultiLocationActivity.class));
-                                finish();
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                break;
-        }
 
     }
 
     @Override
     public void userAction(int actionType) {
-
-        switch (actionType) {
-            case Constants.ActionNetworkFailed:
-                finish();
-                break;
-        }
 
     }
 }

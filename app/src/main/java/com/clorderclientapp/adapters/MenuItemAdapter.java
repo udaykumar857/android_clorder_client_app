@@ -1,8 +1,9 @@
 package com.clorderclientapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.clorderclientapp.R;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.clorderclientapp.modelClasses.CategoryItemModel;
+import com.clorderclientapp.R;
 import com.clorderclientapp.utils.Utils;
 
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
     public void onBindViewHolder(final MenuItemViewHolder holder, final int position) {
 
         holder.itemNameText.setText(itemModelArrayList.get(position).getItemTitle());
-        if (itemModelArrayList.get(position).getItemDesc().length() > 0) {
+        if (itemModelArrayList.get(position).getItemDesc().toString().length() > 0) {
             holder.itemDescText.setVisibility(View.VISIBLE);
             holder.itemDescText.setText(itemModelArrayList.get(position).getItemDesc());
         } else {
@@ -54,7 +57,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
 //        } else {
 //            holder.itemLayout.setBackgroundColor(Color.parseColor("#F2F2F2"));
 //        }
-
         if (itemModelArrayList.get(position).getItemDesc().length() > 0) {
             holder.itemDescText.post(new Runnable() {
                 @Override
@@ -66,25 +68,24 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                     } else {
                         holder.itemMoreText.setVisibility(View.GONE);
                     }
+
                 }
             });
         } else {
             holder.itemMoreText.setVisibility(View.GONE);
         }
 
-        Glide.with(mContext).load(itemModelArrayList.get(position).getItemImageUrl()).placeholder(R.mipmap.restaurant_128).into(holder.itemImage);
+        Glide.with(mContext).load(itemModelArrayList.get(position).getItemImageUrl()).asBitmap().listener(new RequestListener<String, Bitmap>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
+            }
 
-//        Glide.with(mContext).load(itemModelArrayList.get(position).getItemImageUrl()).asBitmap().listener(new RequestListener<String, Bitmap>() {
-//            @Override
-//            public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                return false;
-//            }
-//        }).placeholder(R.mipmap.restaurant_128).into(holder.itemImage);
+            @Override
+            public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                return false;
+            }
+        }).placeholder(R.mipmap.restaurant_128).into(holder.itemImage);
 
     }
 

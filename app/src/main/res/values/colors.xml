@@ -6,6 +6,13 @@
     <color name="sub_text_col_grey">#737373</color>
     <color name="colr_red">#Fb5b5b</color>
 
+    //Find Restaurant screen colors
+    <color name="find_restaurant_col">#43a422</color>
+
+    //RestaurantList screen colors
+    <color name="restaurant_type_bg_col">#80000000</color>
+    <color name="filters_txt_col">#FFFFFF</color>
+
 
     //Home screen colors
     <color name="create_account_text_color">#371E00</color>

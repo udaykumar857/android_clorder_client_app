@@ -4,20 +4,22 @@ package com.clorderclientapp.activites;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.clorderclientapp.R;
 import com.clorderclientapp.RealmModels.CartItemModel;
 import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.RealmModels.OptionsModifiersModel;
@@ -35,8 +38,9 @@ import com.clorderclientapp.interfaces.UserActionInterface;
 import com.clorderclientapp.modelClasses.ItemModifiersModel;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.Converter;
+import com.clorderclientapp.utils.FontTextViewRegularClass;
 import com.clorderclientapp.utils.Utils;
-import com.clorderclientapp.R;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -124,6 +128,7 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
             }
 
             realm.close();
+//            generateLayout();
         }
     }
 
@@ -297,10 +302,9 @@ public class ItemSelectionActivity extends AppCompatActivity implements View.OnC
                 if (cartModel == null) {
                     cartModel = new CartModel();
                     cartModel.setCartId(1);
+                } else {
+                    cartModel.setCartId(cartModel.getCartId());
                 }
-//                else {
-//                    cartModel.setCartId(cartModel.getCartId());
-//                }
                 CartItemModel cartItemModel = null;
 
                 if (modifierSelection == 0) {

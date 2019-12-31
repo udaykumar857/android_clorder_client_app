@@ -2,8 +2,14 @@ package com.clorderclientapp.httpClient;
 
 public class URL {
 
-    private static final String BASE_URL = "http://devapi.clorder.com/";
-//    private static final String BASE_URL = "https://api.clorder.com/";
+//        private static final String BASE_URL = "http://devapi.clorder.com/";
+    private static final String BASE_URL = "https://api.clorder.com/";
+
+    private static final String AWS_BASE_URL = "https://xnabrco3j1.execute-api.us-east-2.amazonaws.com/prod/";
+
+    public static final String RESTAURANT_DATA = AWS_BASE_URL + "api/";
+    public static final String RESTAURANT_CUISINE_DATA = AWS_BASE_URL + "api/";
+    public static final String CUISINE_DATA = AWS_BASE_URL + "api?cuisine=";
 
     public static final String FETCH_CLIENT_CHILD_LOCATIONS = BASE_URL + "ClorderMobile/FetchClientChildLocations";
     public static final String REGISTER_CLORDER_USER = BASE_URL + "ClorderMobile/registerClorderUser";

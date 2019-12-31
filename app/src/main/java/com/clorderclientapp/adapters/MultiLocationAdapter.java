@@ -1,8 +1,7 @@
 package com.clorderclientapp.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.clorderclientapp.R;
 import com.clorderclientapp.modelClasses.MultiLocationModel;
-import com.clorderclientapp.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ public class MultiLocationAdapter extends RecyclerView.Adapter<MultiLocationAdap
 
     public MultiLocationAdapter(Context mContext, ArrayList<MultiLocationModel> multiLocationModelArrayList) {
         this.mContext = mContext;
-        multiLocationList = multiLocationModelArrayList;
+        multiLocationList=multiLocationModelArrayList;
     }
 
     @Override
@@ -35,10 +33,7 @@ public class MultiLocationAdapter extends RecyclerView.Adapter<MultiLocationAdap
     public void onBindViewHolder(MultiLocationViewHolder holder, int position) {
         holder.restTxt.setText(multiLocationList.get(position).getRestaurantName());
         holder.addressTxt.setText(multiLocationList.get(position).getAddress());
-        int num = position + 1;
-        Bitmap exp = Utils.drawMultilineTextToBitmap(mContext, R.mipmap.map_marker_60, "" + num);
-//        holder.restImg.setBackgroundResource(R.mipmap.logo_oc);
-        holder.restImg.setImageBitmap(exp);
+        holder.restImg.setBackgroundResource(R.mipmap.logo_oc);
 
 
     }
@@ -50,13 +45,13 @@ public class MultiLocationAdapter extends RecyclerView.Adapter<MultiLocationAdap
 
     class MultiLocationViewHolder extends RecyclerView.ViewHolder {
 
-        TextView restTxt, addressTxt;
+        TextView restTxt,addressTxt;
         ImageView restImg;
 
         public MultiLocationViewHolder(View itemView) {
             super(itemView);
             restTxt = (TextView) itemView.findViewById(R.id.restNameTxt);
-            addressTxt = (TextView) itemView.findViewById(R.id.addressTxt);
+            addressTxt= (TextView) itemView.findViewById(R.id.addressTxt);
             restImg = (ImageView) itemView.findViewById(R.id.restImg);
         }
     }

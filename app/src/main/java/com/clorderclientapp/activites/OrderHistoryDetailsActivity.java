@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -1622,15 +1622,15 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         int minutes = 0;
 
         String timeSpilt[] = time.split(" ");
-        if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) + 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("PM") || timeSpilt[1].equals("pm")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("PM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
 
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) < 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0])) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
-        } else if ((timeSpilt[1].equals("AM") || timeSpilt[1].equals("am")) && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
+        } else if (timeSpilt[1].equals("AM") && (Integer.parseInt(timeSpilt[0].split(":")[0]) == 12)) {
             minutes = ((Integer.parseInt(timeSpilt[0].split(":")[0]) - 12) * 60) + Integer.parseInt(timeSpilt[0].split(":")[1]);
         }
 

@@ -6,6 +6,13 @@ import android.app.Activity;
 import org.json.JSONObject;
 
 public interface RequestInterface {
+
+    public void restaurantData(Activity mActivity, JSONObject requestObject, int requestNumber);
+
+    public void restaurantCuisineData(Activity mActivity, JSONObject requestObject, int requestNumber);
+
+    public void getCuisineData(Activity mActivity, int requestNumber);
+
     public void fetchClientChildLocations(Activity mActivity, JSONObject requestObject, int requestNumber);
 
     public void fetchMenuWithCategories(Activity mActivity, JSONObject requestObject, int requestNumber);

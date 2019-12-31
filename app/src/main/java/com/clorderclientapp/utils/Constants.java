@@ -56,6 +56,9 @@ public class Constants {
     public static final int ResetUserPassword = 1020;
     public static final int FetchClientChildLocations=1021;
     public static final int ChangeUserPassword=1021;
+    public static final int RestaurantData=1022;
+    public static final int RestaurantCuisineData=1023;
+    public static final int CuisineData=1024;
 
 
     //Dialog Action Types
@@ -107,4 +110,6 @@ public class Constants {
     public static final int ActionChangePasswordStatus=2044;
     public static final int ActionChangePasswordSuccess=2045;
 
+    //Permission
+    public static final int ActionLocationPermission=3000;
 }

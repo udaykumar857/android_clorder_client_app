@@ -19,7 +19,6 @@ package com.clorderclientapp.utils;
 import android.app.Activity;
 import android.util.Pair;
 
-import com.braintreepayments.api.models.GooglePaymentRequest;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.CardRequirements;
 import com.google.android.gms.wallet.IsReadyToPayRequest;
@@ -71,10 +70,10 @@ public class PaymentsUtil {
                         .setPaymentMethodTokenizationType(
                                 WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY)
                         .addParameter("gateway", GooglePayConstants.GATEWAY_TOKENIZATION_NAME);
-
         for (Pair<String, String> param : GooglePayConstants.GATEWAY_TOKENIZATION_PARAMETERS) {
             paramsBuilder.addParameter(param.first, param.second);
         }
+
         return createPaymentDataRequest(transactionInfo, paramsBuilder.build());
     }
 
@@ -101,12 +100,13 @@ public class PaymentsUtil {
 //
 //        return createPaymentDataRequest(transactionInfo, params);
 //    }
+
     private static PaymentDataRequest createPaymentDataRequest(TransactionInfo transactionInfo, PaymentMethodTokenizationParameters params) {
         PaymentDataRequest request =
                 PaymentDataRequest.newBuilder()
                         .setPhoneNumberRequired(false)
                         .setEmailRequired(true)
-                        .setShippingAddressRequired(false)
+                        .setShippingAddressRequired(true)
 
                         // Omitting ShippingAddressRequirements all together means all countries are
                         // supported.
@@ -180,7 +180,7 @@ public class PaymentsUtil {
      * @param micros value of the price.
      */
     public static String microsToString(float micros) {
-        String val = String.valueOf(micros);
+        String val= String.valueOf(micros);
         return val;
     }
 }

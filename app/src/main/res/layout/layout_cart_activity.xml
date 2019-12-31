@@ -568,7 +568,6 @@
         android:text="@string/add_more_txt"
         android:textColor="@color/add_item_txt_col"
         android:textSize="@dimen/add_item_txt_size"
-        android:textStyle="bold"
         android:visibility="gone" />
 
 

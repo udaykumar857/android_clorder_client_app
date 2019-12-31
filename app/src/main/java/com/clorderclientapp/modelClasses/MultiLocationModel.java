@@ -9,7 +9,6 @@ public class MultiLocationModel {
     public String address;
     public LatLng mLatLng;
 
-
     public int getId() {
         return id;
     }
@@ -42,4 +41,3 @@ public class MultiLocationModel {
         this.mLatLng = mLatLng;
     }
 }
-

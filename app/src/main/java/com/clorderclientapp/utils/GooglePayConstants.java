@@ -43,7 +43,7 @@ public class GooglePayConstants {
     // Changing this to ENVIRONMENT_PRODUCTION will make the API return real card information.
     // Please refer to the documentation to read about the required steps needed to enable
     // ENVIRONMENT_PRODUCTION.
-    public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_PRODUCTION;
+    public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
 
     // The allowed networks to be requested from the API. If the user has cards from networks not
     // specified here in their account, these will not be offered for them to choose in the popup.
@@ -78,8 +78,6 @@ public class GooglePayConstants {
 
     // The name of your payment processor / gateway. Please refer to their documentation for
     // more information.
-//    example
-//    braintree
     public static final String GATEWAY_TOKENIZATION_NAME = "braintree";
 
     // Custom parameters required by the processor / gateway.
@@ -88,12 +86,6 @@ public class GooglePayConstants {
     // required and their names vary depending on the processor.
     public static final List<Pair<String, String>> GATEWAY_TOKENIZATION_PARAMETERS = Arrays.asList(
             Pair.create("gatewayMerchantId", "x8xhk82f9y5vzx8k")
-//            Pair.create("gatewayMerchantId", "x8xhk82f9y5vzx8k")
-//            exampleGatewayMerchantId
-//            9qx7w4yw7cdm4mbk ---> Production Brain tree Merchant Id
-
-//            x8xhk82f9y5vzx8k ---> Sandbox Brain tree Merchant Id
-//                    .addParameter("merchantId", "10439298226194477200")
 //            Pair.create("tokenizationKey","sandbox_m32bhjjg_x8xhk82f9y5vzx8k")
 
             // Your processor may require additional parameters.

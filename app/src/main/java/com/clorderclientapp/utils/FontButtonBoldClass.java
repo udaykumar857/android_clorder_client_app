@@ -2,7 +2,7 @@ package com.clorderclientapp.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import androidx.appcompat.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
 public class FontButtonBoldClass extends AppCompatButton {

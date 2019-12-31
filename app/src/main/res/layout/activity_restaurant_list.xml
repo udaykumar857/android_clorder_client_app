@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/address_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB5B5B"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/left_arrow" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/address_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:lines="1"
+            android:text="@string/order_food_online_txt"
+            android:textColor="@color/delivery_address_txt_col"
+            android:textSize="@dimen/delivery_address_txt_size" />
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/map_loc2" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <com.clorderclientapp.utils.FontEditTextRegularClass
+            android:id="@+id/searchRest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:background="@drawable/search_bar_bg"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:hint="@string/search_by_res"
+            android:textSize="20sp"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/filterImg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.1"
+            android:src="@mipmap/filter_36" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.clorderclientapp.utils.FontTextViewBoldClass
+        android:id="@+id/noRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/noRestaurants"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/noRestaurant_txt_size"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -1,10 +1,8 @@
 package com.clorderclientapp.adapters;
 
 import android.content.Context;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +26,7 @@ public class AllDayMenuAdapter extends RecyclerView.Adapter<AllDayMenuAdapter.Al
     public AllDayMenuAdapter(Context context, ArrayList<CategoryModel> allDayMenuArrayList) {
         mContext = context;
         allDayMenuList = allDayMenuArrayList;
-//        mListener = (ItemClick) context;
+        mListener = (ItemClick) context;
     }
 
     @Override
@@ -42,31 +40,31 @@ public class AllDayMenuAdapter extends RecyclerView.Adapter<AllDayMenuAdapter.Al
         holder.menuListItemText.setText(allDayMenuList.get(position).getCategoryTitle());
 
 
-//        if (allDayMenuList.get(position).isExpanded()) {
-//            holder.menuItemRecyclerView.setVisibility(View.VISIBLE);
-//            holder.menuListArrow.setImageResource(R.mipmap.rsz_up_arrow);
-//        } else {
-//            holder.menuItemRecyclerView.setVisibility(View.GONE);
-//            holder.menuListArrow.setImageResource(R.mipmap.rsz_expand_button);
-//        }
+        if (allDayMenuList.get(position).isExpanded()) {
+            holder.menuItemRecyclerView.setVisibility(View.VISIBLE);
+            holder.menuListArrow.setImageResource(R.mipmap.rsz_up_arrow);
+        } else {
+            holder.menuItemRecyclerView.setVisibility(View.GONE);
+            holder.menuListArrow.setImageResource(R.mipmap.rsz_expand_button);
+        }
 
-//        holder.categoryLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mListener.onParentClick(holder.getAdapterPosition());
-//            }
-//        });
-//        LinearLayoutManager manager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-//        holder.menuItemRecyclerView.setLayoutManager(manager);
-//        MenuItemAdapter menuItemAdapter = new MenuItemAdapter(mContext, Constants.CategoryItemList);
-//        holder.menuItemRecyclerView.setAdapter(menuItemAdapter);
-//        holder.menuItemRecyclerView.addOnItemTouchListener(new RecyclerViewClickListener(mContext,
-//                new RecyclerViewClickListener.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-////                        mListener.onChildClick(holder.getAdapterPosition(), position);
-//                    }
-//                }));
+        holder.categoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onParentClick(holder.getAdapterPosition());
+            }
+        });
+        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        holder.menuItemRecyclerView.setLayoutManager(manager);
+        MenuItemAdapter menuItemAdapter = new MenuItemAdapter(mContext, Constants.CategoryItemList);
+        holder.menuItemRecyclerView.setAdapter(menuItemAdapter);
+        holder.menuItemRecyclerView.addOnItemTouchListener(new RecyclerViewClickListener(mContext,
+                new RecyclerViewClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        mListener.onChildClick(holder.getAdapterPosition(), position);
+                    }
+                }));
     }
 
     @Override
@@ -85,7 +83,7 @@ public class AllDayMenuAdapter extends RecyclerView.Adapter<AllDayMenuAdapter.Al
             super(itemView);
             menuListItemText = (TextView) itemView.findViewById(R.id.menu_list_item_txt);
 //            menuListArrow = (ImageView) itemView.findViewById(R.id.menu_list_arrow);
-//            menuItemRecyclerView = (RecyclerView) itemView.findViewById(R.id.menuItemRecyclerView);
+            menuItemRecyclerView = (RecyclerView) itemView.findViewById(R.id.menuItemRecyclerView);
             categoryLayout = (RelativeLayout) itemView.findViewById(R.id.category_layout);
         }
     }

@@ -4,19 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.clorderclientapp.adapters.AllDayMenuAdapter;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,8 +27,10 @@ import com.clorderclientapp.R;
 import com.clorderclientapp.RealmModels.CartModel;
 import com.clorderclientapp.adapters.CategoryAdapter;
 import com.clorderclientapp.httpClient.HttpRequest;
+import com.clorderclientapp.interfaces.ItemClick;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.interfaces.UserActionInterface;
+import com.clorderclientapp.modelClasses.CategoryItemModel;
 import com.clorderclientapp.modelClasses.MenuModel;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.Converter;
@@ -59,7 +59,7 @@ public class AllDayMenuActivity extends AppCompatActivity implements View.OnClic
 
     RecyclerView allDayMenuRecyclerView;
 
-    private AllDayMenuAdapter allDayMenuAdapter;
+    //    private AllDayMenuAdapter allDayMenuAdapter;
     private CategoryAdapter categoryAdapter;
     private ImageView backArrow, frontArrow;
     private HttpRequest httpRequest;
@@ -95,20 +95,15 @@ public class AllDayMenuActivity extends AppCompatActivity implements View.OnClic
 //        } else {
 //            backArrow.setVisibility(View.INVISIBLE);
 //        }
-//
+        allDayMenuRecyclerView.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS_COUNT,
+                LinearLayoutManager.VERTICAL, false);
         Constants.MenuCategoryArrayList.clear();
-
-        allDayMenuAdapter = new AllDayMenuAdapter(this, Constants.MenuCategoryArrayList);
-        allDayMenuRecyclerView.setAdapter(allDayMenuAdapter);
-        allDayMenuRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-//        allDayMenuRecyclerView.setHasFixedSize(true);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMNS_COUNT,
-//                RecyclerView.VERTICAL, false);
-//        categoryAdapter = new CategoryAdapter(this, Constants.MenuCategoryArrayList);
-//        allDayMenuRecyclerView.setAdapter(categoryAdapter);
-//        allDayMenuRecyclerView.setLayoutManager(gridLayoutManager);
-
+        allDayMenuRecyclerView.setLayoutManager(gridLayoutManager);
+        categoryAdapter = new CategoryAdapter(this, Constants.MenuCategoryArrayList);
+        allDayMenuRecyclerView.setAdapter(categoryAdapter);
+//        allDayMenuAdapter = new AllDayMenuAdapter(this, Constants.MenuCategoryArrayList);
+//        allDayMenuRecyclerView.setAdapter(allDayMenuAdapter);
 
         if (Utils.isNetworkAvailable(this)) {
             clientMenuAndCategoryRequest();
@@ -193,13 +188,13 @@ public class AllDayMenuActivity extends AppCompatActivity implements View.OnClic
         MenuItem menuItem = menu.findItem(R.id.cart_action);
         Realm realm = Realm.getDefaultInstance();
         CartModel cartModel = realm.where(CartModel.class).findFirst();
-        int cartItemCnt = 0;
+        int cartItemCnt=0;
         if (cartModel != null) {
             if (cartModel.getCartItemList().size() > 0) {
-                cartItemCnt = cartModel.getCartItemList().size();
+                cartItemCnt=cartModel.getCartItemList().size();
             }
         }
-        menuItem.setIcon(Converter.convertLayoutToImage(this, cartItemCnt, R.mipmap.ic_shopping_cart_white_24dp));
+        menuItem.setIcon(Converter.convertLayoutToImage(this,cartItemCnt,R.mipmap.ic_shopping_cart_white_24dp));
         return true;
     }
 
@@ -210,7 +205,7 @@ public class AllDayMenuActivity extends AppCompatActivity implements View.OnClic
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (id) {
+        switch (id){
             case R.id.cart_action:
                 startActivity(new Intent(this, CartActivity.class));
                 break;
@@ -437,8 +432,8 @@ public class AllDayMenuActivity extends AppCompatActivity implements View.OnClic
     private void categoryList(int position) {
         Constants.MenuCategoryArrayList.clear();
         Constants.MenuCategoryArrayList.addAll(Constants.MenuArrayList.get(position).getCategoryArrayList());
-        allDayMenuAdapter.notifyDataSetChanged();
-//        categoryAdapter.notifyDataSetChanged();
+//        allDayMenuAdapter.notifyDataSetChanged();
+        categoryAdapter.notifyDataSetChanged();
     }
 
     private int timeInMinutes(String time) {

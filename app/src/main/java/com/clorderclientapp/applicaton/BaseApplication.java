@@ -36,11 +36,9 @@ public class BaseApplication extends Application {
                 }
             }
         };
-        Realm.init(this);
-        RealmConfiguration configuration = new RealmConfiguration.Builder()
+        RealmConfiguration configuration = new RealmConfiguration.Builder(this)
                 .schemaVersion(2)//change version num when new keys added in database....
                 .migration(realmMigration)
-                .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(configuration);
     }

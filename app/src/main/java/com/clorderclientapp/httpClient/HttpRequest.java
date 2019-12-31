@@ -11,12 +11,15 @@ import com.clorderclientapp.interfaces.RequestInterface;
 import com.clorderclientapp.interfaces.ResponseHandler;
 import com.clorderclientapp.modelClasses.CategoryItemModel;
 import com.clorderclientapp.modelClasses.CategoryModel;
+import com.clorderclientapp.modelClasses.CuisineModel;
 import com.clorderclientapp.modelClasses.ItemModifiersModel;
 import com.clorderclientapp.modelClasses.MenuModel;
 import com.clorderclientapp.modelClasses.OrderHistoryModel;
+import com.clorderclientapp.modelClasses.RestaurantModel;
 import com.clorderclientapp.modelClasses.RestaurantPromotionsModel;
 import com.clorderclientapp.utils.Constants;
 import com.clorderclientapp.utils.VolleySingletonClass;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +34,149 @@ import java.util.TimeZone;
 import io.realm.RealmList;
 
 public class HttpRequest implements RequestInterface {
+
     private ResponseHandler mCallBack;
+
+    @Override
+    public void restaurantData(Activity mActivity, JSONObject requestObject, final int requestNumber) {
+        mCallBack = (ResponseHandler) mActivity;
+        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.RESTAURANT_DATA, requestObject, new VolleyRequest.onSuccess() {
+            @Override
+            public void onResponse(int statusCode, Object response) {
+                try {
+                    JSONArray responseData = new JSONArray(response.toString());
+                    Log.d("restaurantData", "" + responseData.toString());
+                    ArrayList<RestaurantModel> restaurantModelArrayList = new ArrayList<>();
+                    if (responseData.length() > 1) {
+                        ArrayList<CuisineModel> cuisineModelArrayList = new ArrayList<>();
+                        for (int i = 0; i < responseData.length(); i++) {
+                            if (responseData.getJSONObject(i).has("Cuisines")) {
+                                JSONArray cuisineArray = responseData.getJSONObject(i).getJSONArray("Cuisines");
+                                for (int j = 0; j < cuisineArray.length(); j++) {
+                                    CuisineModel cuisineModel = new CuisineModel();
+                                    cuisineModel.setCname(cuisineArray.getJSONObject(j).getString("Cname"));
+                                    cuisineModel.setCount(cuisineArray.getJSONObject(j).getInt("Count"));
+                                    cuisineModelArrayList.add(cuisineModel);
+                                }
+                            } else {
+                                RestaurantModel restaurantModel = new RestaurantModel();
+                                restaurantModel.setTitle(responseData.getJSONObject(i).getString("Title"));
+                                restaurantModel.setAddress(responseData.getJSONObject(i).getString("Address"));
+                                restaurantModel.setCuisineName(responseData.getJSONObject(i).getString("CuisineName"));
+                                restaurantModel.setDistance(responseData.getJSONObject(i).getString("Distance"));
+                                restaurantModel.setImageUrl(responseData.getJSONObject(i).getString("ImageUrl"));
+                                restaurantModel.setRestaurantID(Integer.parseInt(responseData.getJSONObject(i).getString("RestaurantID")));
+                                restaurantModel.setmLatLngRestaurant(new LatLng(responseData.getJSONObject(i).getDouble("Lat"), responseData.getJSONObject(i).getDouble("Long")));
+                                restaurantModel.setLunchStatus(responseData.getJSONObject(i).getString("Lunch"));
+                                restaurantModel.setDinnerStatus(responseData.getJSONObject(i).getString("Dinner"));
+                                restaurantModel.setLunchDelivery(responseData.getJSONObject(i).getString("LunchDelivery"));
+                                restaurantModel.setDinnerDelivery(responseData.getJSONObject(i).getString("DinnerDelivery"));
+                                restaurantModel.setTimingsArray(responseData.getJSONObject(i).getJSONArray("Timing"));
+                                restaurantModel.setCuisineModelArrayList(cuisineModelArrayList);
+                                restaurantModelArrayList.add(restaurantModel);
+                            }
+                        }
+                        mCallBack.responseHandler(restaurantModelArrayList, requestNumber);
+                    } else {
+                        mCallBack.responseHandler(null, requestNumber);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new VolleyRequest.onFailure() {
+            @Override
+            public void onError(int statusCode, Object errorResponse) {
+                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
+                mCallBack.responseHandler(null, requestNumber);
+            }
+        });
+        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
+
+    }
+
+    @Override
+    public void restaurantCuisineData(Activity mActivity, JSONObject requestObject, final int requestNumber) {
+        mCallBack = (ResponseHandler) mActivity;
+        VolleyRequest volleyRequest = new VolleyRequest(Request.Method.POST, URL.RESTAURANT_CUISINE_DATA, requestObject, new VolleyRequest.onSuccess() {
+            @Override
+            public void onResponse(int statusCode, Object response) {
+                try {
+                    JSONObject responseData = new JSONObject(response.toString());
+                    Log.d("restaurantCuisineData", "" + responseData.toString());
+                    if (responseData.length() > 0) {
+                        ArrayList<CuisineModel> cuisineModelArrayList = new ArrayList<>();
+                        if (responseData.has("Cuisines")) {
+                            JSONArray cuisineArray = responseData.getJSONArray("Cuisines");
+                            for (int j = 0; j < cuisineArray.length(); j++) {
+                                CuisineModel cuisineModel = new CuisineModel();
+                                cuisineModel.setCname(cuisineArray.getJSONObject(j).getString("Cname"));
+                                cuisineModel.setCount(cuisineArray.getJSONObject(j).getInt("Count"));
+                                cuisineModelArrayList.add(cuisineModel);
+                            }
+                        }
+                        mCallBack.responseHandler(cuisineModelArrayList, requestNumber);
+                    } else {
+                        mCallBack.responseHandler(null, requestNumber);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new VolleyRequest.onFailure() {
+            @Override
+            public void onError(int statusCode, Object errorResponse) {
+                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
+                mCallBack.responseHandler(null, requestNumber);
+            }
+        });
+        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
+    }
+
+    @Override
+    public void getCuisineData(Activity mActivity, final int requestNumber) {
+        mCallBack = (ResponseHandler) mActivity;
+        VolleyRequest volleyRequest = new VolleyRequest(URL.CUISINE_DATA, new VolleyRequest.onSuccess() {
+            @Override
+            public void onResponse(int statusCode, Object response) {
+                JSONArray responseData = null;
+                try {
+                    responseData = new JSONArray(response.toString());
+                    Log.d("getCuisineData", "" + responseData.toString());
+                    ArrayList<CuisineModel> cuisineArrayList = new ArrayList<>();
+                    if (responseData.length() > 1) {
+                        for (int j = 0; j < responseData.length(); j++) {
+                            CuisineModel cuisineModel = new CuisineModel();
+                            cuisineModel.setCname(String.valueOf(responseData.get(j)));
+                            cuisineArrayList.add(cuisineModel);
+                        }
+                        mCallBack.responseHandler(cuisineArrayList, requestNumber);
+                    } else {
+                        mCallBack.responseHandler(null, requestNumber);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new VolleyRequest.onFailure() {
+            @Override
+            public void onError(int statusCode, Object errorResponse) {
+                Log.d("Fail", "\t" + statusCode + "Error : " + errorResponse.toString());
+                mCallBack.responseHandler(null, requestNumber);
+            }
+        });
+        volleyRequest.setRetryPolicy(new DefaultRetryPolicy(15000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingletonClass.getInstance(mActivity).addToRequestQueue(volleyRequest);
+    }
 
 
     @Override

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -29,6 +29,9 @@ import com.clorderclientapp.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NewUserSignUpActivity extends AppCompatActivity implements View.OnClickListener, ResponseHandler, UserActionInterface {
     private Button createAccountBtn, cancelBtn;
@@ -91,7 +94,7 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.clorder.com/terms-conditions.html"));
+                intent.setData(Uri.parse("http://www.clorder.com/terms_conditions.html"));
                 startActivity(intent);
 
             }
@@ -110,7 +113,7 @@ public class NewUserSignUpActivity extends AppCompatActivity implements View.OnC
 
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.clorder.com/privacy-policy.html"));
+                intent.setData(Uri.parse("http://www.clorder.com/privacy_policy.html"));
                 startActivity(intent);
 
             }

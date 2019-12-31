@@ -88,7 +88,6 @@
                     android:drawableLeft="@mipmap/rsz_1emailid"
                     android:drawablePadding="15dp"
                     android:drawableStart="@mipmap/rsz_1emailid"
-                    android:enabled="false"
                     android:hint="@string/new_user_email_txt"
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"

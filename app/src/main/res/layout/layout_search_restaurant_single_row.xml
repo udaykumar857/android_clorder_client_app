@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/drawable_restaurant_list_border"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/restImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/restaurant_img" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/restaurant_type_bg_col"
+            android:layout_marginTop="-20dp">
+            <com.clorderclientapp.utils.FontTextViewRegularClass
+                android:id="@+id/cuisineName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_gravity="center"
+                android:paddingRight="10dp"
+                android:drawableRight="@mipmap/knife_fork"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/restaurantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Punjab Kitchen"
+            android:textColor="#43a047"
+            android:textSize="@dimen/restaurantName_txt_size" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/restAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5479 W Irlo Bronson Memorial Hwy Kissimmee
+FL 34746"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/restAddress_txt_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#E0E0E0" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance(Miles):	1.05"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/distance_txt_size" />
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/deliveryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery:	Not Available"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/delivery_status_txt_size" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E4E4E4"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/restaurantStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Currently Not Available-Order In Advance." />
+
+
+        <com.clorderclientapp.utils.FontTextViewRegularClass
+            android:id="@+id/restTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opens At 11:00"
+            android:textColor="#84c734" />
+    </LinearLayout>
+
+</LinearLayout>

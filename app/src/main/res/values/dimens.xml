@@ -4,12 +4,24 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="drawer_layout_margin_top">0dp</dimen>
 
+
+    //RestaurantList screen dimensions
+    <dimen name="restaurantName_txt_size">20sp</dimen>
+    <dimen name="restAddress_txt_size">18sp</dimen>
+    <dimen name="distance_txt_size">15sp</dimen>
+    <dimen name="delivery_status_txt_size">15sp</dimen>
+    <dimen name="noRestaurant_txt_size">25sp</dimen>
+    <dimen name="filters_txt_size">20sp</dimen>
+    <dimen name="addressTxtSize">18sp</dimen>
+    <dimen name="distanceTxtSize">18sp</dimen>
+
+
     //Home screen dimensions
     <dimen name="create_account_text_size">20sp</dimen>
 
     //Location Screen dimensions
     <dimen name="all_locations_txt_size">25sp</dimen>
-    <dimen name="restaurantName_txt_size">20sp</dimen>
+    <dimen name="restName_txt_size">20sp</dimen>
     <dimen name="no_locations_msg_txt_size">25sp</dimen>
 
     //Johnnies Pizza Screen dimensions

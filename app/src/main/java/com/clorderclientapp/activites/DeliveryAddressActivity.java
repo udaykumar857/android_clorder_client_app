@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
@@ -31,14 +31,9 @@ import com.clorderclientapp.utils.Utils;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-//import com.google.android.gms.location.places.AutocompleteFilter;
-//import com.google.android.gms.location.places.Place;
-//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,8 +42,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import io.realm.Realm;
@@ -76,11 +69,6 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         initViews();
         listeners();
         httpRequest = new HttpRequest();
-
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getResources().getString(R.string.places_apiKey));
-        }
-
 
 
         sharedPreferences = getSharedPreferences("MySharedPreferences", MODE_PRIVATE);
@@ -169,7 +157,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         });
 
         try {
-            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
+            if (Utils.getClientId(this) == 829 || Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
 
                 //        Westlake - 31303 Agoura Road, Westlake village, CA 91361
                 //        Agoura - 29701 Agoura Road, Agoura Hills, CA 91301
@@ -250,31 +238,19 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
     }
 
     private void addressRequest() {
-//        try {
-//            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-//                    .setCountry("US")
-//                    .build();
-//            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-//                    .setFilter(typeFilter)
-//                    .build(this);
-//            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-//        } catch (GooglePlayServicesRepairableException e) {
-//            // TODO: Handle the error.
-//        } catch (GooglePlayServicesNotAvailableException e) {
-//            // TODO: Handle the error.
-//        }
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PLUS_CODE,
-                Place.Field.ADDRESS_COMPONENTS);
-
-        Log.d("Fields",fields.toString());
-
-//             Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setCountry("US")
-
-                .build(this);
-        startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        try {
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                    .setCountry("US")
+                    .build();
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .setFilter(typeFilter)
+                    .build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // TODO: Handle the error.
+        }
     }
 
 
@@ -286,13 +262,12 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
                 addressEditTxt.setText("");
                 cityEditTxt.setText("");
                 zipCodeEditTxt.setText("");
-//                Place place = PlaceAutocomplete.getPlace(this, data);
-                Place place = Autocomplete.getPlaceFromIntent(data);
+                Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.i("TAG", "Place: " + place.getName());
                 Log.i("TAG", "Place: " + place.getAddress());
                 Log.i("TAG", "Place: " + place.getPhoneNumber());
-//                Log.i("TAG", "Place: " + place.getPlaceTypes());
-//                Log.i("TAG", "Place: " + place.getLocale());
+                Log.i("TAG", "Place: " + place.getPlaceTypes());
+                Log.i("TAG", "Place: " + place.getLocale());
                 String zip = null;
                 String placeName = null;
                 String city = null;
@@ -337,8 +312,8 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
                 }
 
 
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                Status status = Autocomplete.getStatusFromIntent(data);
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
                 Log.i("TAG", status.getStatusMessage());
 
@@ -374,7 +349,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
 //                            .com, .co.in, .net, .org, .edu, .co.nz
                                         String domain = userName[1].split("\\.", 2)[1];
                                         if (Utils.domainValid(domain)) {
-                                            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
+                                            if (Utils.getClientId(this) == 829 || Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
                                                 getData();
                                                 //key Board Dismiss
 //                                            InputMethodManager imm1 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -473,7 +448,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
             try {
                 JSONObject userDetails = new JSONObject((String) sharedPreferences.getString("userDetails", ""));
                 nameEditTxt.setText(userDetails.getString("name"));
-                if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
+                if (Utils.getClientId(this) != 829 || Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
                     addressEditTxt.setText(userDetails.getString("address"));
                     buildingEditTxt.setText(userDetails.getString("buildings"));
                     cityEditTxt.setText(userDetails.getString("city"));
@@ -503,7 +478,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
 //                                "ZipPostalCode": "08816"
 //                    },
                         JSONObject userAddressObject = userCredentials.getJSONObject("UserAddress");
-                        if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
+                        if (Utils.getClientId(this) != 829 || Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
                             addressEditTxt.setText(userAddressObject.getString("Address1"));
                             buildingEditTxt.setText(userAddressObject.getString("Address2"));
                             cityEditTxt.setText(userAddressObject.getString("City"));
@@ -526,7 +501,7 @@ public class DeliveryAddressActivity extends AppCompatActivity implements View.O
         JSONObject userDetails = new JSONObject();
         try {
             userDetails.put("name", nameEditTxt.getText().toString());
-            if (Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
+            if (Utils.getClientId(this) == 829 || Constants.clientSettingsObject.getJSONObject("ClientSettings").getInt("ShippingOptionId") == 2) {
                 userDetails.put("address", addressArrayList.get(addressSpinnerPosition).getAddress1());
                 userDetails.put("buildings", addressArrayList.get(addressSpinnerPosition).getAddress2());
                 userDetails.put("city", addressArrayList.get(addressSpinnerPosition).getCity());
